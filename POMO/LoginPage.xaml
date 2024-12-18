@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.LoginPage"
+             Background="Transparent">
+
+    <ContentPage.Resources>
+        <!-- Gradient Background -->
+        <Style TargetType="Grid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8A4FFF" Offset="0.0" />
+                        <GradientStop Color="#6BC2E6" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Layout Grid -->
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
+                <!-- Welcome Text -->
+                <Label Text="WELCOME, USER !" 
+                       FontSize="20" 
+                       TextColor="White" 
+                       HorizontalOptions="Center" />
+
+                <!-- Title -->
+                <Label Text="POMO" 
+                       FontSize="48" 
+                       FontAttributes="Bold"
+                       TextColor="White" 
+                       HorizontalOptions="Center" />
+
+                <!-- User Icon -->
+                <Image Source="dotnet_bot.png" 
+                       WidthRequest="100" 
+                       HeightRequest="100" 
+                       HorizontalOptions="Center" />
+
+                <!-- Username Field -->
+                <Entry Placeholder="Username" 
+                       PlaceholderColor="Gray" 
+                       BackgroundColor="White" 
+                       TextColor="Black"
+                       WidthRequest="250" />
+
+                <!-- Password Field -->
+                <Entry Placeholder="Password" 
+                       PlaceholderColor="Gray" 
+                       IsPassword="True"
+                       BackgroundColor="White" 
+                       TextColor="Black"
+                       WidthRequest="250" />
+
+                <!-- Sign Up Link -->
+                <Label Text="Don't have an account? Sign Up" 
+                       FontSize="12" 
+                       TextColor="White" 
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
