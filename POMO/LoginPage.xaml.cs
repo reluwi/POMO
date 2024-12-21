@@ -14,5 +14,11 @@ namespace POMO
             // Navigate to the MainPage
             await Shell.Current.GoToAsync("//MainPage");
         }
+
+        private async void OnSignUpTapped(object sender, EventArgs e)
+        {
+            // Navigate to the SignUpPage or perform any action
+            await Shell.Current.GoToAsync("//SignUpPage");
+        }
     }
 }

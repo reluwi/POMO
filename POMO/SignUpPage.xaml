@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="POMO.LoginPage"
-             Background="Transparent">
+             x:Class="POMO.SignUpPage"
+             BackgroundColor="Transparent">
 
     <!-- Layout Grid -->
     <Grid>
@@ -13,13 +13,13 @@
                 <GradientStop Color="#0066CC" Offset="1.0" />
             </LinearGradientBrush>
         </Grid.Background>
-        
+
         <!-- Page Content -->
         <VerticalStackLayout Spacing="50" HorizontalOptions="Center" VerticalOptions="Center" Padding="30">
 
             <VerticalStackLayout Spacing="5">
                 <!-- Welcome Text -->
-                <Label Text="WELCOME TO" 
+                <Label Text="CREATE AN ACCOUNT" 
                        FontSize="20" 
                        TextColor="White"
                        FontAttributes="Bold"
@@ -67,8 +67,23 @@
                        TextColor="Black"/>
                 </Border>
 
-                <!-- Sign In Button -->
-                <Button Text="Login"
+                <!-- Confirm Password Field -->
+                <Border Padding="5"
+                   BackgroundColor="White">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Opacity="0.5" Radius="5" Offset="2,2"/>
+                    </Border.Shadow>
+                    <Entry Placeholder="Confirm Password"
+                       IsPassword="True"
+                       BackgroundColor="Transparent"
+                       TextColor="Black"/>
+                </Border>
+
+                <!-- Sign Up Button -->
+                <Button Text="Sign Up"
                     BackgroundColor="#003366"
                     TextColor="White"
                     FontAttributes="Bold"
@@ -76,17 +91,16 @@
                     Padding="10,5"
                     WidthRequest="200"
                     HorizontalOptions="Center"
-                    Clicked="OnSignInClicked"/>
-
+                    Clicked="OnSignUpClicked"/>
             </VerticalStackLayout>
 
-            <!-- Sign Up Text -->
-            <Label Text="Don't have an account? Sign Up"
+            <!-- Already have an account? Sign In Text -->
+            <Label Text="Already have an account? Sign In"
                    FontSize="14"
                    TextColor="White"
                    HorizontalOptions="Center">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnSignUpTapped" />
+                    <TapGestureRecognizer Tapped="OnSignInTapped" />
                 </Label.GestureRecognizers>
             </Label>
         </VerticalStackLayout>
