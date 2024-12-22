@@ -27,8 +27,14 @@
 
     <!-- Timer Page -->
     <ShellContent
-    Title="Timer"
-    ContentTemplate="{DataTemplate local:TimerPage}"
-    Route="TimerPage" />
+        Title="Timer"
+        ContentTemplate="{DataTemplate local:TimerPage}"
+        Route="TimerPage" />
+
+    <!-- Running Time Page -->
+    <ShellContent
+        Title="RunningTime"
+        ContentTemplate="{DataTemplate local:RunningTimePage}"
+        Route="RunningTimePage" />
 
 </Shell>

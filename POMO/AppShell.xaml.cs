@@ -18,6 +18,9 @@
 
             // Register TimerPage route
             Routing.RegisterRoute("TimerPage", typeof(TimerPage));
+
+            // Register RunningTimePage route
+            Routing.RegisterRoute("RunningTimePage", typeof(RunningTimePage));
         }
     }
 }

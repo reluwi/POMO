@@ -2,7 +2,8 @@ namespace POMO
 {
 	public partial class TimerPage : ContentPage
 	{
-		public TimerPage()
+
+        public TimerPage()
 		{
 			InitializeComponent();
 		}
@@ -20,6 +21,12 @@ namespace POMO
         {
             // Navigate to MainPage
             await Shell.Current.GoToAsync("///MainPage");
+        }
+
+        private async void OnTimerButtonTapped(object sender, EventArgs e)
+        {
+            // Navigate to MainPage
+            await Shell.Current.GoToAsync("RunningTimePage");
         }
     }
 }

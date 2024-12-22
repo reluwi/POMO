@@ -23,22 +23,21 @@
 
                 <!-- Timer Display -->
                 <Label x:Name="TimerLabel" 
-               Text="25:00" FontSize="88" 
-               FontAttributes="Bold" 
-               TextColor="White" 
-               HorizontalOptions="Center" />
+                   Text="25:00" FontSize="88" 
+                   FontAttributes="Bold" 
+                   TextColor="White" 
+                   HorizontalOptions="Center" />
 
                 <!-- Slider for Time Adjustment -->
                 <Slider x:Name="TimeSlider"
-                Minimum="10"
-                Maximum="40"
-                Value="25"
-                ThumbColor="White"
-                MinimumTrackColor="White"
-                MaximumTrackColor="#CCCCCC"
-                ValueChanged="OnSliderValueChanged"
-                HorizontalOptions="FillAndExpand" />
-
+                    Minimum="10"
+                    Maximum="40"
+                    Value="25"
+                    ThumbColor="White"
+                    MinimumTrackColor="White"
+                    MaximumTrackColor="#CCCCCC"
+                    ValueChanged="OnSliderValueChanged"
+                    HorizontalOptions="FillAndExpand" />        
             </VerticalStackLayout>
 
             <!-- Pomodoro Count -->
@@ -58,7 +57,11 @@
                 </VerticalStackLayout>
 
                 <!-- Play Button -->
-                <Image Source="timer_button.png" WidthRequest="80" HeightRequest="80" />
+                <Image Source="timer_button.png" WidthRequest="80" HeightRequest="80">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTimerButtonTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
 
             </HorizontalStackLayout>
 
@@ -81,8 +84,7 @@
                 </Image>
                 <Image Source="notif_button.png" WidthRequest="30" HeightRequest="30"/>
                 <Image Source="task_button.png" WidthRequest="30" HeightRequest="30"/>
-                <Image Source="clock_button_clicked.png" WidthRequest="30" HeightRequest="30">
-                </Image>
+                <Image Source="clock_button_clicked.png" WidthRequest="30" HeightRequest="30"/>
             </HorizontalStackLayout>
         </Grid>
     </Grid>
