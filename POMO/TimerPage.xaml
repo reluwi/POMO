@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.TimerPage"
+             BackgroundColor="#0066CC"
+             Title="Timer">
+    <!-- Main Layout -->
+    <Grid>
+        <!-- Background Gradient -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#003366" Offset="0.0" />
+                <GradientStop Color="#0066CC" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Content -->
+        <VerticalStackLayout Spacing="100" Padding="10" HorizontalOptions="Center" VerticalOptions="Center">
+
+            <VerticalStackLayout Spacing="20">
+                <!-- Title -->
+                <Label Text="Pomodoro" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+
+                <!-- Timer Display -->
+                <Label x:Name="TimerLabel" 
+               Text="25:00" FontSize="88" 
+               FontAttributes="Bold" 
+               TextColor="White" 
+               HorizontalOptions="Center" />
+
+                <!-- Slider for Time Adjustment -->
+                <Slider x:Name="TimeSlider"
+                Minimum="10"
+                Maximum="40"
+                Value="25"
+                ThumbColor="White"
+                MinimumTrackColor="White"
+                MaximumTrackColor="#CCCCCC"
+                ValueChanged="OnSliderValueChanged"
+                HorizontalOptions="FillAndExpand" />
+
+            </VerticalStackLayout>
+
+            <!-- Pomodoro Count -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
+                <VerticalStackLayout>
+                    <Label Text="Pomodoros:" TextColor="White" FontSize="16" />
+                    <Border Background="White" Padding="3">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                            <Button Text="&lt;" WidthRequest="40" HeightRequest="40" FontSize="15" TextColor="#003366" BackgroundColor="White" />
+                            <Label Text="1" FontSize="15" TextColor="#003366" VerticalOptions="Center" />
+                            <Button Text="&gt;" WidthRequest="40" HeightRequest="40" FontSize="15" TextColor="#003366" BackgroundColor="White" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Play Button -->
+                <Image Source="timer_button.png" WidthRequest="80" HeightRequest="80" />
+
+            </HorizontalStackLayout>
+
+            <!-- Create New Task Button -->
+            <Button Text="+ Create new task"
+                BackgroundColor="White"
+                TextColor="#0066CC"
+                HeightRequest="50"
+                CornerRadius="10"
+                HorizontalOptions="FillAndExpand" />
+        </VerticalStackLayout>
+        
+        <!-- Bottom Navigation Bar -->
+        <Grid VerticalOptions="End" BackgroundColor="White" HeightRequest="50">
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="60">
+                <Image Source="home_button_unclicked.png" WidthRequest="30" HeightRequest="30">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeButtonTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Source="notif_button.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="task_button.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="clock_button_clicked.png" WidthRequest="30" HeightRequest="30">
+                </Image>
+            </HorizontalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -25,4 +25,10 @@
         ContentTemplate="{DataTemplate local:SignUpPage}"
         Route="SignUpPage" />
 
+    <!-- Timer Page -->
+    <ShellContent
+    Title="Timer"
+    ContentTemplate="{DataTemplate local:TimerPage}"
+    Route="TimerPage" />
+
 </Shell>
