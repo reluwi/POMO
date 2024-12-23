@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:POMO"
              x:Class="POMO.RunningTimePage"
              BackgroundColor="#0066CC"
              Title="RunningTime">
@@ -29,18 +30,43 @@
             </VerticalStackLayout>
 
             <!-- Pomodoro Count -->
-            <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
-                <!-- Timer Display -->
-                <Label x:Name="RunningTimerLabel" 
-                   Text="25:00" FontSize="88" 
-                   FontAttributes="Bold" 
-                   TextColor="White" 
-                   HorizontalOptions="Center" />    
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <!-- Skip Button -->
-                <Image Source="skip_button.png" WidthRequest="40" HeightRequest="40" />
+                <!-- Main Content -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-            </VerticalStackLayout>
+                    <!-- Timer Label -->
+                    <Label x:Name="RunningTimerLabel" 
+                        Text="25:00" 
+                        FontSize="88" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        HorizontalOptions="Center" 
+                        Grid.Column="0" />
+
+                    <!-- Skip Button -->
+                    <Image Source="skip_button.png" 
+                        WidthRequest="40" 
+                        HeightRequest="40" 
+                        Grid.Column="1" 
+                        VerticalOptions="Center">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSkipButtonTapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+
+                <!-- Skip Pop-Up -->
+                <local:SkipPopUp x:Name="SkipPopup" IsVisible="False" Grid.RowSpan="2" />
+            </Grid>
 
             <!-- Pause Button -->
             <Image Source="pause_button.png" WidthRequest="80" HeightRequest="80" />
