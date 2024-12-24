@@ -21,6 +21,9 @@
 
             // Register RunningTimePage route
             Routing.RegisterRoute("RunningTimePage", typeof(RunningTimePage));
+
+            // Register NotifPage route
+            Routing.RegisterRoute("NotifPage", typeof(NotifPage));
         }
     }
 }
