@@ -59,7 +59,7 @@
                 <!-- Play Button -->
                 <Image Source="timer_button.png" WidthRequest="80" HeightRequest="80">
                     <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnTimerButtonTapped" />
+                        <TapGestureRecognizer Tapped="OnPlayButtonClicked" />
                     </Image.GestureRecognizers>
                 </Image>
 

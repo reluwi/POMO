@@ -23,10 +23,13 @@ namespace POMO
             await Shell.Current.GoToAsync("///MainPage");
         }
 
-        private async void OnTimerButtonTapped(object sender, EventArgs e)
+        private async void OnPlayButtonClicked(object sender, EventArgs e)
         {
-            // Navigate to MainPage
-            await Shell.Current.GoToAsync("RunningTimePage");
+            // Get the value directly from the slider
+            var timeSet = TimeSlider.Value;
+
+            // Navigate to RunningTimePage with the selected time
+            await Shell.Current.GoToAsync(nameof(RunningTimePage) + $"?InitialTimeValue={timeSet}");
         }
     }
 }

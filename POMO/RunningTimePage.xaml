@@ -20,7 +20,11 @@
 
             <VerticalStackLayout Spacing="20">
                 <!-- Title -->
-                <Label Text="POMO (1/1)" FontSize="50" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                <Label Text="POMO (1/1)" 
+                       FontSize="50" 
+                       FontAttributes="Bold" 
+                       TextColor="White" 
+                       HorizontalOptions="Center" />
 
                 <HorizontalStackLayout Spacing="30">
                     <Label Text="+5 Minutes" FontSize="15" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
@@ -44,7 +48,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Timer Label -->
-                    <Label x:Name="RunningTimerLabel" 
+                    <Label x:Name="RunningTimerLabel"
                         Text="25:00" 
                         FontSize="88" 
                         FontAttributes="Bold" 
