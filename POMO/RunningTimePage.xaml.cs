@@ -1,18 +1,28 @@
 namespace POMO
 {
     [QueryProperty(nameof(InitialTimeValue), "InitialTimeValue")]
+    [QueryProperty(nameof(PomodoroCount), "PomodoroCount")]
     public partial class RunningTimePage : ContentPage
 	{
         private double remainingTime;
-
         // Property to receive the time value
         public double InitialTimeValue { get; set; }
+        public int PomodoroCount { get; set; } // Pomodoro count
+
         public RunningTimePage()
 		{
 			InitializeComponent();
 
             // Listen for the SkipConfirmed event from the SkipPopUp
             SkipPopup.SkipConfirmed += OnSkipConfirmed;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Display the Pomodoro count
+            PomodoroCountLabel.Text = $"POMO: (1/{PomodoroCount})";
         }
 
         protected override void OnNavigatedTo(NavigatedToEventArgs args)

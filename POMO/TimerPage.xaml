@@ -49,9 +49,25 @@
                             <RoundRectangle CornerRadius="10"/>
                         </Border.StrokeShape>
                         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Button Text="&lt;" WidthRequest="40" HeightRequest="40" FontSize="15" TextColor="#003366" BackgroundColor="White" />
-                            <Label Text="1" FontSize="15" TextColor="#003366" VerticalOptions="Center" />
-                            <Button Text="&gt;" WidthRequest="40" HeightRequest="40" FontSize="15" TextColor="#003366" BackgroundColor="White" />
+                            <Button Text="&lt;" 
+                                    WidthRequest="40" 
+                                    HeightRequest="40" 
+                                    FontSize="15" 
+                                    TextColor="#003366" 
+                                    BackgroundColor="White"
+                                    Clicked="OnDecreasePomodoroClicked"/>
+                            <Label  x:Name="PomodoroCountLabel"
+                                    Text="1" 
+                                    FontSize="15" 
+                                    TextColor="#003366" 
+                                    VerticalOptions="Center" />
+                            <Button Text="&gt;" 
+                                    WidthRequest="40" 
+                                    HeightRequest="40" 
+                                    FontSize="15" 
+                                    TextColor="#003366" 
+                                    BackgroundColor="White" 
+                                    Clicked="OnIncreasePomodoroClicked"/>
                         </HorizontalStackLayout>
                     </Border>
                 </VerticalStackLayout>

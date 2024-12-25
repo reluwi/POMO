@@ -2,11 +2,32 @@ namespace POMO
 {
 	public partial class TimerPage : ContentPage
 	{
-
+        private int _pomodoroCount = 1;
         public TimerPage()
 		{
 			InitializeComponent();
 		}
+
+        private void OnIncreasePomodoroClicked(object sender, EventArgs e)
+        {
+            // Increment the Pomodoro count
+            _pomodoroCount++;
+
+            // Update the label
+            PomodoroCountLabel.Text = _pomodoroCount.ToString();
+        }
+
+        private void OnDecreasePomodoroClicked(object sender, EventArgs e)
+        {
+            // Decrement the Pomodoro count, ensuring it stays >= 1
+            if (_pomodoroCount > 1)
+            {
+                _pomodoroCount--;
+            }
+
+            // Update the label
+            PomodoroCountLabel.Text = _pomodoroCount.ToString();
+        }
 
         private void OnSliderValueChanged(object sender, ValueChangedEventArgs e)
         {
@@ -29,7 +50,8 @@ namespace POMO
             var timeSet = TimeSlider.Value;
 
             // Navigate to RunningTimePage with the selected time
-            await Shell.Current.GoToAsync(nameof(RunningTimePage) + $"?InitialTimeValue={timeSet}");
+            await Shell.Current.GoToAsync(
+                $"{nameof(RunningTimePage)}?InitialTimeValue={timeSet}&PomodoroCount={_pomodoroCount}");
         }
     }
 }

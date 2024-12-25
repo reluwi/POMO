@@ -19,12 +19,9 @@
         <VerticalStackLayout Spacing="100" Padding="50" HorizontalOptions="Center" VerticalOptions="Start">
 
             <VerticalStackLayout Spacing="20">
-                <!-- Title -->
-                <Label Text="POMO (1/1)" 
-                       FontSize="50" 
-                       FontAttributes="Bold" 
-                       TextColor="White" 
-                       HorizontalOptions="Center" />
+
+                <!-- Pomodoro Count -->
+                <Label x:Name="PomodoroCountLabel" FontSize="50" TextColor="White" VerticalOptions="Center"/>
 
                 <HorizontalStackLayout Spacing="30">
                     <Label Text="+5 Minutes" FontSize="15" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
