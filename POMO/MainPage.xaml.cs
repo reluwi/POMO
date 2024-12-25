@@ -14,11 +14,6 @@
             await Shell.Current.GoToAsync("TimerPage");
         }
 
-        private async void OnNotifButtonTapped(object sender, EventArgs e)
-        {
-            // Navigate to NotifPage
-            await Shell.Current.GoToAsync("NotifPage");
-        }
     }
 
 }
