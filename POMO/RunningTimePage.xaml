@@ -70,7 +70,20 @@
             </Grid>
 
             <!-- Pause Button -->
-            <Image Source="pause_button.png" WidthRequest="80" HeightRequest="80" />
+            <Button 
+                x:Name="PauseResumeButton"
+                Text="||"
+                WidthRequest="80"
+                HeightRequest="80"
+                BackgroundColor="#ffffff"
+                CornerRadius="20"
+                BorderColor="#003366"
+                BorderWidth="3"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="#003366"
+                FontSize="24"
+                FontAttributes="Bold" />
         </VerticalStackLayout>
 
         <!-- Bottom Navigation Bar -->

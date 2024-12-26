@@ -5,15 +5,35 @@
     <!-- Dark semi-transparent overlay -->
     <Grid BackgroundColor="Black" Opacity="0.93">
         <!-- Center the content -->
-        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="25">
             <Label Text="Are you sure you want to skip the current focus session?" 
                    TextColor="White" 
                    FontSize="16" 
                    HorizontalOptions="Center" />
-            <HorizontalStackLayout Spacing="20" Margin="0,20,0,0">
-                <Button Text="Cancel" Clicked="OnCancelTapped" />
-                <Button Text="Skip" Clicked="OnSkipConfirmedTapped" />
-            </HorizontalStackLayout>
+
+            <!-- Grid to equally distribute the buttons -->
+            <Grid Margin="0,20,0,0" HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Cancel Button -->
+                <Border BackgroundColor="Black" Grid.Column="0" Padding="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Button Text="Cancel" Clicked="OnCancelTapped" BackgroundColor="#003366" HorizontalOptions="FillAndExpand" />
+                </Border>
+
+                <!-- Skip Button -->
+                <Border BackgroundColor="Black" Grid.Column="1" Padding="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Button Text="Skip" Clicked="OnSkipConfirmedTapped" BackgroundColor="#003366" HorizontalOptions="FillAndExpand" />
+                </Border>
+            </Grid>
         </VerticalStackLayout>
     </Grid>
 </ContentView>
