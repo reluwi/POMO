@@ -98,7 +98,11 @@
                         <TapGestureRecognizer Tapped="OnHomeButtonTapped" />
                     </Image.GestureRecognizers>
                 </Image>
-                <Image Source="notif_button.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="notif_button.png" WidthRequest="30" HeightRequest="30">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNotifButtonTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
                 <Image Source="task_button.png" WidthRequest="30" HeightRequest="30"/>
                 <Image Source="clock_button_clicked.png" WidthRequest="30" HeightRequest="30"/>
             </HorizontalStackLayout>

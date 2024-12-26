@@ -37,4 +37,10 @@
         ContentTemplate="{DataTemplate local:RunningTimePage}"
         Route="RunningTimePage" />
 
+    <!-- Notif Page -->
+    <ShellContent
+        Title="NotifPage"
+        ContentTemplate="{DataTemplate local:NotifPage}"
+        Route="NotifPage" />
+
 </Shell>
