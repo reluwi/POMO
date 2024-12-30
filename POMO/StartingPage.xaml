@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.StartingPage">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#5B9BF3" Offset="0.0" />
+            <!-- Darker Blue -->
+            <GradientStop Color="#A0C4FF" Offset="1.0" />
+            <!-- Lighter Blue -->
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <VerticalStackLayout
+        Spacing="15"
+        VerticalOptions="Center"
+        HorizontalOptions="Center">
+
+        <!-- Welcome Text -->
+        <VerticalStackLayout>
+            <Label 
+            Text="WELCOME TO"
+            FontSize="30"
+            TextColor="White"
+            HorizontalOptions="Center" />
+
+            <Label 
+            Text="POMO"
+            FontSize="84"
+            FontAttributes="Bold"
+            TextColor="White"
+            HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Bear Image -->
+        <Image
+            Source="bear_timer.png"
+            WidthRequest="380"
+            HeightRequest="380"
+            HorizontalOptions="Center" />
+
+        <!-- Buttons -->
+        <VerticalStackLayout 
+            Spacing="10"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+
+            <Button 
+                Text="Start"
+                WidthRequest="200"
+                HeightRequest="50"
+                BackgroundColor="White"
+                TextColor="#6c757d"
+                FontSize="20"
+                CornerRadius="25" />
+
+            <Button 
+                Text="About us"
+                WidthRequest="200"
+                HeightRequest="50"
+                BackgroundColor="White"
+                TextColor="#6c757d"
+                FontSize="20"
+                CornerRadius="25" />
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

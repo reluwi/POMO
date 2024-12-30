@@ -44,12 +44,6 @@ namespace POMO
             await Shell.Current.GoToAsync("///MainPage");
         }
 
-        private async void OnNotifButtonTapped(object sender, EventArgs e)
-        {
-            // Navigate to NotifPage
-            await Shell.Current.GoToAsync("NotifPage");
-        }
-
         private async void OnPlayButtonClicked(object sender, EventArgs e)
         {
             // Get the value directly from the slider

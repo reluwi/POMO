@@ -10,20 +10,14 @@
             Routing.RegisterRoute("MainPage", typeof(MainPage));
 
             // Navigate to LoginPage as the first page
-            Routing.RegisterRoute("LoginPage", typeof(LoginPage));
-            GoToAsync("//LoginPage");
-
-            // Register SignUpPage route
-            Routing.RegisterRoute("SignUpPage", typeof(SignUpPage));
+            Routing.RegisterRoute("LoginPage", typeof(StartingPage));
+            GoToAsync("//StartingPage");
 
             // Register TimerPage route
             Routing.RegisterRoute("TimerPage", typeof(TimerPage));
 
             // Register RunningTimePage route
             Routing.RegisterRoute("RunningTimePage", typeof(RunningTimePage));
-
-            // Register NotifPage route
-            Routing.RegisterRoute("NotifPage", typeof(NotifPage));
         }
     }
 }

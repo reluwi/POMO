@@ -9,21 +9,15 @@
 
     <!-- Login Page -->
     <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" />
+        Title="Starting"
+        ContentTemplate="{DataTemplate local:StartingPage}"
+        Route="StartingPage" />
 
     <!-- Main Page -->
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
-    <!-- Sign Up Page -->
-    <ShellContent
-        Title="SignUp"
-        ContentTemplate="{DataTemplate local:SignUpPage}"
-        Route="SignUpPage" />
 
     <!-- Timer Page -->
     <ShellContent
@@ -36,11 +30,4 @@
         Title="RunningTime"
         ContentTemplate="{DataTemplate local:RunningTimePage}"
         Route="RunningTimePage" />
-
-    <!-- Notif Page -->
-    <ShellContent
-        Title="NotifPage"
-        ContentTemplate="{DataTemplate local:NotifPage}"
-        Route="NotifPage" />
-
 </Shell>

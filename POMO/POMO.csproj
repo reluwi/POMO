@@ -67,16 +67,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="LoginPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="NotifPage.xaml">
+	  <Compile Update="StartingPage.xaml.cs">
+	    <DependentUpon>StartingPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="StartingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="RunningTimePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="SignUpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="SkipPopUp.xaml">
@@ -84,9 +84,6 @@
 	  </MauiXaml>
 	  <MauiXaml Update="TimerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="NotifPage.xaml">
-		<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 

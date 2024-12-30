@@ -20,7 +20,7 @@ namespace POMO
             SkipConfirmed?.Invoke(this, EventArgs.Empty); // Notify the parent page
             this.IsVisible = false; // Hide the pop-up
             // Navigate to TimerPage
-            await Shell.Current.GoToAsync("TimerPage");
+            await Shell.Current.GoToAsync("///TimerPage");
         }
     }
 }
