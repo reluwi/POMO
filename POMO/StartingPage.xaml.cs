@@ -8,5 +8,11 @@ namespace POMO
         {
             InitializeComponent();
         }
+
+        private async void OnStartButtonClicked(object sender, EventArgs e)
+        {
+            // Navigate to MainPage
+            await Shell.Current.GoToAsync("MainPage");
+        }
     }
 }

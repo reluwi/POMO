@@ -53,7 +53,8 @@
                 BackgroundColor="White"
                 TextColor="#6c757d"
                 FontSize="20"
-                CornerRadius="25" />
+                CornerRadius="25" 
+                Clicked="OnStartButtonClicked"/>
 
             <Button 
                 Text="About us"
