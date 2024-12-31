@@ -88,7 +88,7 @@
             <Grid>
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
                     <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
-                        <ImageButton Source="home_button.png" WidthRequest="50" HeightRequest="50" />
+                        <ImageButton Source="home_button_unclicked.png" WidthRequest="50" HeightRequest="50" />
                     </Border>
                     <Border StrokeShape="Ellipse" Background="Transparent" StrokeThickness="0" HeightRequest="100" WidthRequest="100">
 
