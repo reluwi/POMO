@@ -5,103 +5,102 @@
              BackgroundColor="#0066CC"
              Title="Timer">
     <!-- Main Layout -->
-    <Grid>
+    <Grid Padding="-5">
         <!-- Background Gradient -->
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#003366" Offset="0.0" />
-                <GradientStop Color="#0066CC" Offset="1.0" />
-            </LinearGradientBrush>
-        </Grid.Background>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#4B96FF" Offset="0.0" />
+                    <GradientStop Color="#A7B5FF" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
 
-        <!-- Content -->
-        <VerticalStackLayout Spacing="100" Padding="10" HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid Padding="70">
+            <!-- Content -->
+            <VerticalStackLayout Spacing="50" Padding="10" HorizontalOptions="Center" VerticalOptions="Start">
 
-            <VerticalStackLayout Spacing="20">
-                <!-- Title -->
-                <Label Text="Pomodoro" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                <VerticalStackLayout Spacing="20">
+                    <!-- Title -->
+                    <HorizontalStackLayout IsVisible="True" HorizontalOptions="Center">
+                    <Label Text="Pomodoro Timer" FontSize="27" FontAttributes="Bold" TextColor="White"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout IsVisible="False" HorizontalOptions="Center">
+                        <!-- Label muna, hindi ko pa alam paano ipapasok-->
+                        <Label Text="Activity 2 " FontSize="27" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="(1/2)" FontSize="27" FontAttributes="Bold" TextColor="White"/>
+                    </HorizontalStackLayout>
+                    <!-- Timer Display -->
+                    <Label x:Name="TimerLabel" 
+                       Text="25:00" FontSize="88" 
+                       FontAttributes="Bold" 
+                       TextColor="White" 
+                       HorizontalOptions="Center" />
 
-                <!-- Timer Display -->
-                <Label x:Name="TimerLabel" 
-                   Text="25:00" FontSize="88" 
-                   FontAttributes="Bold" 
-                   TextColor="White" 
-                   HorizontalOptions="Center" />
-
-                <!-- Slider for Time Adjustment -->
-                <Slider x:Name="TimeSlider"
-                    Minimum="1"
-                    Maximum="40"
-                    Value="25"
-                    ThumbColor="White"
-                    MinimumTrackColor="White"
-                    MaximumTrackColor="#CCCCCC"
-                    ValueChanged="OnSliderValueChanged"
-                    HorizontalOptions="FillAndExpand" />        
-            </VerticalStackLayout>
-
-            <!-- Pomodoro Count -->
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
-                <VerticalStackLayout>
-                    <Label Text="Pomodoros:" TextColor="White" FontSize="16" />
-                    <Border Background="White" Padding="3">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10"/>
-                        </Border.StrokeShape>
-                        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                            <Button Text="&lt;" 
-                                    WidthRequest="40" 
-                                    HeightRequest="40" 
-                                    FontSize="15" 
-                                    TextColor="#003366" 
-                                    BackgroundColor="White"
-                                    Clicked="OnDecreasePomodoroClicked"/>
-                            <Label  x:Name="PomodoroCountLabel"
-                                    Text="1" 
-                                    FontSize="15" 
-                                    TextColor="#003366" 
-                                    VerticalOptions="Center" />
-                            <Button Text="&gt;" 
-                                    WidthRequest="40" 
-                                    HeightRequest="40" 
-                                    FontSize="15" 
-                                    TextColor="#003366" 
-                                    BackgroundColor="White" 
-                                    Clicked="OnIncreasePomodoroClicked"/>
-                        </HorizontalStackLayout>
-                    </Border>
+                    <!-- Slider for Time Adjustment -->
+                    <Slider x:Name="TimeSlider"
+                        Minimum="1"
+                        Maximum="40"
+                        Value="25"
+                        ThumbColor="White"
+                        MinimumTrackColor="White"
+                        MaximumTrackColor="#CCCCCC"
+                        HorizontalOptions="FillAndExpand" />
+                    <!--ValueChanged="OnSliderValueChanged"-->
                 </VerticalStackLayout>
 
-                <!-- Play Button -->
-                <Image Source="timer_button.png" WidthRequest="80" HeightRequest="80">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnPlayButtonClicked" />
-                    </Image.GestureRecognizers>
-                </Image>
+                <!-- Reset and Play/Pause Button -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="90">
+                    <ImageButton Source="reset_button.png" WidthRequest="90" HeightRequest="90" />
+                    <ImageButton Source="play_button.png" WidthRequest="90" HeightRequest="90" IsVisible="True"/>
+                    <ImageButton Source="pause_button.png" WidthRequest="90" HeightRequest="90" IsVisible="False"/>
+                </HorizontalStackLayout>
+                
+                <!-- Create New Task Button -->
+                <VerticalStackLayout Spacing="15">
 
-            </HorizontalStackLayout>
-
-            <!-- Create New Task Button -->
-            <Button Text="+ Create new task"
-                BackgroundColor="White"
-                TextColor="#0066CC"
-                HeightRequest="50"
-                CornerRadius="10"
-                HorizontalOptions="FillAndExpand" />
-        </VerticalStackLayout>
-        
-        <!-- Bottom Navigation Bar -->
-        <Grid VerticalOptions="End" BackgroundColor="White" HeightRequest="50">
-            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="60">
-                <Image Source="home_button_unclicked.png" WidthRequest="30" HeightRequest="30">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnHomeButtonTapped" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Image Source="notif_button.png" WidthRequest="30" HeightRequest="30"/>
-                <Image Source="task_button.png" WidthRequest="30" HeightRequest="30"/>
-                <Image Source="clock_button_clicked.png" WidthRequest="30" HeightRequest="30"/>
-            </HorizontalStackLayout>
+                    <Button Text="Skip Session"
+                        BackgroundColor="White"
+                        TextColor="#4F4F4F"
+                        FontSize="18"
+                        HeightRequest="30"
+                        CornerRadius="10"
+                        HorizontalOptions="FillAndExpand" 
+                        IsVisible="False"/>
+                    <Button Text="+ Create new task"
+                        BackgroundColor="White"
+                        TextColor="#4F4F4F"
+                        FontSize="18"
+                        HeightRequest="30"
+                        CornerRadius="10"
+                        HorizontalOptions="FillAndExpand" />
+                    <Button Text="End Timer"
+                        BackgroundColor="White"
+                        TextColor="#4F4F4F"
+                        FontSize="18"
+                        HeightRequest="30"
+                        CornerRadius="10"
+                        HorizontalOptions="FillAndExpand" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
         </Grid>
+        
+        <!-- Bottom Navigation -->
+        <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" VerticalOptions="End" HeightRequest="80">
+            <Grid>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
+                    <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
+                        <ImageButton Source="home_button_unclicked.png" WidthRequest="50" HeightRequest="50" />
+                    </Border>
+                    <Border StrokeShape="Ellipse" Background="Transparent" StrokeThickness="0" HeightRequest="100" WidthRequest="100">
+
+                    </Border>
+                    <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
+                        <ImageButton Source="task_button.png" WidthRequest="50" HeightRequest="50" />
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+        <Border StrokeShape="Ellipse" BackgroundColor="White" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="120" WidthRequest="120" StrokeThickness="0">
+            <ImageButton Source="timer_button_clicked.png" WidthRequest="70" HeightRequest="70" CornerRadius="30" />
+        </Border>
     </Grid>
 </ContentPage>
