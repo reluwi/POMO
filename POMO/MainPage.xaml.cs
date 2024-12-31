@@ -8,10 +8,10 @@
             InitializeComponent();
         }
 
-        private async void OnClockButtonTapped(object sender, EventArgs e)
+        private async void OnTaskButtonTapped(object sender, EventArgs e)
         {
-            // Navigate to TimerPage
-            await Shell.Current.GoToAsync("TimerPage");
+            // Navigate to TaskPage
+            await Shell.Current.GoToAsync("TaskPage");
         }
     }
 

@@ -28,5 +28,11 @@ namespace POMO
         {
             TaskPopUp.IsVisible = false; // Hide the popup when the action is canceled
         }
+
+        private async void OnHomeButtonTapped(object sender, EventArgs e)
+        {
+            // Navigate to TimerPage
+            await Shell.Current.GoToAsync("MainPage");
+        }
     }
 }
