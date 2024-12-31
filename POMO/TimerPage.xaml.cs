@@ -2,12 +2,13 @@ namespace POMO
 {
 	public partial class TimerPage : ContentPage
 	{
-        private int _pomodoroCount = 1;
+        //private int _pomodoroCount = 1;
         public TimerPage()
 		{
 			InitializeComponent();
 		}
 
+        /*
         private void OnIncreasePomodoroClicked(object sender, EventArgs e)
         {
             // Increment the Pomodoro count
@@ -53,5 +54,6 @@ namespace POMO
             await Shell.Current.GoToAsync(
                 $"{nameof(RunningTimePage)}?InitialTimeValue={timeSet}&PomodoroCount={_pomodoroCount}");
         }
+        */
     }
 }
