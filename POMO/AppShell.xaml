@@ -7,7 +7,7 @@
     Shell.FlyoutBehavior="Flyout"
     Title="POMO">
 
-    <!-- Login Page -->
+    <!-- Starting Page -->
     <ShellContent
         Title="Starting"
         ContentTemplate="{DataTemplate local:StartingPage}"
@@ -30,4 +30,10 @@
         Title="RunningTime"
         ContentTemplate="{DataTemplate local:RunningTimePage}"
         Route="RunningTimePage" />
+
+    <!-- Task Page -->
+    <ShellContent
+        Title="Task"
+        ContentTemplate="{DataTemplate local:TaskPage}"
+        Route="TaskPage" />
 </Shell>

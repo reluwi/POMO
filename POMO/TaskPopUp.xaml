@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="POMO.TaskPopUp">
+    
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20"
+                         BackgroundColor="White" Padding="20" WidthRequest="300" >
+        <!-- Header -->
+        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+            <Image Source="edit_icon.png" WidthRequest="24" HeightRequest="24" />
+            <Label Text="NEW TASK" FontSize="20" FontAttributes="Bold" TextColor="#FF6F61" />
+        </HorizontalStackLayout>
+
+        <!-- Task Title -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Task title" FontSize="16" TextColor="#FF6F61" />
+            <Entry Placeholder="Enter task title" BackgroundColor="#F5F5F5" />
+        </VerticalStackLayout>
+
+        <!-- Task Description -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Description 0/100" FontSize="16" TextColor="#FF6F61" />
+            <Editor Placeholder="Enter task description" BackgroundColor="#F5F5F5" MaxLength="100" />
+        </VerticalStackLayout>
+
+        <!-- Due Date -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Due Date" FontSize="16" TextColor="#FF6F61" />
+            <HorizontalStackLayout Spacing="10">
+                <DatePicker Format="MMM dd, yyyy" TextColor="#FF6F61" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!-- Number of Sessions -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="No. of Sessions" FontSize="16" TextColor="#FF6F61" />
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="-" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" />
+                <Label Text="1" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
+                <Button Text="+" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        
+        <HorizontalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+            <!-- Done Button -->
+            <Button Text="Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" Clicked="OnDoneClicked" HorizontalOptions="Start"/>
+            <Button Text="Cancel" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" Clicked="OnCancelClicked" HorizontalOptions="End"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentView>
