@@ -2,6 +2,8 @@ namespace POMO
 {
     public partial class TaskPage : ContentPage
     {
+        private bool isExistingTasksVisible = true;
+        private bool isCompletedTasksVisible = true;
         public TaskPage()
         {
             InitializeComponent();
@@ -9,6 +11,39 @@ namespace POMO
             // Access the TaskPopUp instance from XAML and subscribe to the events
             TaskPopUp.TaskCreated += OnTaskCreated;
             TaskPopUp.Cancelled += OnTaskCancelled;
+
+        }
+
+        private void OnExistingTasksToggleClicked(object sender, EventArgs e)
+        {
+            isExistingTasksVisible = !isExistingTasksVisible;
+            ExistingTasksContent.IsVisible = isExistingTasksVisible;
+
+            // Change the arrow icon
+            if (isExistingTasksVisible)
+            {
+                ExistingTasksToggle.Source = "arrow_up.png";
+            }
+            else
+            {
+                ExistingTasksToggle.Source = "arrow_down.png";
+            }
+        }
+
+        private void OnCompletedTasksToggleClicked(object sender, EventArgs e)
+        {
+            isCompletedTasksVisible = !isCompletedTasksVisible;
+            CompletedTasksContent.IsVisible = isCompletedTasksVisible;
+
+            // Change the arrow icon
+            if (isCompletedTasksVisible)
+            {
+                CompletedTasksToggle.Source = "arrow_up.png";
+            }
+            else
+            {
+                CompletedTasksToggle.Source = "arrow_down.png";
+            }
         }
 
         private void OnCreateNewTaskClicked(object sender, EventArgs e)
