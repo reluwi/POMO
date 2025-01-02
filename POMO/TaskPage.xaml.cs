@@ -51,6 +51,33 @@ namespace POMO
             TaskPopUp.IsVisible = true; // Show the TaskPopUp when the button is clicked
         }
 
+        private void OnTaskTapped(object sender, EventArgs e)
+        {
+            // Get the tapped Border
+            var border = sender as Border;
+            if (border == null)
+                return;
+
+            // Extract task details (labels inside the Border)
+            var stackLayout = border.Content as VerticalStackLayout;
+            if (stackLayout == null)
+                return;
+
+            var dueDateLabel = stackLayout.Children[0] as Label;
+            var taskTitleLabel = stackLayout.Children[1] as Label;
+            var descriptionLabel = stackLayout.Children[2] as Label;
+            var NumSessionLabel = stackLayout.Children[3] as Label;
+
+            if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && NumSessionLabel != null)
+            {
+                // Pass the task details to the SpecificTaskPopUp
+                SpecificTaskPopUp.DisplayTaskDetails(dueDateLabel.Text, taskTitleLabel.Text, descriptionLabel.Text, NumSessionLabel.Text);
+
+                // Show the pop-up
+                //SpecificTaskPopUp.IsVisible = true;
+            }
+        }
+
         // Event handler when a task is created (done button clicked)
         private void OnTaskCreated(object? sender, EventArgs e)
         {

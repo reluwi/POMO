@@ -57,6 +57,9 @@
                         <BoxView HeightRequest="1" BackgroundColor="White" />
                         <VerticalStackLayout x:Name="ExistingTasksContent" Spacing="10" IsVisible="True">
                             <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout>
                                     <Label Text="DUE 12/27/2024"
                                            FontSize="16"
@@ -64,9 +67,20 @@
                                     <Label Text="Linisin yung Skibidi Toilet"
                                            FontSize="16"
                                            TextColor="Black" />
+                                    <Label Text="Naninilaw na ang bowl" 
+                                           FontSize="16"
+                                           TextColor="Black" 
+                                           IsVisible="False"/>
+                                    <Label Text="Number of Session: 3" 
+                                           FontSize="16"
+                                           TextColor="Black" 
+                                           IsVisible="False"/>
                                 </VerticalStackLayout>
                             </Border>
                             <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout>
                                     <Label Text="DUE 12/28/2024"
                                        FontSize="16"
@@ -74,6 +88,14 @@
                                     <Label Text="Assessment: Brainrot-ology"
                                        FontSize="16"
                                        TextColor="Black" />
+                                    <Label Text="TikTok na malala" 
+                                       FontSize="16"
+                                       TextColor="Black" 
+                                       IsVisible="False"/>
+                                    <Label Text="Number of Session: 2" 
+                                       FontSize="16"
+                                       TextColor="Black" 
+                                       IsVisible="False"/>
                                 </VerticalStackLayout>
                             </Border>
                         </VerticalStackLayout>
@@ -96,6 +118,9 @@
                         <BoxView HeightRequest="1" BackgroundColor="White" />
                         <VerticalStackLayout x:Name="CompletedTasksContent" Spacing="10" IsVisible="True">
                             <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout>
                                     <Label Text="Due: 12/21/2024"
                                        FontSize="16"
@@ -103,6 +128,14 @@
                                     <Label Text="✓ Activity 3 - English or Spanish"
                                        FontSize="16"
                                        TextColor="Black" />
+                                    <Label Text="Gumalaw Bading" 
+                                       FontSize="16"
+                                       TextColor="Black" 
+                                       IsVisible="False"/>
+                                    <Label Text="Number of Session: 5" 
+                                       FontSize="16"
+                                       TextColor="Black" 
+                                       IsVisible="False"/>
                                 </VerticalStackLayout>
                             </Border>
                         </VerticalStackLayout>
@@ -116,6 +149,13 @@
                              AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
                              AbsoluteLayout.LayoutFlags="PositionProportional"
                              BackgroundColor="#000000AA" />
+
+            <!-- Specific Task Popup -->
+            <local:SpecificTaskPopUp x:Name="SpecificTaskPopUp" 
+                                     IsVisible="False"
+                                     AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+                                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                                     BackgroundColor="#000000AA"/>
         </AbsoluteLayout>
 
         <!-- Bottom Navigation -->

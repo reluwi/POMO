@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.SpecificTaskPopUp"
+             BackgroundColor="#000000AA">
+    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
+            Padding="20"
+            HorizontalOptions="Center" VerticalOptions="Center"
+            WidthRequest="350" HeightRequest="450">
+        <VerticalStackLayout Spacing="40">
+            <Grid>
+                <Button Text="X" TextColor="Black" FontSize="Large" BackgroundColor="Transparent" HorizontalOptions="End"
+                        Clicked="OnCloseClicked"/>
+                <!-- Edit Icon -->
+                <ImageButton Source="edit_button.png" WidthRequest="30" HeightRequest="30"
+                        HorizontalOptions="Start" Clicked="OnEditTaskClicked"/>
+            </Grid>
+            
+            <!-- Task Info -->
+            <Label x:Name="DueDateLabel" Text="Due Date" TextColor="#FF6F61" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+            <Label x:Name="TaskTitleLabel" Text="Task Title" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <Label x:Name="DescriptionLabel" Text="Description" FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
+            <Label x:Name="NumSessionLabel" Text="Number of Session : 3" FontSize="16" TextColor="Black" HorizontalOptions="Center"/>
+            <!-- Buttons -->
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                <ImageButton Source="delete_button.png" WidthRequest="30" HeightRequest="30"/>
+                <ImageButton Source="go_timer_button.png" WidthRequest="30" HeightRequest="30"/>
+                <!-- Mark as Done Button -->
+                <Button Text="Marked as Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="20"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Border>
+</ContentView>
+
