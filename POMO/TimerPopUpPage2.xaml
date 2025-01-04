@@ -8,73 +8,162 @@
              VerticalOptions="Start"
              HorizontalOptions="Fill">
 
-
+  <Grid RowDefinitions="350, *">
+    
     <!-- CHOOSE TASK POP UP -->
-
-    <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+    
+    <VerticalStackLayout Spacing="10" HorizontalOptions="Center" 
+                         x:Name="ChoosingTask" IsVisible="True" Grid.RowSpan="3">
 
         <Border BackgroundColor="Transparent"
             StrokeThickness="0"
             HeightRequest="100"
             HorizontalOptions="Center"/>
 
-        <Button Text="X    "
+        <Button Text="X"
                 Clicked="CloseButton_Clicked"
                 FontSize="25" 
                 VerticalOptions="Center"
                 HorizontalOptions="End"
                 BackgroundColor="Transparent"/>
 
-        <Label Text="       Existing Tasks"
+        <Label Text=" Existing Tasks"
                FontSize="18"
                TextColor="White"
                HorizontalOptions="Start" 
                FontAttributes="Bold"/>
 
         <VerticalStackLayout Spacing="10">
-            <Border BackgroundColor="White"
-                    StrokeShape="RoundRectangle 10"
-                    HeightRequest="90"
-                    WidthRequest="350"
-                    HorizontalOptions="Center"
-                    DescendantAdded="Task_Clicked">
-                <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
-                    <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
-                           HeightRequest="30" WidthRequest="30" Grid.Column="0"/>
-                    <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                        <Label Text="DUE 12/27/2004"
-                               TextColor="#F73467"
-                               FontSize="15"/>
-                        <Label Text="Activity 2"
-                               TextColor="Black"
-                               FontSize="18"
-                               FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Grid>
-            </Border>
+            <Grid>
+                <Button BackgroundColor="White"
+                        CornerRadius="10"
+                        HeightRequest="90"
+                        WidthRequest="350"
+                        HorizontalOptions="Center"
+                        Clicked="Task_Clicked"/>
+                <Border BackgroundColor="Transparent"
+                        StrokeShape="RoundRectangle 10"
+                        HeightRequest="90"
+                        WidthRequest="350"
+                        HorizontalOptions="Center">
+                    <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
+                        <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                               HeightRequest="30" WidthRequest="30" Grid.Column="0" />
+                        <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                            <Label Text="DUE 12/27/2004"
+                                   TextColor="#F73467"
+                                   FontSize="15"/>
+                            <Label Text="Activity 2"
+                                   TextColor="Black"
+                                   FontSize="18"
+                                   FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
 
-            <Border BackgroundColor="White"
-                    StrokeShape="RoundRectangle 10"
-                    HeightRequest="90"
-                    WidthRequest="350"
-                    HorizontalOptions="Center">
-                <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
-                    <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
-                   HeightRequest="30" WidthRequest="30" Grid.Column="0"/>
-                    <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                        <Label Text="DUE 12/28/2004"
-                       TextColor="#F73467"
-                       FontSize="15"/>
-                        <Label Text="Assessment 1"
-                       TextColor="Black"
-                       FontSize="18"
-                       FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Grid>
-            </Border>
+            <Grid>
+                <Button BackgroundColor="White"
+                        CornerRadius="10"
+                        HeightRequest="90"
+                        WidthRequest="350"
+                        HorizontalOptions="Center"
+                        Clicked="Task_Clicked"/>
+                <Border BackgroundColor="Transparent"
+                        StrokeShape="RoundRectangle 10"
+                        HeightRequest="90"
+                        WidthRequest="350"
+                        HorizontalOptions="Center">
+                    <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
+                        <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                               HeightRequest="30" WidthRequest="30" Grid.Column="0"/>
+                        <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                            <Label Text="DUE 12/28/2004"
+                                   TextColor="#F73467"
+                                   FontSize="15"/>
+                            <Label Text="Assessment 1"
+                                   TextColor="Black"
+                                   FontSize="18"
+                                   FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
         </VerticalStackLayout>
 
     </VerticalStackLayout>
 
+
+    <!-- CHOOSE TASK POP UP -->
+    
+    <Border StrokeThickness="0"
+            BackgroundColor="White"
+            HorizontalOptions="Center"
+            StrokeShape="RoundRectangle 20"
+            WidthRequest="350"
+            x:Name="ChoosingPomodoro" IsVisible="False"
+            Grid.Row="1">
+
+        <VerticalStackLayout Padding="-2">
+            <HorizontalStackLayout Padding="10">
+                <VerticalStackLayout Padding="20" Spacing="10">
+                    <Label 
+                    Text="Number of Sessions:"
+                    HorizontalTextAlignment="Start"
+                    LineBreakMode="WordWrap" 
+                    TextColor="#4B96FF" 
+                    FontSize="18"
+                    WidthRequest="270"/>
+                    <Border BackgroundColor="#4B96FF"
+                        HorizontalOptions="Center"
+                        HeightRequest="50"
+                        WidthRequest="200"
+                        Padding="-20"
+                        StrokeShape="RoundRectangle 10">
+                        <Grid ColumnDefinitions=".3*, .4*, .3*">
+                            <Button Text=" -"
+                           FontSize="40"
+                           TextColor="White"
+                           HorizontalOptions="End"
+                           BackgroundColor="Transparent"/>
+                            <Label Text="2"
+                           FontSize="30"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Grid.Column="1"/>
+                            <Button Text="+    "
+                           FontSize="30"
+                           TextColor="White"
+                           BackgroundColor="Transparent"
+                           HorizontalOptions="Start"
+                           Grid.Column="2"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Text="Continue" Clicked="CloseButton_Clicked" 
+                BackgroundColor="#4B96FF"
+                TextColor="White"
+                WidthRequest="180"
+                CornerRadius="0"
+                FontSize="17"/>
+                <Button Text="Cancel" Clicked="PomodoroCancel_Clicked" 
+                BackgroundColor="White"
+                TextColor="#4B96FF"
+                BorderWidth="1"
+                BorderColor="#4B96FF"
+                WidthRequest="180"
+                CornerRadius="0"
+                FontSize="17"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+    </Border>
+    </Grid>
 
 </toolkit:Popup>

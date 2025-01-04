@@ -20,20 +20,16 @@ namespace POMO
             this.ShowPopup(new TimerPopUpPage2());
         }
 
-        public void ShowPopup()
-        {
-            this.ShowPopup(new TimerPopUpPage3());
-        }
-
-        private void Pomodoro_Clicked(object sender, EventArgs e)
-        {
-            this.ShowPopup(new TimerPopUpPage3());
-        }
-
         private void SkipSession_Clicked(object sender, EventArgs e)
         {
-            this.ShowPopup(new TimerPopUpPage4());
+            this.ShowPopup(new TimerPopUpPage3());
         }
+
+        private async void GoToHome(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("MainPage");
+        }
+
 
         /*
         private void OnIncreasePomodoroClicked(object sender, EventArgs e)

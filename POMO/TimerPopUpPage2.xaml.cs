@@ -14,12 +14,16 @@ public partial class TimerPopUpPage2 : Popup
         Close();
     }
 
-    private void Task_Clicked(object sender, ElementEventArgs e)
+    private void Task_Clicked(object sender, EventArgs e)
     {
-        Close();
-
-        TimerPage ChooseTask = new TimerPage();
-        ChooseTask.ShowPopup();
+        ChoosingTask.IsVisible = false;
+        ChoosingPomodoro.IsVisible = true;
     }
 
+    private void PomodoroCancel_Clicked(object sender, EventArgs e)
+    {
+        ChoosingPomodoro.IsVisible = false;
+        ChoosingTask.IsVisible = true;
+    }
 }
+

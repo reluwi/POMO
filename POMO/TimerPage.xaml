@@ -65,7 +65,7 @@
                         HeightRequest="30"
                         CornerRadius="10"
                         HorizontalOptions="FillAndExpand" 
-                        IsVisible="False"
+                        IsVisible="True"
                         Clicked="SkipSession_Clicked"/>
                     <Button Text="+ Choose task"
                         BackgroundColor="White"
@@ -102,7 +102,7 @@
             <Grid>
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
                     <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
-                        <ImageButton Source="home_button_unclicked.png" WidthRequest="50" HeightRequest="50" />
+                        <ImageButton Source="home_button_unclicked.png" WidthRequest="50" HeightRequest="50" Clicked="GoToHome"/>
                     </Border>
                     <Border StrokeShape="Ellipse" Background="Transparent" StrokeThickness="0" HeightRequest="100" WidthRequest="100">
 
