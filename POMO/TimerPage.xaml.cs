@@ -30,6 +30,11 @@ namespace POMO
             await Shell.Current.GoToAsync("MainPage");
         }
 
+        private async void GoToTask(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("TaskPage");
+        }
+
 
         /*
         private void OnIncreasePomodoroClicked(object sender, EventArgs e)

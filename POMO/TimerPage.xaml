@@ -108,7 +108,7 @@
 
                     </Border>
                     <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
-                        <ImageButton Source="task_button.png" WidthRequest="50" HeightRequest="50" />
+                        <ImageButton Source="task_button.png" WidthRequest="50" HeightRequest="50" Clicked="GoToTask"/>
                     </Border>
                 </HorizontalStackLayout>
             </Grid>

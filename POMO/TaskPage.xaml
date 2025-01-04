@@ -2,39 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:POMO"
-             x:Class="POMO.TaskPage"
-             BackgroundColor="#003366">
+             x:Class="POMO.TaskPage">
 
     <!-- Background Gradient -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#5B9BF3" Offset="0.0" />
-            <!-- Dark Blue -->
-            <GradientStop Color="#A0C4FF" Offset="1.0" />
-            <!-- Light Blue -->
+            <GradientStop Color="#4B96FF" Offset="0.0" />
+            <GradientStop Color="#A7B5FF" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <!-- Main Layout -->
-    <Grid Padding="20">
-        <!-- Content -->
-        <VerticalStackLayout Spacing="20" VerticalOptions="StartAndExpand">
+    <ScrollView>
+      <Grid Padding="-5">
+        <!-- Main Layout -->
+        <Grid Padding="25">
+            <!-- Main Content -->
+            <VerticalStackLayout x:Name="MainContent" Spacing="20" VerticalOptions="FillAndExpand" 
+                                AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                <!-- App Header -->
+                <HorizontalStackLayout Spacing="5" HorizontalOptions="Start">
+                    <Image Source="bear_timer.png" WidthRequest="120" HeightRequest="100" />
+                    <VerticalStackLayout Spacing="-10">
+                        <Label Text="P O M O" 
+                               FontSize="50" 
+                               FontAttributes="Bold" 
+                               TextColor="White" 
+                               HorizontalOptions="Start" />
+                        <Line X1="0" Y1="10" X2="220" Y2="10" Stroke="White" StrokeThickness="1" />
+                        <Label Text=" "/>
+                        <Label Text="T   A   S   K      "
+                               FontSize="25"
+                               TextColor="White"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
 
-            <!-- App Header -->
-            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                <Image Source="bear_timer.png" WidthRequest="80" HeightRequest="80" />
-                <Label Text="POMO TASK" 
-                       FontSize="36" 
-                       FontAttributes="Bold" 
-                       TextColor="White" 
-                       HorizontalOptions="Center" />
-            </VerticalStackLayout>
-
-            <!-- Task Popup -->
-            <local:TaskPopUp x:Name="TaskPopUp" IsVisible="False" HorizontalOptions="Center"/>
-
-            <!-- Create New Task Button -->
-            <Button Text="+ Create new task"
+                <!-- Create New Task Button -->
+                <Button Text="+ Create new task"
                     FontSize="18"
                     BackgroundColor="Transparent"
                     TextColor="White"
@@ -42,53 +46,163 @@
                     HorizontalOptions="Center"
                     Clicked="OnCreateNewTaskClicked" />
 
-            <!-- Tasks Section -->
-            <VerticalStackLayout Spacing="20" VerticalOptions="FillAndExpand">
+                <!-- Tasks Section -->
+                <VerticalStackLayout Spacing="60" VerticalOptions="FillAndExpand" Padding="10">
+                    <!-- Existing Tasks -->
+                    <VerticalStackLayout Spacing="5">
+                        <Grid ColumnDefinitions="330, 15" HorizontalOptions="Center">
+                            <Label Text="Existing Tasks"
+                                   FontSize="18"
+                                   TextColor="White"
+                                   FontAttributes="Bold" 
+                                   Grid.Column="0"
+                                   VerticalOptions="Center"/>
+                            <ImageButton x:Name="ExistingTasksToggle"
+                                    Source="arrow_down.png"
+                                    HorizontalOptions="End"
+                                    Grid.Column="1"
+                                    Clicked="OnExistingTasksToggleClicked" 
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                        <VerticalStackLayout x:Name="ExistingTasksContent" Spacing="10" IsVisible="True" VerticalOptions="FillAndExpand">
+                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
+                                    <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                                           HeightRequest="20" WidthRequest="20" Grid.Column="0" />
+                                    <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                        <Label Text="DUE 12/27/2024"
+                                               TextColor="#F73467"
+                                               FontSize="15"/>
+                                        <Label Text="Linisin yung Skibidi Toilet"
+                                               TextColor="Black"
+                                               FontSize="18"/>
 
-                <!-- Existing Tasks -->
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Existing Tasks"
-                           FontSize="18"
-                           TextColor="White"
-                           FontAttributes="Bold" />
-                    <BoxView HeightRequest="1" BackgroundColor="White" />
-                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
-                        <Label Text="DUE 12/27/2024\nLinisin yung Skibidi Toilet"
-                               FontSize="16"
-                               TextColor="Black" />
-                    </Border>
-                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
-                        <Label Text="DUE 12/28/2024\nAssessment: Brainrot-ology"
-                               FontSize="16"
-                               TextColor="Black" />
-                    </Border>
-                </VerticalStackLayout>
+                                        <Label Text="Naninilaw na ang bowl" 
+                                               FontSize="16"
+                                               TextColor="Black" 
+                                               IsVisible="False"/>
+                                        <Label Text="Number of Session: 3" 
+                                               FontSize="16"
+                                               TextColor="Black" 
+                                               IsVisible="False"/>
+                                        </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
+                                        <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                                           HeightRequest="20" WidthRequest="20" Grid.Column="0" />
+                                        <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                            <Label Text="DUE 12/28/2024"
+                                               TextColor="#F73467"
+                                               FontSize="15"/>
+                                            <Label Text="Assessment: Brainrot-ology"
+                                               TextColor="Black"
+                                               FontSize="18"/>
 
-                <!-- Completed Tasks -->
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Completed Tasks"
-                           FontSize="18"
-                           TextColor="White"
-                           FontAttributes="Bold" />
-                    <BoxView HeightRequest="1" BackgroundColor="White" />
-                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
-                        <Label Text="Due: 12/21/2024\n✓ Activity 3 - English or Spanish"
-                               FontSize="16"
-                               TextColor="Black" />
-                    </Border>
+                                            <Label Text="TikTok na malala" 
+                                                    FontSize="16"
+                                                    TextColor="Black" 
+                                                    IsVisible="False"/>
+                                            <Label Text="Number of Session: 2" 
+                                                    FontSize="16"
+                                                    TextColor="Black" 
+                                                    IsVisible="False"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Completed Tasks -->
+                    <VerticalStackLayout Spacing="5">
+                        <Grid ColumnDefinitions="330, 15" HorizontalOptions="Center">
+                            <Label Text="Completed Tasks"
+                                   FontSize="18"
+                                   TextColor="White"
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center"/>
+                            <ImageButton x:Name="CompletedTasksToggle"
+                                    Source="arrow_down.png"
+                                    HorizontalOptions="End"
+                                    Grid.Column="1"
+                                    Clicked="OnCompletedTasksToggleClicked" 
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                        <VerticalStackLayout x:Name="CompletedTasksContent" Spacing="10" IsVisible="True">
+                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
+                                        <Image Source="check_icon.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                                            HeightRequest="20" WidthRequest="20" Grid.Column="0" />
+                                        <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                            <Label Text="DUE 12/21/2024"
+                                               TextColor="#30BFBF"
+                                               FontSize="15"/>
+                                            <Label Text="Activity 3 - English or Spanish"
+                                               TextColor="Black"
+                                               FontSize="18"/>
+
+                                            <Label Text="Gumalaw Bading" 
+                                                FontSize="16"
+                                                TextColor="Black" 
+                                                IsVisible="False"/>
+                                            <Label Text="Number of Session: 5" 
+                                                FontSize="16"
+                                                TextColor="Black" 
+                                                IsVisible="False"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
+            <!-- 
+            Task Popup 
+            <local:TaskPopUp x:Name="TaskPopUp" 
+            IsVisible="False"
+            AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            BackgroundColor="#000000AA" />
 
-        <!-- Bottom Navigation -->
-        <Border StrokeShape="RoundRectangle 40" BackgroundColor="White" VerticalOptions="End" HeightRequest="80" Padding="0">
-            <Grid>
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
-                    <ImageButton Source="home_button.png" WidthRequest="40" HeightRequest="40" />
-                    <ImageButton Source="timer_button.png" WidthRequest="60" HeightRequest="60" BackgroundColor="#FF6F61" CornerRadius="30" />
-                    <ImageButton Source="task_button.png" WidthRequest="40" HeightRequest="40" />
-                </HorizontalStackLayout>
-            </Grid>
-        </Border>
-    </Grid>
+            Specific Task Popup
+            <local:SpecificTaskPopUp x:Name="SpecificTaskPopUp" 
+            IsVisible="False"
+            AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            BackgroundColor="#000000AA"/>
+            -->
+        </Grid>
+          
+            <!-- Bottom Navigation -->
+            <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" VerticalOptions="End" HeightRequest="80">
+                <Grid>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
+                        <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
+                            <ImageButton Source="home_button_unclicked.png" WidthRequest="50" HeightRequest="50" Clicked="GoToHome" />
+                        </Border>
+                        <Border StrokeShape="Ellipse" Background="Transparent" StrokeThickness="0" HeightRequest="100" WidthRequest="100">
+
+                        </Border>
+                        <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
+                            <ImageButton Source="task_button_clicked.png" WidthRequest="50" HeightRequest="50" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Border>
+            <Border StrokeShape="Ellipse" BackgroundColor="White" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="120" WidthRequest="120" StrokeThickness="0">
+                <ImageButton Source="timer_button.png" WidthRequest="70" HeightRequest="70" CornerRadius="30" Clicked="GoToTimer"/>
+            </Border>
+        
+       </Grid>
+    </ScrollView>
 </ContentPage>

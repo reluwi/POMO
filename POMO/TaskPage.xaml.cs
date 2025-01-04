@@ -6,27 +6,36 @@ namespace POMO
         {
             InitializeComponent();
 
-            // Access the TaskPopUp instance from XAML and subscribe to the events
-            TaskPopUp.TaskCreated += OnTaskCreated;
-            TaskPopUp.Cancelled += OnTaskCancelled;
         }
 
         private void OnCreateNewTaskClicked(object sender, EventArgs e)
         {
-            TaskPopUp.IsVisible = true; // Show the TaskPopUp when the button is clicked
+
         }
 
-        // Event handler when a task is created (done button clicked)
-        private void OnTaskCreated(object? sender, EventArgs e)
+        private void OnExistingTasksToggleClicked(object sender, EventArgs e)
         {
-            DisplayAlert("Task Created", "A new task has been successfully created.", "OK");
-            TaskPopUp.IsVisible = false; // Hide the popup after task is created
+
         }
 
-        // Event handler when task creation is canceled (cancel button clicked)
-        private void OnTaskCancelled(object? sender, EventArgs e)
+        private void OnCompletedTasksToggleClicked(object sender, EventArgs e)
         {
-            TaskPopUp.IsVisible = false; // Hide the popup when the action is canceled
+
+        }
+
+        private async void GoToHome(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("MainPage");
+        }
+
+        private async void GoToTimer(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("TimerPage");
+        }
+
+        private void OnTaskTapped(object sender, TappedEventArgs e)
+        {
+
         }
     }
 }
