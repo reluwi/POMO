@@ -35,6 +35,42 @@ namespace POMO
             _taskPage = taskPage;
         }
 
+        private void OnIncreaseClicked(object sender, EventArgs e)
+        {
+            // Parse the current session count
+            int currentCount = int.Parse(SessionCountLabel.Text);
+
+            // Increment the session count
+            currentCount++;
+
+            // Update the label
+            SessionCountLabel.Text = currentCount.ToString();
+        }
+
+        private void OnDecreaseClicked(object sender, EventArgs e)
+        {
+            // Parse the current session count
+            int currentCount = int.Parse(SessionCountLabel.Text);
+
+            // Decrement the session count only if it's greater than 1
+            if (currentCount > 1)
+            {
+                currentCount--;
+            }
+
+            // Update the label
+            SessionCountLabel.Text = currentCount.ToString();
+        }
+
+        private void OnDescriptionTextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Get the length of the user's input
+            int currentLength = e.NewTextValue.Length;
+
+            // Update the character count label
+            CharacterCountLabel.Text = $"Description {currentLength}/100";
+        }
+
         private void OnMonthOrYearChanged(object? sender, EventArgs e)
         {
             if (sender is Picker picker)
@@ -42,8 +78,14 @@ namespace POMO
                 // Ensure YearPicker.SelectedItem is not null
                 if (YearPicker.SelectedItem != null)
                 {
-                    int selectedYear = int.Parse(YearPicker.SelectedItem.ToString()!); // The "!" asserts non-nullability
-                    int selectedMonth = MonthPicker.SelectedIndex + 1;
+                    int selectedYear = YearPicker.SelectedItem != null
+                        ? int.Parse(YearPicker.SelectedItem.ToString()!)
+                        : DateTime.Now.Year; // Default to current year
+
+                    int selectedMonth = MonthPicker.SelectedIndex != -1
+                        ? MonthPicker.SelectedIndex + 1
+                        : DateTime.Now.Month; // Default to current month
+
                     int daysInMonth = DateTime.DaysInMonth(selectedYear, selectedMonth);
                     UpdateDayPicker(daysInMonth);
                 }
@@ -64,7 +106,32 @@ namespace POMO
         // Method to hide the pop-up
         public void Hide()
         {
+            TaskTitleEntry.Text = string.Empty;
+            DescriptionEditor.Text = string.Empty;
+            SessionCountLabel.Text = "1";
+
+            // Reset due date pickers
+            MonthPicker.SelectedIndex = -1;         
+            DayPicker.SelectedIndex = -1;           
+            YearPicker.SelectedIndex = -1;           
+
+
             this.IsVisible = false;
+        }
+
+        public void Show()
+        {
+            TaskTitleEntry.Text = string.Empty;
+            DescriptionEditor.Text = string.Empty;
+            SessionCountLabel.Text = "1";
+
+            // Reset due date pickers
+            MonthPicker.SelectedIndex = -1;
+            DayPicker.SelectedIndex = -1;
+            YearPicker.SelectedIndex = -1;
+
+
+            this.IsVisible = true;
         }
 
         // Method to show alert using the parent page
@@ -108,10 +175,12 @@ namespace POMO
 
 
             // Add GestureRecognizer for the Tap event
+            #pragma warning disable CS8602 // Dereference of a possibly null reference.
             taskBorder.GestureRecognizers.Add(new TapGestureRecognizer
             {
                 Command = new Command(() => _taskPage.OnTaskTapped(taskBorder, EventArgs.Empty))
             });
+            #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
 
             // Create a VerticalStackLayout for the task details
@@ -152,7 +221,9 @@ namespace POMO
             taskBorder.Content = taskStack;
 
             // Add the taskBorder to the ExistingTasksContent
+            #pragma warning disable CS8602 // Dereference of a possibly null reference.
             _taskPage.AddNewTask(taskBorder);
+            #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             // Optionally hide the TaskPopUp after adding the task
             this.IsVisible = false;

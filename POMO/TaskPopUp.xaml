@@ -19,8 +19,9 @@
 
         <!-- Task Description -->
         <VerticalStackLayout Spacing="5">
-            <Label Text="Description 0/100" FontSize="16" TextColor="#FF6F61" />
-            <Editor x:Name="DescriptionEditor" Placeholder="Enter task description" BackgroundColor="#F5F5F5" MaxLength="100" />
+            <Label x:Name="CharacterCountLabel" Text="Description 0/100" FontSize="16" TextColor="#FF6F61" />
+            <Editor x:Name="DescriptionEditor" Placeholder="Enter task description" BackgroundColor="#F5F5F5" MaxLength="100"
+                    TextChanged="OnDescriptionTextChanged"/>
         </VerticalStackLayout>
 
         <!-- Due Date -->
@@ -42,17 +43,21 @@
         <VerticalStackLayout Spacing="5">
             <Label Text="No. of Sessions" FontSize="16" TextColor="#FF6F61" />
             <HorizontalStackLayout Spacing="10">
-                <Button Text="-" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White"/>
+                <Button Text="-" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" 
+                        Clicked="OnDecreaseClicked"/>
                 <Label x:Name="SessionCountLabel" Text="1" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
-                <Button Text="+" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White"/>
+                <Button Text="+" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" 
+                        Clicked="OnIncreaseClicked"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
         <!-- Buttons -->
         <HorizontalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
             <!-- Done Button -->
-            <Button Text="Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" Clicked="OnDoneClicked" HorizontalOptions="Start"/>
-            <Button Text="Cancel" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" Clicked="OnCancelClicked" HorizontalOptions="End"/>
+            <Button Text="Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" 
+                    Clicked="OnDoneClicked" HorizontalOptions="Start"/>
+            <Button Text="Cancel" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" 
+                    Clicked="OnCancelClicked" HorizontalOptions="End"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentView>

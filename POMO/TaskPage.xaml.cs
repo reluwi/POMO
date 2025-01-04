@@ -31,7 +31,7 @@ namespace POMO
 
         private void OnExistingTasksToggleClicked(object sender, EventArgs e)
         {
-            /*isExistingTasksVisible = !isExistingTasksVisible;
+            isExistingTasksVisible = !isExistingTasksVisible;
             ExistingTasksContent.IsVisible = isExistingTasksVisible;
 
             // Change the arrow icon
@@ -42,7 +42,7 @@ namespace POMO
             else
             {
                 ExistingTasksToggle.Source = "arrow_down.png";
-            }*/
+            }
         }
 
         private void OnCompletedTasksToggleClicked(object sender, EventArgs e)
@@ -63,7 +63,7 @@ namespace POMO
 
         private void OnCreateNewTaskClicked(object sender, EventArgs e)
         {
-            TaskPopUp.IsVisible = true; // Show the TaskPopUp when the button is clicked
+            TaskPopUp.Show(); // Show the TaskPopUp when the button is clicked
         }
 
         public void OnTaskTapped(object sender, EventArgs e)
