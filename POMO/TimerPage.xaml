@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="POMO.TimerPage"
-             BackgroundColor="#0066CC"
              Title="Timer">
+    
     <!-- Main Layout -->
+    
     <Grid Padding="-5">
         <!-- Background Gradient -->
             <Grid.Background>
@@ -64,21 +65,34 @@
                         HeightRequest="30"
                         CornerRadius="10"
                         HorizontalOptions="FillAndExpand" 
-                        IsVisible="False"/>
-                    <Button Text="+ Create new task"
+                        IsVisible="False"
+                        Clicked="SkipSession_Clicked"/>
+                    <Button Text="+ Choose task"
                         BackgroundColor="White"
                         TextColor="#4F4F4F"
                         FontSize="18"
                         HeightRequest="30"
                         CornerRadius="10"
-                        HorizontalOptions="FillAndExpand" />
+                        HorizontalOptions="FillAndExpand" 
+                        IsVisible="True"
+                        Clicked="ChooseTask_Clicked"/>
+                    <Button Text="Choose Another Task"
+                        BackgroundColor="White"
+                        TextColor="#4F4F4F"
+                        FontSize="18"
+                        HeightRequest="30"
+                        CornerRadius="10"
+                        HorizontalOptions="FillAndExpand" 
+                        IsVisible="False"
+                        Clicked="ChooseTask_Clicked"/>
                     <Button Text="End Timer"
                         BackgroundColor="White"
                         TextColor="#4F4F4F"
                         FontSize="18"
                         HeightRequest="30"
                         CornerRadius="10"
-                        HorizontalOptions="FillAndExpand" />
+                        HorizontalOptions="FillAndExpand" 
+                        Clicked="EndTimer_Clicked" />
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Grid>
@@ -103,4 +117,6 @@
             <ImageButton Source="timer_button_clicked.png" WidthRequest="70" HeightRequest="70" CornerRadius="30" />
         </Border>
     </Grid>
+    
+    
 </ContentPage>

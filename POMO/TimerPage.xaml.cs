@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+
 namespace POMO
 {
 	public partial class TimerPage : ContentPage
@@ -7,6 +9,31 @@ namespace POMO
 		{
 			InitializeComponent();
 		}
+
+        private void EndTimer_Clicked(object sender, EventArgs e)
+        {
+            this.ShowPopup(new TimerPopUpPage1());
+        }
+
+        private void ChooseTask_Clicked(object sender, EventArgs e)
+        {
+            this.ShowPopup(new TimerPopUpPage2());
+        }
+
+        public void ShowPopup()
+        {
+            this.ShowPopup(new TimerPopUpPage3());
+        }
+
+        private void Pomodoro_Clicked(object sender, EventArgs e)
+        {
+            this.ShowPopup(new TimerPopUpPage3());
+        }
+
+        private void SkipSession_Clicked(object sender, EventArgs e)
+        {
+            this.ShowPopup(new TimerPopUpPage4());
+        }
 
         /*
         private void OnIncreasePomodoroClicked(object sender, EventArgs e)

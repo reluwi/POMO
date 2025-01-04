@@ -70,6 +70,12 @@
 	  <Compile Update="StartingPage.xaml.cs">
 	    <DependentUpon>StartingPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="TimerPopUpPage2.xaml.cs">
+	    <DependentUpon>TimerPopUpPage2.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="TimerPopUpPage1.xaml.cs">
+	    <DependentUpon>TimerPopUpPage1.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,6 +95,18 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="TimerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TimerPopUpPage2.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TimerPopUpPage1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TimerPopUpPage3.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TimerPopUpPage4.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
