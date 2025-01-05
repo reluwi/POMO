@@ -144,7 +144,7 @@
                                         <Image Source="check_icon.png" VerticalOptions="Center" HorizontalOptions="Center" 
                                             HeightRequest="20" WidthRequest="20" Grid.Column="0" />
                                         <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                                            <Label Text="Due: 12/21/2024"
+                                            <Label Text="DUE 12/21/2024"
                                                 TextColor="#30BFBF"
                                                 FontSize="15" />
                                             <Label Text="Activity 3 - English or Spanish"

@@ -86,6 +86,12 @@ namespace POMO
             ExistingTasksContent.Children.Add(taskBorder);
         }
 
+        public void AddCompletedTask(Border taskBorder)
+        {
+            // Ensure ExistingTasksContent is directly accessible
+            CompletedTasksContent.Children.Add(taskBorder);
+        }
+
         public new async Task DisplayAlert(string title, string message, string cancel)
         {
             // Use the inherited DisplayAlert from ContentPage by explicitly hiding it here
@@ -180,6 +186,108 @@ namespace POMO
         {
             _ = DisplayAlert("Task Created", "A new task has been successfully created.", "OK");
             TaskPopUp.IsVisible = false; // Hide the popup after task is created
+        }
+
+        public void OnMarkAsDoneClicked(object sender, EventArgs e)
+        {
+            if (selectedTaskBorder == null)
+                return;
+
+            // Clone the selected task
+            Border clonedTaskBorder = CloneBorder(selectedTaskBorder);
+
+            // Add the cloned task to the CompletedTasksContent section
+            CompletedTasksContent.Children.Add(clonedTaskBorder);
+
+            // Remove the selectedTaskBorder from its current layout
+            var parentLayout = selectedTaskBorder.Parent as Microsoft.Maui.Controls.Layout;
+            if (parentLayout != null)
+            {
+                parentLayout.Children.Remove(selectedTaskBorder);
+            }
+
+            // Clear the selected task reference
+            selectedTaskBorder = null;
+        }
+
+        private Border CloneBorder(Border originalBorder)
+        {
+            // Create a new Border
+            Border clonedBorder = new Border
+            {
+                StrokeShape = originalBorder.StrokeShape,
+                BackgroundColor = originalBorder.BackgroundColor,
+                Padding = originalBorder.Padding,
+            };
+
+            // Copy GestureRecognizers
+            foreach (var gestureRecognizer in originalBorder.GestureRecognizers)
+            {
+                clonedBorder.GestureRecognizers.Add(gestureRecognizer); // Add each recognizer
+            }
+
+            // Clone the Content (assuming it's a Grid with a specific structure)
+            if (originalBorder.Content is Grid originalGrid)
+            {
+                // Clone the Grid
+                Grid clonedGrid = new Grid
+                {
+                    ColumnDefinitions = originalGrid.ColumnDefinitions,
+                    ColumnSpacing = originalGrid.ColumnSpacing,
+                    Padding = originalGrid.Padding
+                };
+
+                // Clone the Image
+                if (originalGrid.Children[0] is Image originalImage)
+                {
+                    Image clonedImage = new Image
+                    {
+                        Source = "check_icon.png",
+                        VerticalOptions = originalImage.VerticalOptions,
+                        HorizontalOptions = originalImage.HorizontalOptions,
+                        HeightRequest = originalImage.HeightRequest,
+                        WidthRequest = originalImage.WidthRequest
+                    };
+                    Grid.SetColumn(clonedImage, Grid.GetColumn(originalImage));
+                    clonedGrid.Children.Add(clonedImage);
+                }
+
+                // Clone the VerticalStackLayout
+                if (originalGrid.Children[1] is VerticalStackLayout originalStack)
+                {
+                    VerticalStackLayout clonedStack = new VerticalStackLayout
+                    {
+                        VerticalOptions = originalStack.VerticalOptions
+                    };
+
+                    int labelIndex = 0;
+
+                    foreach (var child in originalStack.Children)
+                    {
+                        if (child is Label originalLabel)
+                        {
+                            // Clone Label
+                            Label clonedLabel = new Label
+                            {
+                                Text = originalLabel.Text,
+                                FontSize = originalLabel.FontSize,
+                                TextColor = labelIndex == 0 ? Color.FromArgb("#30BFBF") : originalLabel.TextColor,
+                                IsVisible = originalLabel.IsVisible
+                            };
+                            clonedStack.Children.Add(clonedLabel);
+                            labelIndex++; // Increment the label index
+                        }
+                    }
+
+                    Grid.SetColumn(clonedStack, Grid.GetColumn(originalStack));
+                    clonedGrid.Children.Add(clonedStack);
+                }
+
+                // Set the cloned Grid as the Content of the cloned Border
+                clonedBorder.Content = clonedGrid;
+            }
+
+            return clonedBorder;
         }
 
         // Event handler when task creation is canceled (cancel button clicked)

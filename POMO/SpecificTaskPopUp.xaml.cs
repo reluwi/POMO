@@ -105,5 +105,31 @@ namespace POMO
             Console.WriteLine("TaskPage not found in the visual tree.");
         }
 
+        private void OnMarkAsDoneButtonClicked(object sender, EventArgs e)
+        {
+            // Traverse the visual tree to find TaskPage
+            Element parent = this;
+
+            while (parent != null)
+            {
+                if (parent is TaskPage taskPage)
+                {
+                    if (taskPage.selectedTaskBorder != null)
+                    {
+                        // Call the MarkAsDone function in TaskPage
+                        taskPage.OnMarkAsDoneClicked(sender, e);
+
+                        // Hide the popup
+                        this.IsVisible = false;
+                        return;
+                    }
+                }
+
+                parent = parent.Parent;
+            }
+
+            Console.WriteLine("TaskPage not found in the visual tree.");
+        }
+
     }
 }
