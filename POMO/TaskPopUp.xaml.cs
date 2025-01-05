@@ -182,26 +182,52 @@ namespace POMO
             });
             #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
+            // Create a Grid for the layout
+            var taskGrid = new Grid
+            {
+                ColumnDefinitions = new ColumnDefinitionCollection
+    {
+                    new ColumnDefinition { Width = new GridLength(0.1, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(0.9, GridUnitType.Star) },
+    },
+                ColumnSpacing = 10,
+                Padding = new Thickness(3),
+            };
+
+            // Add an Image to the Grid (Column 0)
+            var taskImage = new Image
+            {
+                Source = "existing_task_logo.png",
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                HeightRequest = 20,
+                WidthRequest = 20,
+            };
+            taskGrid.Add(taskImage, 0, 0); // Add to Column 0
 
             // Create a VerticalStackLayout for the task details
-            var taskStack = new VerticalStackLayout();
+            // Create a VerticalStackLayout for task details (Column 1)
+            var taskDetailsStack = new VerticalStackLayout
+            {
+                VerticalOptions = LayoutOptions.Center
+            };
 
             // Add the task labels
-            taskStack.Children.Add(new Label
+            taskDetailsStack.Children.Add(new Label
             {
                 Text = $"DUE {dueDate}", // Example date
-                FontSize = 16,
-                TextColor = Colors.Black
+                TextColor = Color.FromArgb("#F73467"),
+                FontSize = 15
             });
 
-            taskStack.Children.Add(new Label
+            taskDetailsStack.Children.Add(new Label
             {
                 Text = TaskTitleEntry.Text ?? "No title", // Example task title
-                FontSize = 16,
-                TextColor = Colors.Black
+                TextColor = Colors.Black,
+                FontSize = 18
             });
 
-            taskStack.Children.Add(new Label
+            taskDetailsStack.Children.Add(new Label
             {
                 Text = DescriptionEditor.Text ?? "No description", // Description, set IsVisible to False initially
                 FontSize = 16,
@@ -209,7 +235,7 @@ namespace POMO
                 IsVisible = false
             });
 
-            taskStack.Children.Add(new Label
+            taskDetailsStack.Children.Add(new Label
             {
                 Text = $"Number of Sessions: {sessionCount}", // Example session info
                 FontSize = 16,
@@ -217,8 +243,11 @@ namespace POMO
                 IsVisible = false
             });
 
+            // Add the VerticalStackLayout to the Grid (Column 1)
+            taskGrid.Add(taskDetailsStack, 1, 0);
+
             // Set the taskStack as the content of the Border
-            taskBorder.Content = taskStack;
+            taskBorder.Content = taskGrid;
 
             // Add the taskBorder to the ExistingTasksContent
             #pragma warning disable CS8602 // Dereference of a possibly null reference.

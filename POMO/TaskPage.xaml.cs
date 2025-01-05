@@ -28,16 +28,24 @@ namespace POMO
             if (selectedTaskBorder == null)
                 return;
 
-            // Extract the stackLayout from the selected task
-            var stackLayout = selectedTaskBorder.Content as VerticalStackLayout;
-            if (stackLayout == null)
+            // Extract the Grid from the selected task
+            var grid = selectedTaskBorder.Content as Grid;
+            if (grid == null)
+                return;
+
+            // Find the VerticalStackLayout within the Grid (Column 1)
+            var taskDetailsStack = grid.Children
+                .OfType<VerticalStackLayout>()
+                .FirstOrDefault();
+
+            if (taskDetailsStack == null)
                 return;
 
             // Find the labels inside the stackLayout
-            var dueDateLabel = stackLayout.Children[0] as Label;
-            var taskTitleLabel = stackLayout.Children[1] as Label;
-            var descriptionLabel = stackLayout.Children[2] as Label;
-            var NumSessionLabel = stackLayout.Children[3] as Label;
+            var dueDateLabel = taskDetailsStack.Children[0] as Label;
+            var taskTitleLabel = taskDetailsStack.Children[1] as Label;
+            var descriptionLabel = taskDetailsStack.Children[2] as Label;
+            var NumSessionLabel = taskDetailsStack.Children[3] as Label;
 
             if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && NumSessionLabel != null)
             {
@@ -133,15 +141,23 @@ namespace POMO
             // Store the reference to the tapped task (Border)
             selectedTaskBorder = border;
 
-            // Extract task details (labels inside the Border)
-            var stackLayout = border.Content as VerticalStackLayout;
-            if (stackLayout == null)
+            // Extract task details (labels inside the Grid within the Border)
+            var grid = border.Content as Grid;
+            if (grid == null)
                 return;
 
-            var dueDateLabel = stackLayout.Children[0] as Label;
-            var taskTitleLabel = stackLayout.Children[1] as Label;
-            var descriptionLabel = stackLayout.Children[2] as Label;
-            var NumSessionLabel = stackLayout.Children[3] as Label;
+            // Get the VerticalStackLayout from Column 1 of the Grid
+            var taskDetailsStack = grid.Children
+                .OfType<VerticalStackLayout>()
+                .FirstOrDefault();
+
+            if (taskDetailsStack == null)
+                return;
+
+            var dueDateLabel = taskDetailsStack.Children[0] as Label;
+            var taskTitleLabel = taskDetailsStack.Children[1] as Label;
+            var descriptionLabel = taskDetailsStack.Children[2] as Label;
+            var NumSessionLabel = taskDetailsStack.Children[3] as Label;
 
             if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && NumSessionLabel != null)
             {
@@ -175,6 +191,11 @@ namespace POMO
         {
             // Navigate to TimerPage
             await Shell.Current.GoToAsync("MainPage");
+        }
+
+        private async void GoToTimer(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("TimerPage");
         }
     }
 }
