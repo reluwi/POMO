@@ -79,5 +79,31 @@ namespace POMO
             Console.WriteLine("TaskPage not found in the visual tree.");
         }
 
+        private void OnDeleteButtonClicked(object sender, EventArgs e)
+        {
+            // Traverse the visual tree to find the TaskPage
+            Element parent = this;
+
+            while (parent != null)
+            {
+                if (parent is TaskPage taskPage)
+                {
+                    // Show the DeleteTaskPopUp
+                    taskPage.DeleteTaskPopUpInstance.IsVisible = true;
+
+                    // Optionally, hide the SpecificTaskPopUp
+                    this.IsVisible = false;
+
+                    return;
+                }
+
+                // Traverse to the next parent
+                parent = parent.Parent;
+            }
+
+            // If TaskPage was not found, log a message (optional)
+            Console.WriteLine("TaskPage not found in the visual tree.");
+        }
+
     }
 }

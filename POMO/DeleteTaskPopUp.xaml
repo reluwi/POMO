@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.DeleteTaskPopUp">
+    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
+            Padding="20"
+            HorizontalOptions="Center" VerticalOptions="Center"
+            WidthRequest="350" HeightRequest="250">
+        <VerticalStackLayout
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="#FFFFFF"
+            Padding="20"
+            Spacing="40">
+            <ImageButton Source="delete_button.png" WidthRequest="30" HeightRequest="30"/>
+            <Label Text="Are you sure you want to delete this task?" 
+               TextColor="#F73467" 
+               HorizontalOptions="Center" />
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Text="Yes" TextColor="White" BackgroundColor="#F73467" HorizontalOptions="Start" Clicked="OnYesButtonClicked"/>
+                <Button Text="No" TextColor="White" BackgroundColor="#E5E5E5" HorizontalOptions="End" Clicked="OnNoButtonClicked"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

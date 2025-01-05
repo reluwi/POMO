@@ -8,6 +8,7 @@ namespace POMO
         private bool isCompletedTasksVisible = true;
 
         public EditTaskPopUp EditTaskPopUpInstance => this.FindByName<EditTaskPopUp>("EditTaskPopUp");
+        public DeleteTaskPopUp DeleteTaskPopUpInstance => this.FindByName<DeleteTaskPopUp>("DeleteTaskPopUp");
 
         public TaskPage()
         {
@@ -129,7 +130,7 @@ namespace POMO
         }
 
         // Store a reference to the currently selected task
-        private Border? selectedTaskBorder;
+        public Border? selectedTaskBorder;
 
         public void OnTaskTapped(object sender, EventArgs e)
         {

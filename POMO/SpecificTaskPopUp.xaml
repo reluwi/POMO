@@ -23,7 +23,7 @@
             <Label x:Name="NumSessionLabel" Text="Number of Session : 3" FontSize="16" TextColor="Black" HorizontalOptions="Center"/>
             <!-- Buttons -->
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <ImageButton Source="delete_button.png" WidthRequest="30" HeightRequest="30"/>
+                <ImageButton Source="delete_button.png" WidthRequest="30" HeightRequest="30" Clicked="OnDeleteButtonClicked"/>
                 <ImageButton Source="go_timer_button.png" WidthRequest="30" HeightRequest="30"/>
                 <!-- Mark as Done Button -->
                 <Button Text="Marked as Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="20"/>
