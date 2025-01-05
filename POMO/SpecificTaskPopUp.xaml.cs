@@ -1,3 +1,5 @@
+using Microsoft.Maui.Graphics;
+
 namespace POMO
 {
 	public partial class SpecificTaskPopUp : ContentView
@@ -7,6 +9,8 @@ namespace POMO
         public required string Description { get; set; }
         public required string NumSession { get; set; }
 
+        public event Action<string, string, DateTime, int>? EditRequested;
+
         public SpecificTaskPopUp()
 		{
 			InitializeComponent();
@@ -14,16 +18,11 @@ namespace POMO
 
         public void DisplayTaskDetails(string dueDate, string taskTitle, string description, string numSession)
         {
-            DueDate = dueDate;
-            TaskTitle = taskTitle;
-            Description = description;
-            NumSession = numSession;
-
             DueDateLabel.Text = dueDate; // Example: XAML element with x:Name="DueDateLabel"
             TaskTitleLabel.Text = taskTitle; // Example: XAML element with x:Name="TaskTitleLabel"
             DescriptionLabel.Text = description;
             NumSessionLabel.Text = numSession;
-            IsVisible = true;
+            //IsVisible = true;
         }
 
         public void Show()
@@ -36,14 +35,48 @@ namespace POMO
             this.IsVisible = false;
         }
 
-        private void OnEditTaskClicked(object sender, EventArgs e)
-        {
-            // Logic for editing the task
-        }
-
         private void OnCloseClicked(object sender, EventArgs e)
         {
             Hide();
+        }
+
+        private void OnEditButtonClicked(object sender, EventArgs e)
+        {
+            // Extract values from the labels
+            string taskTitle = TaskTitleLabel.Text;
+            string taskDescription = DescriptionLabel.Text;
+
+            // Parse the due date (assuming the format is valid)
+            DateTime.TryParse(DueDateLabel.Text, out DateTime dueDate);
+
+            // Parse the number of sessions (assuming it's a valid number)
+            int.TryParse(NumSessionLabel.Text.Replace("Number of Session : ", ""), out int numSessions);
+
+            // Trigger the EditRequested event and pass the extracted values
+            EditRequested?.Invoke(taskTitle, taskDescription, dueDate, numSessions);
+
+            // Traverse the visual tree to find the TaskPage
+            Element parent = this;
+
+            while (parent != null)
+            {
+                if (parent is TaskPage taskPage)
+                {
+                    // Show EditTaskPopUp
+                    taskPage.EditTaskPopUpInstance.IsVisible = true;
+
+                    // Optionally, hide SpecificTaskPopUp
+                    this.IsVisible = false;
+
+                    return;
+                }
+
+                // Traverse to the next parent
+                parent = parent.Parent;
+            }
+
+            // If TaskPage was not found, log a message (optional)
+            Console.WriteLine("TaskPage not found in the visual tree.");
         }
 
     }

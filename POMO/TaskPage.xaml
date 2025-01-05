@@ -157,6 +157,13 @@
             AbsoluteLayout.LayoutFlags="PositionProportional"
             BackgroundColor="#000000AA"/>
 
+            <!-- Edit Task Popup -->
+            <local:EditTaskPopUp x:Name="EditTaskPopUp" 
+            IsVisible="False"
+            AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            BackgroundColor="#000000AA"/>
+
             <!-- Bottom Navigation -->
             <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" VerticalOptions="End" HeightRequest="80">
                 <Grid>

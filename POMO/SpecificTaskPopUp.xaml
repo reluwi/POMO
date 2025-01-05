@@ -7,13 +7,13 @@
             Padding="20"
             HorizontalOptions="Center" VerticalOptions="Center"
             WidthRequest="350" HeightRequest="450">
-        <VerticalStackLayout Spacing="40">
+        <VerticalStackLayout Spacing="40" x:Name="Parent">
             <Grid>
                 <Button Text="X" TextColor="Black" FontSize="Large" BackgroundColor="Transparent" HorizontalOptions="End"
                         Clicked="OnCloseClicked"/>
                 <!-- Edit Icon -->
                 <ImageButton Source="edit_button.png" WidthRequest="30" HeightRequest="30"
-                        HorizontalOptions="Start" Clicked="OnEditTaskClicked"/>
+                        HorizontalOptions="Start" Clicked="OnEditButtonClicked"/>
             </Grid>
             
             <!-- Task Info -->

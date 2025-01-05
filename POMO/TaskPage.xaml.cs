@@ -1,9 +1,13 @@
+using Microsoft.VisualBasic;
+
 namespace POMO
 {
     public partial class TaskPage : ContentPage
     {
         private bool isExistingTasksVisible = true;
         private bool isCompletedTasksVisible = true;
+
+        public EditTaskPopUp EditTaskPopUpInstance => this.FindByName<EditTaskPopUp>("EditTaskPopUp");
 
         public TaskPage()
         {
@@ -14,6 +18,56 @@ namespace POMO
             // Access the TaskPopUp instance from XAML and subscribe to the events
             TaskPopUp.TaskCreated += OnTaskCreated;
             TaskPopUp.Cancelled += OnTaskCancelled;
+            SpecificTaskPopUp.EditRequested += OnEditRequested;
+            // Subscribe to the TaskUpdated event from EditTaskPopUp
+            EditTaskPopUpInstance.TaskUpdated += OnTaskUpdated;
+        }
+
+        private void OnTaskUpdated(string updatedTitle, string updatedDescription, DateTime updatedDueDate, int updatedNumSessions)
+        {
+            if (selectedTaskBorder == null)
+                return;
+
+            // Extract the stackLayout from the selected task
+            var stackLayout = selectedTaskBorder.Content as VerticalStackLayout;
+            if (stackLayout == null)
+                return;
+
+            // Find the labels inside the stackLayout
+            var dueDateLabel = stackLayout.Children[0] as Label;
+            var taskTitleLabel = stackLayout.Children[1] as Label;
+            var descriptionLabel = stackLayout.Children[2] as Label;
+            var NumSessionLabel = stackLayout.Children[3] as Label;
+
+            if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && NumSessionLabel != null)
+            {
+                // Update the labels with the new values
+                dueDateLabel.Text = updatedDueDate.ToString("DUE MM/dd/yyyy");
+                taskTitleLabel.Text = updatedTitle;
+                descriptionLabel.Text = updatedDescription;
+                NumSessionLabel.Text = $"Number of Sessions: {updatedNumSessions}";
+            }
+        }
+
+        // Populate the EditTaskPopUp with the current task details
+        private void OnEditRequested(string title, string description, DateTime dueDate, int numSessions)
+        {
+            // Populate the task details in EditTaskPopUp
+            EditTaskPopUp.TaskTitleEntryControl.Text = title;
+            EditTaskPopUp.DescriptionEditorControl.Text = description;
+
+            //dueDate = DateTime.Now;
+
+            // Set the pickers for the due date
+            EditTaskPopUp.MonthPickerControl.SelectedIndex = 0;
+            EditTaskPopUp.DayPickerControl.SelectedIndex = 0;
+            EditTaskPopUp.YearPickerControl.SelectedIndex = 0;
+
+            // Set the session count
+            EditTaskPopUp.SessionCountLabelControl.Text = numSessions > 0 ? numSessions.ToString() : "1";
+
+            // Show the EditTaskPopUp
+            EditTaskPopUp.IsVisible = true;
         }
 
         // Update the method in TaskPopUp.xaml.cs to reference ExistingTasksContent directly
@@ -66,12 +120,18 @@ namespace POMO
             TaskPopUp.Show(); // Show the TaskPopUp when the button is clicked
         }
 
+        // Store a reference to the currently selected task
+        private Border? selectedTaskBorder;
+
         public void OnTaskTapped(object sender, EventArgs e)
         {
             // Get the tapped Border
             var border = sender as Border;
             if (border == null)
                 return;
+
+            // Store the reference to the tapped task (Border)
+            selectedTaskBorder = border;
 
             // Extract task details (labels inside the Border)
             var stackLayout = border.Content as VerticalStackLayout;
@@ -85,11 +145,16 @@ namespace POMO
 
             if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && NumSessionLabel != null)
             {
-                // Pass the task details to the SpecificTaskPopUp
-                SpecificTaskPopUp.DisplayTaskDetails(dueDateLabel.Text, taskTitleLabel.Text, descriptionLabel.Text, NumSessionLabel.Text);
+                // Pass the task details and the border reference to SpecificTaskPopUp
+                SpecificTaskPopUp.DisplayTaskDetails(
+                    dueDateLabel.Text,
+                    taskTitleLabel.Text,
+                    descriptionLabel.Text,
+                    NumSessionLabel.Text
+                );
 
-                // Show the pop-up
-                //SpecificTaskPopUp.IsVisible = true;
+                // Show the popup
+                SpecificTaskPopUp.IsVisible = true;
             }
         }
 

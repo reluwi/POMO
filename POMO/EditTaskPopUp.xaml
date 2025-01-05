@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.EditTaskPopUp">
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20"
+                     BackgroundColor="White" Padding="20" WidthRequest="300">
+        <!-- Header -->
+        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+            <Image Source="edit_icon.png" WidthRequest="24" HeightRequest="24" />
+            <Label Text="EDITING" FontSize="20" FontAttributes="Bold" TextColor="#FF6F61" />
+        </HorizontalStackLayout>
+
+        <!-- Task Title -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Task title" FontSize="16" TextColor="#FF6F61" />
+            <Entry x:Name="TaskTitleEntry" Placeholder="Enter task title" BackgroundColor="#F5F5F5" />
+        </VerticalStackLayout>
+
+        <!-- Task Description -->
+        <VerticalStackLayout Spacing="5">
+            <Label x:Name="CharacterCountLabel" Text="Description 0/100" FontSize="16" TextColor="#FF6F61" />
+            <Editor x:Name="DescriptionEditor" Placeholder="Enter task description" BackgroundColor="#F5F5F5" MaxLength="100"
+                TextChanged="OnDescriptionTextChanged"/>
+        </VerticalStackLayout>
+
+        <!-- Due Date -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Due Date" FontSize="16" TextColor="#FF6F61" />
+            <HorizontalStackLayout Spacing="10">
+                <!-- Month Picker -->
+                <Picker x:Name="MonthPicker" Title="Month" WidthRequest="100" TextColor="#FF6F61" />
+
+                <!-- Day Picker -->
+                <Picker x:Name="DayPicker" Title="Day" WidthRequest="70" TextColor="#FF6F61" />
+
+                <!-- Year Picker -->
+                <Picker x:Name="YearPicker" Title="Year" WidthRequest="100" TextColor="#FF6F61" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!-- Number of Sessions -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="No. of Sessions" FontSize="16" TextColor="#FF6F61" />
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="-" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" 
+                    Clicked="OnDecreaseClicked"/>
+                <Label x:Name="SessionCountLabel" Text="1" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
+                <Button Text="+" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" 
+                    Clicked="OnIncreaseClicked"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!-- Buttons -->
+        <HorizontalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+            <!-- Done Button -->
+            <Button Text="Done Editing" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" 
+                 HorizontalOptions="Start" Clicked="OnDoneClicked"/>
+            <Button Text="Cancel" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="10" 
+                Clicked="OnCancelClicked" HorizontalOptions="End"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentView>
