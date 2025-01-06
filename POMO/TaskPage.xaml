@@ -12,35 +12,36 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <ScrollView>
+    <Grid>
         <!-- Main Layout -->
         <Grid Padding="-5">
             <Grid Padding="25">
-                <!-- Main Content -->
-                <VerticalStackLayout x:Name="MainContent" Spacing="20" VerticalOptions="FillAndExpand" 
+                <ScrollView>
+                    <!-- Main Content -->
+                    <VerticalStackLayout x:Name="MainContent" Spacing="20" VerticalOptions="FillAndExpand" 
                                 AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-                    <!-- App Header -->
-                    <VerticalStackLayout>
-                        <HorizontalStackLayout>
-                            <Image Source="bear_timer.png" WidthRequest="120" HeightRequest="100" />
-                            <VerticalStackLayout Spacing="0" HorizontalOptions="Center">
-                                <Label Text="P O M O" 
+                        <!-- App Header -->
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Image Source="bear_timer.png" WidthRequest="120" HeightRequest="100" />
+                                <VerticalStackLayout Spacing="0" HorizontalOptions="Center">
+                                    <Label Text="P O M O" 
                                FontSize="50" 
                                FontAttributes="Bold" 
                                TextColor="White" 
                                HorizontalOptions="Start" />
-                                <Line X1="0" Y1="10" X2="220" Y2="10" Stroke="White" StrokeThickness="1" />
-                                <Label Text=" "/>
-                                <Label Text="T   A   S   K      "
+                                    <Line X1="0" Y1="10" X2="220" Y2="10" Stroke="White" StrokeThickness="1" />
+                                    <Label Text=" "/>
+                                    <Label Text="T   A   S   K      "
                                FontSize="25"
                                TextColor="White"
                                HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
 
-                    <!-- Create New Task Button -->
-                    <Button Text="+ Create new task"
+                        <!-- Create New Task Button -->
+                        <Button Text="+ Create new task"
                     FontSize="18"
                     BackgroundColor="Transparent"
                     TextColor="White"
@@ -48,123 +49,124 @@
                     HorizontalOptions="Center"
                     Clicked="OnCreateNewTaskClicked" />
 
-                    <!-- Tasks Section -->
-                    <VerticalStackLayout Spacing="60" VerticalOptions="FillAndExpand" Padding="10">
-                        <!-- Existing Tasks -->
-                        <VerticalStackLayout Spacing="5">
-                            <Grid ColumnDefinitions="330, 15" HorizontalOptions="Center">
-                                <Label Text="Existing Tasks"
+                        <!-- Tasks Section -->
+                        <VerticalStackLayout Spacing="60" VerticalOptions="FillAndExpand" Padding="10">
+                            <!-- Existing Tasks -->
+                            <VerticalStackLayout Spacing="5">
+                                <Grid ColumnDefinitions="330, 15" HorizontalOptions="Center">
+                                    <Label Text="Existing Tasks"
                                     FontSize="18"
                                     TextColor="White"
                                     FontAttributes="Bold" 
                                     Grid.Column="0"
                                     VerticalOptions="Center"/>
-                                <ImageButton x:Name="ExistingTasksToggle"
+                                    <ImageButton x:Name="ExistingTasksToggle"
                                     Source="arrow_up.png"
                                     HorizontalOptions="End"
                                     Grid.Column="1"
                                     Clicked="OnExistingTasksToggleClicked" 
                                     VerticalOptions="Center" />
-                            </Grid>
-                            <VerticalStackLayout x:Name="ExistingTasksContent" Spacing="10" IsVisible="True" VerticalOptions="FillAndExpand">
-                                <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnTaskTapped" />
-                                    </Border.GestureRecognizers>
-                                    <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
-                                        <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                                </Grid>
+                                <VerticalStackLayout x:Name="ExistingTasksContent" Spacing="10" IsVisible="True" VerticalOptions="FillAndExpand">
+                                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                        </Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
+                                            <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
                                            HeightRequest="20" WidthRequest="20" Grid.Column="0" />
-                                        <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                                            <Label Text="DUE 12/27/2024"
+                                            <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                                <Label Text="DUE 12/27/2024"
                                                 TextColor="#F73467"
                                                 FontSize="15"/>
-                                            <Label Text="Linisin yung Skibidi Toilet"
+                                                <Label Text="Linisin yung Skibidi Toilet"
                                                 TextColor="Black"
                                                 FontSize="18"/>
-                                            <Label Text="Naninilaw na ang bowl" 
+                                                <Label Text="Naninilaw na ang bowl" 
                                                 FontSize="16"
                                                 TextColor="Black" 
                                                 IsVisible="False"/>
-                                            <Label Text="Number of Session: 3" 
+                                                <Label Text="Number of Session: 3" 
                                                 FontSize="16"
                                                 TextColor="Black" 
                                                 IsVisible="False"/>
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </Border>
-                                <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnTaskTapped" />
-                                    </Border.GestureRecognizers>
-                                    <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
-                                        <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
+                                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                        </Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
+                                            <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
                                            HeightRequest="20" WidthRequest="20" Grid.Column="0" />
-                                        <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                                            <Label Text="DUE 12/28/2024"
+                                            <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                                <Label Text="DUE 12/28/2024"
                                                 TextColor="#F73467"
                                                 FontSize="15"/>
-                                            <Label Text="Assessment: Brainrot-ology"
+                                                <Label Text="Assessment: Brainrot-ology"
                                                 TextColor="Black"
                                                 FontSize="18"/>
-                                            <Label Text="TikTok na malala" 
+                                                <Label Text="TikTok na malala" 
                                                 FontSize="16"
                                                 TextColor="Black" 
                                                 IsVisible="False"/>
-                                            <Label Text="Number of Session: 2" 
+                                                <Label Text="Number of Session: 2" 
                                                 FontSize="16"
                                                 TextColor="Black" 
                                                 IsVisible="False"/>
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </Border>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
-                        </VerticalStackLayout>
 
-                        <!-- Completed Tasks -->
-                        <VerticalStackLayout Spacing="10">
-                            <Grid ColumnDefinitions="330, 15" HorizontalOptions="Center">
-                                <Label Text="Completed Tasks"
+                            <!-- Completed Tasks -->
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="330, 15" HorizontalOptions="Center">
+                                    <Label Text="Completed Tasks"
                                     FontSize="18"
                                     TextColor="White"
                                     FontAttributes="Bold" 
                                     VerticalOptions="Center" />
-                                <ImageButton x:Name="CompletedTasksToggle"
+                                    <ImageButton x:Name="CompletedTasksToggle"
                                     Source="arrow_down.png"
                                     HorizontalOptions="End"
                                     Grid.Column="1"
                                     Clicked="OnCompletedTasksToggleClicked" 
                                     VerticalOptions="Center" />
-                            </Grid>
-                            <VerticalStackLayout x:Name="CompletedTasksContent" Spacing="10" IsVisible="True">
-                                <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnTaskTapped" />
-                                    </Border.GestureRecognizers>
-                                    <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
-                                        <Image Source="check_icon.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                                </Grid>
+                                <VerticalStackLayout x:Name="CompletedTasksContent" Spacing="10" IsVisible="True">
+                                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                        </Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
+                                            <Image Source="check_icon.png" VerticalOptions="Center" HorizontalOptions="Center" 
                                             HeightRequest="20" WidthRequest="20" Grid.Column="0" />
-                                        <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                                            <Label Text="DUE 12/21/2024"
+                                            <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                                <Label Text="DUE 12/21/2024"
                                                 TextColor="#30BFBF"
                                                 FontSize="15" />
-                                            <Label Text="Activity 3 - English or Spanish"
+                                                <Label Text="Activity 3 - English or Spanish"
                                                 TextColor="Black"
                                                 FontSize="18" />
-                                            <Label Text="Gumalaw Bading" 
+                                                <Label Text="Gumalaw Bading" 
                                                 FontSize="16"
                                                 TextColor="Black" 
                                                 IsVisible="False"/>
-                                            <Label Text="Number of Session: 5" 
+                                                <Label Text="Number of Session: 5" 
                                                 FontSize="16"
                                                 TextColor="Black" 
                                                 IsVisible="False"/>
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </Border>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
-                </VerticalStackLayout>
+                </ScrollView>
             </Grid>
 
             <!-- Task Popup -->
@@ -213,5 +215,5 @@
                 <ImageButton Source="timer_button.png" WidthRequest="70" HeightRequest="70" CornerRadius="30" Clicked="GoToTimer"/>
             </Border>
         </Grid>
-    </ScrollView>
+    </Grid>
 </ContentPage>

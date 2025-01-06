@@ -126,9 +126,9 @@ namespace POMO
             SessionCountLabel.Text = "1";
 
             // Reset due date pickers
-            MonthPicker.SelectedIndex = -1;
-            DayPicker.SelectedIndex = -1;
-            YearPicker.SelectedIndex = -1;
+            MonthPicker.SelectedIndex = 0;
+            DayPicker.SelectedIndex = 0;
+            YearPicker.SelectedIndex = 0;
 
 
             this.IsVisible = true;
@@ -173,7 +173,7 @@ namespace POMO
                 Padding = new Thickness(15),
             };
 
-
+            taskBorder.GestureRecognizers.Clear(); // Clear any old gesture recognizers
             // Add GestureRecognizer for the Tap event
             #pragma warning disable CS8602 // Dereference of a possibly null reference.
             taskBorder.GestureRecognizers.Add(new TapGestureRecognizer
@@ -186,10 +186,10 @@ namespace POMO
             var taskGrid = new Grid
             {
                 ColumnDefinitions = new ColumnDefinitionCollection
-    {
+                {
                     new ColumnDefinition { Width = new GridLength(0.1, GridUnitType.Star) },
                     new ColumnDefinition { Width = new GridLength(0.9, GridUnitType.Star) },
-    },
+                },
                 ColumnSpacing = 10,
                 Padding = new Thickness(3),
             };

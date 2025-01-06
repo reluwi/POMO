@@ -12,7 +12,7 @@
                 <Button Text="X" TextColor="Black" FontSize="Large" BackgroundColor="Transparent" HorizontalOptions="End"
                         Clicked="OnCloseClicked"/>
                 <!-- Edit Icon -->
-                <ImageButton Source="edit_button.png" WidthRequest="30" HeightRequest="30"
+                <ImageButton x:Name="EditButton" Source="edit_button.png" WidthRequest="30" HeightRequest="30"
                         HorizontalOptions="Start" Clicked="OnEditButtonClicked"/>
             </Grid>
             
@@ -23,10 +23,10 @@
             <Label x:Name="NumSessionLabel" Text="Number of Session : 3" FontSize="16" TextColor="Black" HorizontalOptions="Center"/>
             <!-- Buttons -->
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <ImageButton Source="delete_button.png" WidthRequest="30" HeightRequest="30" Clicked="OnDeleteButtonClicked"/>
-                <ImageButton Source="go_timer_button.png" WidthRequest="30" HeightRequest="30"/>
+                <ImageButton x:Name="DeleteButton" Source="delete_button.png" WidthRequest="30" HeightRequest="30" Clicked="OnDeleteButtonClicked"/>
+                <ImageButton x:Name="GoTimerButton" Source="go_timer_button.png" WidthRequest="30" HeightRequest="30"/>
                 <!-- Mark as Done Button -->
-                <Button Text="Marked as Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="20" Clicked="OnMarkAsDoneButtonClicked"/>
+                <Button x:Name="MarkAsDoneButton" Text="Marked as Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="20" Clicked="OnMarkAsDoneButtonClicked"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Border>

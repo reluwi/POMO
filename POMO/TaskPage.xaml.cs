@@ -176,10 +176,24 @@ namespace POMO
                     NumSessionLabel.Text
                 );
 
+                // Check if the tapped task is under CompletedTasksContent
+                if (CompletedTasksContent.Children.Contains(border))
+                {
+                    // Hide the "Mark as Done" button in SpecificTaskPopUp
+                    SpecificTaskPopUp.HideButtons();
+                }
+                else
+                {
+                    // Show the "Mark as Done" button
+                    SpecificTaskPopUp.ShowButtons();
+                }
+
                 // Show the popup
                 SpecificTaskPopUp.IsVisible = true;
             }
         }
+
+
 
         // Event handler when a task is created (done button clicked)
         private void OnTaskCreated(object? sender, EventArgs e)
@@ -193,24 +207,57 @@ namespace POMO
             if (selectedTaskBorder == null)
                 return;
 
-            // Clone the selected task
-            Border clonedTaskBorder = CloneBorder(selectedTaskBorder);
-
-            // Add the cloned task to the CompletedTasksContent section
-            CompletedTasksContent.Children.Add(clonedTaskBorder);
-
-            // Remove the selectedTaskBorder from its current layout
-            var parentLayout = selectedTaskBorder.Parent as Microsoft.Maui.Controls.Layout;
-            if (parentLayout != null)
+            if (selectedTaskBorder.Parent == ExistingTasksContent)
             {
-                parentLayout.Children.Remove(selectedTaskBorder);
+                // Remove from ExistingTasksContent
+                ExistingTasksContent.Children.Remove(selectedTaskBorder);
+
+                // Add to CompletedTasksContent
+                CompletedTasksContent.Children.Add(selectedTaskBorder);
+
+                // Update design for completed task
+                if (selectedTaskBorder.Parent == CompletedTasksContent)
+                {
+                    // Access the taskGrid (the Grid inside the taskBorder)
+                    var taskGrid = selectedTaskBorder.Content as Grid;
+                    if (taskGrid != null)
+                    {
+                        // Access the Image inside the taskGrid (Column 0)
+                        var taskImage = taskGrid.Children.OfType<Image>().FirstOrDefault();
+                        if (taskImage != null)
+                        {
+                            taskImage.Source = "check_icon.png"; // Change to check icon for completed task
+                        }
+
+                        // Access the taskDetailsStack (VerticalStackLayout inside the taskGrid)
+                        var taskDetailsStack = taskGrid.Children.OfType<VerticalStackLayout>().FirstOrDefault();
+                        if (taskDetailsStack != null)
+                        {
+                            // Access the Due Date label inside taskDetailsStack
+                            var dueDateLabel = taskDetailsStack.Children.OfType<Label>().FirstOrDefault(label => label.Text.StartsWith("DUE"));
+                            if (dueDateLabel != null)
+                            {
+                                dueDateLabel.TextColor = Color.FromArgb("#30BFBF"); // Set color for completed task
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Task is already in CompletedTasksContent");
             }
 
             // Clear the selected task reference
             selectedTaskBorder = null;
+
+            // Log the completion status
+            Console.WriteLine("Task moved to CompletedTasksContent");
         }
 
-        private Border CloneBorder(Border originalBorder)
+
+
+        /*private Border CloneBorder(Border originalBorder)
         {
             // Create a new Border
             Border clonedBorder = new Border
@@ -288,7 +335,7 @@ namespace POMO
             }
 
             return clonedBorder;
-        }
+        }*/
 
         // Event handler when task creation is canceled (cancel button clicked)
         private void OnTaskCancelled(object? sender, EventArgs e)

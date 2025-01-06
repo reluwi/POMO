@@ -18,11 +18,11 @@ namespace POMO
 
         public void DisplayTaskDetails(string dueDate, string taskTitle, string description, string numSession)
         {
-            DueDateLabel.Text = dueDate; // Example: XAML element with x:Name="DueDateLabel"
-            TaskTitleLabel.Text = taskTitle; // Example: XAML element with x:Name="TaskTitleLabel"
+            DueDateLabel.Text = dueDate; 
+            TaskTitleLabel.Text = taskTitle; 
             DescriptionLabel.Text = description;
             NumSessionLabel.Text = numSession;
-            //IsVisible = true;
+            IsVisible = true;
         }
 
         public void Show()
@@ -131,5 +131,20 @@ namespace POMO
             Console.WriteLine("TaskPage not found in the visual tree.");
         }
 
+        public void HideButtons()
+        {
+            MarkAsDoneButton.IsVisible = false;
+            GoTimerButton.IsVisible = false;
+            EditButton.IsVisible = false;
+            DueDateLabel.TextColor = Color.FromArgb("#30BFBF");
+        }
+
+        public void ShowButtons()
+        {
+            MarkAsDoneButton.IsVisible = true;
+            GoTimerButton.IsVisible = true;
+            EditButton.IsVisible = true;
+            DueDateLabel.TextColor = Color.FromArgb("#FF6F61");
+        }
     }
 }
