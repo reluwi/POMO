@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:POMO"
              x:Class="POMO.TimerPage"
              BackgroundColor="#0066CC"
              Title="Timer">
@@ -52,7 +53,8 @@
                         FontSize="18"
                         HeightRequest="30"
                         CornerRadius="10"
-                        HorizontalOptions="FillAndExpand" />
+                        HorizontalOptions="FillAndExpand" 
+                        Clicked="ChooseTask_Clicked"/>
                     <Button Text="End Timer"
                         BackgroundColor="White"
                         TextColor="#4F4F4F"
@@ -60,7 +62,7 @@
                         HeightRequest="30"
                         CornerRadius="10"
                         HorizontalOptions="FillAndExpand" 
-                        Clicked="EndTimer_Clicked"/>
+                        Clicked="EndTimerButton_Clicked"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Grid>

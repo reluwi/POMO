@@ -42,12 +42,12 @@
 
                         <!-- Create New Task Button -->
                         <Button Text="+ Create new task"
-                    FontSize="18"
-                    BackgroundColor="Transparent"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Center"
-                    Clicked="OnCreateNewTaskClicked" />
+                        FontSize="18"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Clicked="OnCreateNewTaskClicked" />
 
                         <!-- Tasks Section -->
                         <VerticalStackLayout Spacing="60" VerticalOptions="FillAndExpand" Padding="10">

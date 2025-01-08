@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:POMO"
+             x:Class="POMO.ChooseTaskPopUp"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="Transparent"
+             VerticalOptions="Start"
+             HorizontalOptions="Fill">
+
+
+    <!-- CHOOSE TASK POP UP -->
+
+    <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+
+        <Border BackgroundColor="Transparent"
+            StrokeThickness="0"
+            HeightRequest="100"
+            HorizontalOptions="Center"/>
+
+        <Button Text="X    "
+                Clicked="CloseButton_Clicked"
+                FontSize="25" 
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                BackgroundColor="Transparent"/>
+
+        <Label Text="       Existing Tasks"
+               FontSize="18"
+               TextColor="White"
+               HorizontalOptions="Start" 
+               FontAttributes="Bold"/>
+
+        <VerticalStackLayout Spacing="10">
+            <Border BackgroundColor="White"
+                    StrokeShape="RoundRectangle 10"
+                    HeightRequest="90"
+                    WidthRequest="350"
+                    HorizontalOptions="Center"
+                    DescendantAdded="Task_Clicked">
+                <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
+                    <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                           HeightRequest="30" WidthRequest="30" Grid.Column="0"/>
+                    <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                        <Label Text="DUE 12/27/2004"
+                               TextColor="#F73467"
+                               FontSize="15"/>
+                        <Label Text="Activity 2"
+                               TextColor="Black"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Border BackgroundColor="White"
+                    StrokeShape="RoundRectangle 10"
+                    HeightRequest="90"
+                    WidthRequest="350"
+                    HorizontalOptions="Center">
+                <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
+                    <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
+                   HeightRequest="30" WidthRequest="30" Grid.Column="0"/>
+                    <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                        <Label Text="DUE 12/28/2004"
+                       TextColor="#F73467"
+                       FontSize="15"/>
+                        <Label Text="Assessment 1"
+                       TextColor="Black"
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+
+
+</toolkit:Popup>

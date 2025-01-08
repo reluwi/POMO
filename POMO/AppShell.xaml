@@ -25,12 +25,6 @@
         ContentTemplate="{DataTemplate local:TimerPage}"
         Route="TimerPage" />
 
-    <!-- Running Time Page -->
-    <ShellContent
-        Title="RunningTime"
-        ContentTemplate="{DataTemplate local:RunningTimePage}"
-        Route="RunningTimePage" />
-
     <!-- Task Page -->
     <ShellContent
         Title="Task"

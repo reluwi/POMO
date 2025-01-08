@@ -19,6 +19,41 @@ namespace POMO
             timer.Elapsed += OnTimerElapsed!;
         }
 
+        private async void ChooseTask_Clicked(object sender, EventArgs e)
+        {
+            // Show the Choose Task popup
+            var result = await this.ShowPopupAsync(new ChooseTaskPopUp());
+
+            // Optional: Handle any result returned by the popup
+            if (result is string task)
+            {
+                // Example: Display the selected task or take an action
+                await DisplayAlert("Selected Task", $"You selected: {task}", "OK");
+            }
+        }
+
+        private async void EndTimerButton_Clicked(object sender, EventArgs e)
+        {
+            // Show the popup
+            var result = await this.ShowPopupAsync(new EndTimerPopUp());
+
+            // Check if the result is "Continue"
+            if (result is string action && action == "Continue")
+            {
+                // Reset the timer to 25:00 and pause
+                timeRemaining = TimeSpan.FromMinutes(25);
+                isTimerRunning = false;
+                timer.Stop();
+
+                // Update UI
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    TimerLabel.Text = "25:00";
+                    PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                });
+            }
+        }
+
         private void OnPlayPauseButtonClicked(object? sender, EventArgs e)
         {
             if (sender is not ImageButton playPauseButton)
@@ -63,11 +98,6 @@ namespace POMO
                     // Optional: Add logic to notify the user (e.g., vibration, sound)
                 }
             });
-        }
-
-        private void EndTimer_Clicked(object sender, EventArgs e)
-        {
-            this.ShowPopup(new EndTimerPopUp());
         }
 
         private async void OnHomeButtonTapped(object sender, EventArgs e)
