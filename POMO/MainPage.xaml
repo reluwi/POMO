@@ -84,7 +84,7 @@
             </Grid>
         </Border>
         <Border StrokeShape="Ellipse" BackgroundColor="White" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="120" WidthRequest="120" StrokeThickness="0">
-            <ImageButton Source="timer_button.png" WidthRequest="70" HeightRequest="70" CornerRadius="30" />
+            <ImageButton Source="timer_button.png" WidthRequest="70" HeightRequest="70" CornerRadius="30" Clicked="GoToTimer"/>
         </Border>
     </Grid>
 </ContentPage>

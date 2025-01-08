@@ -13,6 +13,11 @@
             // Navigate to TaskPage
             await Shell.Current.GoToAsync("TaskPage");
         }
+
+        private async void GoToTimer(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("TimerPage");
+        }
     }
 
 }

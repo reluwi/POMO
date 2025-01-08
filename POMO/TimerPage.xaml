@@ -28,26 +28,15 @@
                        FontAttributes="Bold" 
                        TextColor="White" 
                        HorizontalOptions="Center" />
-
-                    <!-- Slider for Time Adjustment -->
-                    <Slider x:Name="TimeSlider"
-                        Minimum="1"
-                        Maximum="40"
-                        Value="25"
-                        ThumbColor="White"
-                        MinimumTrackColor="White"
-                        MaximumTrackColor="#CCCCCC"
-                        HorizontalOptions="FillAndExpand" />
-                    <!--ValueChanged="OnSliderValueChanged"-->
                 </VerticalStackLayout>
 
                 <!-- Reset and Play/Pause Button -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="90">
-                    <ImageButton Source="reset_button.png" WidthRequest="90" HeightRequest="90" />
-                    <ImageButton Source="play_button.png" WidthRequest="90" HeightRequest="90" />
+                    <ImageButton Source="reset_button.png" WidthRequest="90" HeightRequest="90" IsVisible="False"/>
+                    <ImageButton x:Name="PlayPauseButton" Source="play_button.png" WidthRequest="90" HeightRequest="90" Clicked="OnPlayPauseButtonClicked"/>
                 </HorizontalStackLayout>
 
-                <!-- Create New Task Button -->
+                <!-- Choose Task Button -->
                 <VerticalStackLayout Spacing="15">
                     <Button Text="Skip Session"
                         BackgroundColor="White"
@@ -57,7 +46,7 @@
                         CornerRadius="10"
                         HorizontalOptions="FillAndExpand" 
                         IsVisible="False"/>
-                    <Button Text="+ Create new task"
+                    <Button Text="+ Choose a Task"
                         BackgroundColor="White"
                         TextColor="#4F4F4F"
                         FontSize="18"
@@ -70,7 +59,8 @@
                         FontSize="18"
                         HeightRequest="30"
                         CornerRadius="10"
-                        HorizontalOptions="FillAndExpand" />
+                        HorizontalOptions="FillAndExpand" 
+                        Clicked="EndTimer_Clicked"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Grid>
@@ -80,13 +70,13 @@
             <Grid>
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
                     <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
-                        <ImageButton Source="home_button_unclicked.png" WidthRequest="50" HeightRequest="50" />
+                        <ImageButton Source="home_button_unclicked.png" WidthRequest="50" HeightRequest="50" Clicked="OnHomeButtonTapped"/>
                     </Border>
                     <Border StrokeShape="Ellipse" Background="Transparent" StrokeThickness="0" HeightRequest="100" WidthRequest="100">
 
                     </Border>
                     <Border StrokeShape="Rectangle" Background="Transparent" StrokeThickness="0">
-                        <ImageButton Source="task_button.png" WidthRequest="50" HeightRequest="50" />
+                        <ImageButton Source="task_button.png" WidthRequest="50" HeightRequest="50" Clicked="OnTaskButtonTapped"/>
                     </Border>
                 </HorizontalStackLayout>
             </Grid>
