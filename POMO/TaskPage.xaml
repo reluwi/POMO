@@ -190,7 +190,7 @@
             AbsoluteLayout.LayoutFlags="PositionProportional"
             BackgroundColor="#000000AA"/>
 
-            <!-- Edit Task Popup -->
+            <!-- Delete Task Popup -->
             <local:DeleteTaskPopUp x:Name="DeleteTaskPopUp" 
             IsVisible="False"
             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"

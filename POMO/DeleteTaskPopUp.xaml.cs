@@ -2,12 +2,12 @@ using Microsoft.Maui.Controls.Compatibility;
 
 namespace POMO
 {
-	public partial class DeleteTaskPopUp : ContentView
-	{
-		public DeleteTaskPopUp()
-		{
-			InitializeComponent();
-		}
+    public partial class DeleteTaskPopUp : ContentView
+    {
+        public DeleteTaskPopUp()
+        {
+            InitializeComponent();
+        }
 
         private void OnNoButtonClicked(object sender, EventArgs e)
         {
@@ -15,37 +15,42 @@ namespace POMO
             this.IsVisible = false;
         }
 
-        private void OnYesButtonClicked(object sender, EventArgs e)
+        private async void OnYesButtonClicked(object sender, EventArgs e)
         {
-            // Traverse the visual tree to find TaskPage
-            Element parent = this;
-
-            while (parent != null)
+            try
             {
-                if (parent is TaskPage taskPage)
+                // Traverse the visual tree to find TaskPage
+                Element parent = this;
+
+                while (parent != null)
                 {
-                    // Delete the selected task
-                    if (taskPage.selectedTaskBorder != null)
+                    if (parent is TaskPage taskPage)
                     {
-                        var parentLayout = taskPage.selectedTaskBorder.Parent as Microsoft.Maui.Controls.Layout;
-                        if (parentLayout != null)
-                        {
-                            parentLayout.Children.Remove(taskPage.selectedTaskBorder);
-                        }
+                        // Call the DeleteTaskAsync method in TaskPage
+                        await taskPage.DeleteTaskAsync();
+
+                        // Hide the DeleteTaskPopUp
+                        this.IsVisible = false;
+
+                        return;
                     }
 
-                    // Hide the DeleteTaskPopUp
-                    this.IsVisible = false;
-
-                    return;
+                    // Traverse to the next parent
+                    parent = parent.Parent;
                 }
 
-                // Traverse to the next parent
-                parent = parent.Parent;
+                // If TaskPage was not found, log a message (optional)
+                Console.WriteLine("TaskPage not found in the visual tree.");
             }
-
-            // If TaskPage was not found, log a message (optional)
-            Console.WriteLine("TaskPage not found in the visual tree.");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in OnYesButtonClicked: {ex.Message}");
+                var mainPage = Application.Current?.Windows[0]?.Page;
+                if (mainPage != null)
+                {
+                    await mainPage.DisplayAlert("Error", "An error occurred while deleting the task.", "OK");
+                }
+            }
         }
     }
 }

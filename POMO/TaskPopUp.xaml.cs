@@ -38,19 +38,19 @@ namespace POMO
         private void OnIncreaseClicked(object sender, EventArgs e)
         {
             // Parse the current session count
-            int currentCount = int.Parse(SessionCountLabel.Text);
+            int currentCount = int.Parse(SessionCountLabelControl.Text);
 
             // Increment the session count
             currentCount++;
 
             // Update the label
-            SessionCountLabel.Text = currentCount.ToString();
+            SessionCountLabelControl.Text = currentCount.ToString();
         }
 
         private void OnDecreaseClicked(object sender, EventArgs e)
         {
             // Parse the current session count
-            int currentCount = int.Parse(SessionCountLabel.Text);
+            int currentCount = int.Parse(SessionCountLabelControl.Text);
 
             // Decrement the session count only if it's greater than 1
             if (currentCount > 1)
@@ -59,7 +59,7 @@ namespace POMO
             }
 
             // Update the label
-            SessionCountLabel.Text = currentCount.ToString();
+            SessionCountLabelControl.Text = currentCount.ToString();
         }
 
         private void OnDescriptionTextChanged(object sender, TextChangedEventArgs e)
@@ -106,9 +106,9 @@ namespace POMO
         // Method to hide the pop-up
         public void Hide()
         {
-            TaskTitleEntry.Text = string.Empty;
-            DescriptionEditor.Text = string.Empty;
-            SessionCountLabel.Text = "1";
+            TaskTitleEntryControl.Text = string.Empty;
+            DescriptionEditorControl.Text = string.Empty;
+            SessionCountLabelControl.Text = "1";
 
             // Reset due date pickers
             MonthPicker.SelectedIndex = -1;         
@@ -121,9 +121,9 @@ namespace POMO
 
         public void Show()
         {
-            TaskTitleEntry.Text = string.Empty;
-            DescriptionEditor.Text = string.Empty;
-            SessionCountLabel.Text = "1";
+            TaskTitleEntryControl.Text = string.Empty;
+            DescriptionEditorControl.Text = string.Empty;
+            SessionCountLabelControl.Text = "1";
 
             // Reset due date pickers
             MonthPicker.SelectedIndex = 0;
@@ -141,118 +141,43 @@ namespace POMO
         }
 
         // Done button click handler
-        private void OnDoneClicked(object sender, EventArgs e)
+        private async void OnDoneClicked(object sender, EventArgs e)
         {
-
             // Get the values from the user inputs
-            string taskTitle = TaskTitleEntry.Text?.Trim() ?? string.Empty;
-            string taskDescription = DescriptionEditor.Text?.Trim() ?? string.Empty;
+            string taskTitle = TaskTitleEntryControl.Text?.Trim() ?? string.Empty;
+            string taskDescription = DescriptionEditorControl.Text?.Trim() ?? string.Empty;
             string selectedMonth = MonthPicker.SelectedItem?.ToString() ?? string.Empty;
             string selectedDay = DayPicker.SelectedItem?.ToString() ?? string.Empty;
             string selectedYear = YearPicker.SelectedItem?.ToString() ?? string.Empty;
 
-            // Format the due date as "DUE MM/DD/YYYY"
-            string dueDate = $"{selectedMonth}/{selectedDay}/{selectedYear}";
-
-            // Get the session count
-            int sessionCount = int.TryParse(SessionCountLabel.Text, out var result) ? result : 1;
-
             // Ensure all necessary fields are filled
-            if (string.IsNullOrEmpty(taskTitle) || string.IsNullOrEmpty(taskDescription) || string.IsNullOrEmpty(dueDate))
+            if (string.IsNullOrEmpty(taskTitle) || string.IsNullOrEmpty(taskDescription) || string.IsNullOrEmpty(selectedMonth) || string.IsNullOrEmpty(selectedDay) || string.IsNullOrEmpty(selectedYear))
             {
                 // Handle error: Show a message that fields are missing
                 ShowAlert("Error", "Please fill out all the fields before proceeding.");
                 return;
             }
 
-            // Create a new Border for the task
-            var taskBorder = new Border
+            // Construct the due date from the selected values
+            DateTime dueDate = new DateTime(int.Parse(selectedYear), int.Parse(selectedMonth), int.Parse(selectedDay));
+
+            // Get the session count
+            int sessionCount = int.TryParse(SessionCountLabelControl.Text, out var result) ? result : 1;
+
+            var newTask = new TaskModel
             {
-                StrokeShape = new RoundRectangle { CornerRadius = 10 },
-                BackgroundColor = Colors.White,
-                Padding = new Thickness(15),
+                Title = taskTitle,
+                Description = taskDescription,
+                DueDate = dueDate,
+                NumSessions = sessionCount,
+                IsCompleted = false
             };
 
-            taskBorder.GestureRecognizers.Clear(); // Clear any old gesture recognizers
-            // Add GestureRecognizer for the Tap event
-            #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            taskBorder.GestureRecognizers.Add(new TapGestureRecognizer
-            {
-                Command = new Command(() => _taskPage.OnTaskTapped(taskBorder, EventArgs.Empty))
-            });
-            #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            // Save the task to the database
+            await App.Database.SaveTaskAsync(newTask);
 
-            // Create a Grid for the layout
-            var taskGrid = new Grid
-            {
-                ColumnDefinitions = new ColumnDefinitionCollection
-                {
-                    new ColumnDefinition { Width = new GridLength(0.1, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(0.9, GridUnitType.Star) },
-                },
-                ColumnSpacing = 10,
-                Padding = new Thickness(3),
-            };
-
-            // Add an Image to the Grid (Column 0)
-            var taskImage = new Image
-            {
-                Source = "existing_task_logo.png",
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center,
-                HeightRequest = 20,
-                WidthRequest = 20,
-            };
-            taskGrid.Add(taskImage, 0, 0); // Add to Column 0
-
-            // Create a VerticalStackLayout for the task details
-            // Create a VerticalStackLayout for task details (Column 1)
-            var taskDetailsStack = new VerticalStackLayout
-            {
-                VerticalOptions = LayoutOptions.Center
-            };
-
-            // Add the task labels
-            taskDetailsStack.Children.Add(new Label
-            {
-                Text = $"DUE {dueDate}", // Example date
-                TextColor = Color.FromArgb("#F73467"),
-                FontSize = 15
-            });
-
-            taskDetailsStack.Children.Add(new Label
-            {
-                Text = TaskTitleEntry.Text ?? "No title", // Example task title
-                TextColor = Colors.Black,
-                FontSize = 18
-            });
-
-            taskDetailsStack.Children.Add(new Label
-            {
-                Text = DescriptionEditor.Text ?? "No description", // Description, set IsVisible to False initially
-                FontSize = 16,
-                TextColor = Colors.Black,
-                IsVisible = false
-            });
-
-            taskDetailsStack.Children.Add(new Label
-            {
-                Text = $"Number of Sessions: {sessionCount}", // Example session info
-                FontSize = 16,
-                TextColor = Colors.Black,
-                IsVisible = false
-            });
-
-            // Add the VerticalStackLayout to the Grid (Column 1)
-            taskGrid.Add(taskDetailsStack, 1, 0);
-
-            // Set the taskStack as the content of the Border
-            taskBorder.Content = taskGrid;
-
-            // Add the taskBorder to the ExistingTasksContent
-            #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            _taskPage.AddNewTask(taskBorder);
-            #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            // Add the task to the UI
+            _taskPage?.AddTaskToUI(newTask);
 
             // Optionally hide the TaskPopUp after adding the task
             this.IsVisible = false;

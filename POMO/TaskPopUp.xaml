@@ -14,13 +14,13 @@
         <!-- Task Title -->
         <VerticalStackLayout Spacing="5">
             <Label Text="Task title" FontSize="16" TextColor="#FF6F61" />
-            <Entry x:Name="TaskTitleEntry" Placeholder="Enter task title" BackgroundColor="#F5F5F5" />
+            <Entry x:Name="TaskTitleEntryControl" Placeholder="Enter task title" BackgroundColor="#F5F5F5" />
         </VerticalStackLayout>
 
         <!-- Task Description -->
         <VerticalStackLayout Spacing="5">
             <Label x:Name="CharacterCountLabel" Text="Description 0/100" FontSize="16" TextColor="#FF6F61" />
-            <Editor x:Name="DescriptionEditor" Placeholder="Enter task description" BackgroundColor="#F5F5F5" MaxLength="100"
+            <Editor x:Name="DescriptionEditorControl" Placeholder="Enter task description" BackgroundColor="#F5F5F5" MaxLength="100"
                     TextChanged="OnDescriptionTextChanged"/>
         </VerticalStackLayout>
 
@@ -45,7 +45,7 @@
             <HorizontalStackLayout Spacing="10">
                 <Button Text="-" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" 
                         Clicked="OnDecreaseClicked"/>
-                <Label x:Name="SessionCountLabel" Text="1" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
+                <Label x:Name="SessionCountLabelControl" Text="1" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
                 <Button Text="+" FontSize="18" WidthRequest="40" BackgroundColor="#FF6F61" TextColor="White" 
                         Clicked="OnIncreaseClicked"/>
             </HorizontalStackLayout>

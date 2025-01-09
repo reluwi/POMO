@@ -103,7 +103,7 @@ namespace POMO
 
         public event Action<string, string, DateTime, int>? TaskUpdated;
 
-        private void OnDoneClicked(object sender, EventArgs e)
+        private async void OnDoneClicked(object sender, EventArgs e)
         {
             // Get updated values from the UI controls
             string updatedTitle = TaskTitleEntryControl.Text;
@@ -143,6 +143,19 @@ namespace POMO
 
             // Trigger the event to pass the updated values to TaskPage
             TaskUpdated?.Invoke(updatedTitle, updatedDescription, updatedDueDate, updatedNumSessions);
+
+            // Save the updated task to the database
+            if (this.Parent is TaskPage taskPage && taskPage.selectedTaskBorder != null)
+            {
+                var task = (TaskModel)taskPage.selectedTaskBorder.BindingContext;
+                task.Title = updatedTitle;
+                task.Description = updatedDescription;
+                task.DueDate = updatedDueDate;
+                task.NumSessions = updatedNumSessions;
+
+                await App.Database.SaveTaskAsync(task);
+                taskPage.UpdateTaskUI(task);
+            }
 
             // Hide the EditTaskPopUp after updating
             this.IsVisible = false;

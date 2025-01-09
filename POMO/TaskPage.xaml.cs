@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace POMO
 {
@@ -9,7 +9,7 @@ namespace POMO
 
         public EditTaskPopUp EditTaskPopUpInstance => this.FindByName<EditTaskPopUp>("EditTaskPopUp");
         public DeleteTaskPopUp DeleteTaskPopUpInstance => this.FindByName<DeleteTaskPopUp>("DeleteTaskPopUp");
-
+        
         public TaskPage()
         {
             InitializeComponent();
@@ -17,24 +17,143 @@ namespace POMO
             TaskPopUp.Initialize(this);
 
             // Access the TaskPopUp instance from XAML and subscribe to the events
-            TaskPopUp.TaskCreated += OnTaskCreated;
             TaskPopUp.Cancelled += OnTaskCancelled;
             SpecificTaskPopUp.EditRequested += OnEditRequested;
             // Subscribe to the TaskUpdated event from EditTaskPopUp
             EditTaskPopUpInstance.TaskUpdated += OnTaskUpdated;
         }
 
-        private void OnTaskUpdated(string updatedTitle, string updatedDescription, DateTime updatedDueDate, int updatedNumSessions)
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            var tasks = await App.Database.GetTasksAsync();
+            foreach (var task in tasks)
+            {
+                AddTaskToUI(task);
+            }
+        }
+
+        public void AddTaskToUI(TaskModel task)
+        {
+            // Create a new Border for the task
+            var taskBorder = new Border
+            {
+                StrokeShape = new RoundRectangle { CornerRadius = 10 },
+                BackgroundColor = Colors.White,
+                Padding = new Thickness(15),
+                BindingContext = task // Set the BindingContext to the TaskModel
+            };
+
+            taskBorder.GestureRecognizers.Clear(); // Clear any old gesture recognizers
+                                                   // Add GestureRecognizer for the Tap event
+            taskBorder.GestureRecognizers.Add(new TapGestureRecognizer
+            {
+                Command = new Command(() => OnTaskTapped(taskBorder, EventArgs.Empty))
+            });
+
+            // Create a Grid for the layout
+            var taskGrid = new Grid
+            {
+                ColumnDefinitions = new ColumnDefinitionCollection
+                {
+                    new ColumnDefinition { Width = new GridLength(0.1, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(0.9, GridUnitType.Star) },
+                },
+                ColumnSpacing = 10,
+                Padding = new Thickness(3),
+            };
+
+            // Add an Image to the Grid (Column 0)
+            var taskImage = new Image
+            {
+                Source = task.IsCompleted ? "check_icon.png" : "existing_task_logo.png",
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                HeightRequest = 20,
+                WidthRequest = 20,
+            };
+            taskGrid.Add(taskImage, 0, 0); // Add to Column 0
+
+            // Create a VerticalStackLayout for task details (Column 1)
+            var taskDetailsStack = new VerticalStackLayout
+            {
+                VerticalOptions = LayoutOptions.Center
+            };
+
+            // Add the task labels
+            taskDetailsStack.Children.Add(new Label
+            {
+                Text = $"DUE {task.DueDate:MM/dd/yyyy}", // Example date
+                TextColor = task.IsCompleted ? Color.FromArgb("#30BFBF") : Color.FromArgb("#F73467"),
+                FontSize = 15
+            });
+
+            taskDetailsStack.Children.Add(new Label
+            {
+                Text = task.Title ?? "No title", // Example task title
+                TextColor = Colors.Black,
+                FontSize = 18
+            });
+
+            taskDetailsStack.Children.Add(new Label
+            {
+                Text = task.Description ?? "No description", // Description, set IsVisible to False initially
+                FontSize = 16,
+                TextColor = Colors.Black,
+                IsVisible = false
+            });
+
+            taskDetailsStack.Children.Add(new Label
+            {
+                Text = $"Number of Sessions: {task.NumSessions}", // Example session info
+                FontSize = 16,
+                TextColor = Colors.Black,
+                IsVisible = false
+            });
+
+            // Add the VerticalStackLayout to the Grid (Column 1)
+            taskGrid.Add(taskDetailsStack, 1, 0);
+
+            // Set the taskStack as the content of the Border
+            taskBorder.Content = taskGrid;
+
+            // Add the taskBorder to the appropriate container
+            if (task.IsCompleted)
+            {
+                CompletedTasksContent.Children.Add(taskBorder);
+            }
+            else
+            {
+                ExistingTasksContent.Children.Add(taskBorder);
+            }
+        }
+
+        private async void OnTaskUpdated(string updatedTitle, string updatedDescription, DateTime updatedDueDate, int updatedNumSessions)
         {
             if (selectedTaskBorder == null)
                 return;
 
-            // Extract the Grid from the selected task
+            var task = (TaskModel)selectedTaskBorder.BindingContext;
+            task.Title = updatedTitle;
+            task.Description = updatedDescription;
+            task.DueDate = updatedDueDate;
+            task.NumSessions = updatedNumSessions;
+
+            await App.Database.SaveTaskAsync(task);
+            UpdateTaskUI(task);
+        }
+
+        public void UpdateTaskUI(TaskModel task)
+        {
+            if (selectedTaskBorder == null)
+                return;
+
+            // Extract task details (labels inside the Grid within the Border)
             var grid = selectedTaskBorder.Content as Grid;
             if (grid == null)
                 return;
 
-            // Find the VerticalStackLayout within the Grid (Column 1)
+            // Get the VerticalStackLayout from Column 1 of the Grid
             var taskDetailsStack = grid.Children
                 .OfType<VerticalStackLayout>()
                 .FirstOrDefault();
@@ -42,19 +161,29 @@ namespace POMO
             if (taskDetailsStack == null)
                 return;
 
-            // Find the labels inside the stackLayout
             var dueDateLabel = taskDetailsStack.Children[0] as Label;
             var taskTitleLabel = taskDetailsStack.Children[1] as Label;
             var descriptionLabel = taskDetailsStack.Children[2] as Label;
-            var NumSessionLabel = taskDetailsStack.Children[3] as Label;
+            var numSessionLabel = taskDetailsStack.Children[3] as Label;
 
-            if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && NumSessionLabel != null)
+            if (dueDateLabel != null)
             {
-                // Update the labels with the new values
-                dueDateLabel.Text = updatedDueDate.ToString("DUE MM/dd/yyyy");
-                taskTitleLabel.Text = updatedTitle;
-                descriptionLabel.Text = updatedDescription;
-                NumSessionLabel.Text = $"Number of Sessions: {updatedNumSessions}";
+                dueDateLabel.Text = $"DUE {task.DueDate:MM/dd/yyyy}";
+            }
+
+            if (taskTitleLabel != null)
+            {
+                taskTitleLabel.Text = task.Title ?? "No title";
+            }
+
+            if (descriptionLabel != null)
+            {
+                descriptionLabel.Text = task.Description ?? "No description";
+            }
+
+            if (numSessionLabel != null)
+            {
+                numSessionLabel.Text = $"Number of Sessions: {task.NumSessions}";
             }
         }
 
@@ -193,22 +322,71 @@ namespace POMO
             }
         }
 
-
-
-        // Event handler when a task is created (done button clicked)
-        private void OnTaskCreated(object? sender, EventArgs e)
+        public async Task DeleteTaskAsync()
         {
-            _ = DisplayAlert("Task Created", "A new task has been successfully created.", "OK");
-            TaskPopUp.IsVisible = false; // Hide the popup after task is created
+            if (selectedTaskBorder == null)
+            {
+                Console.WriteLine("No task selected for deletion.");
+                return;
+            }
+
+            try
+            {
+                var task = (TaskModel)selectedTaskBorder.BindingContext;
+
+                if (task == null)
+                {
+                    Console.WriteLine("Task binding context is null.");
+                    return;
+                }
+
+                // Delete the task from the database
+                int rowsAffected = await App.Database.DeleteTaskAsync(task);
+                Console.WriteLine($"Task with ID {task.Id} deleted from database. Rows affected: {rowsAffected}");
+
+                // Remove the task from the UI
+                if (task.IsCompleted)
+                {
+                    CompletedTasksContent.Children.Remove(selectedTaskBorder);
+                }
+                else
+                {
+                    ExistingTasksContent.Children.Remove(selectedTaskBorder);
+                }
+                Console.WriteLine("Task removed from UI.");
+
+                // Clear the selected task reference
+                selectedTaskBorder = null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in DeleteTaskAsync: {ex.Message}");
+                var mainPage = Application.Current?.Windows[0]?.Page;
+                if (mainPage != null)
+                {
+                    await mainPage.DisplayAlert("Error", "An error occurred while deleting the task.", "OK");
+                }
+            }
         }
 
-        public void OnMarkAsDoneClicked(object sender, EventArgs e)
+        public async void OnMarkAsDoneClicked(object sender, EventArgs e)
         {
             if (selectedTaskBorder == null)
                 return;
 
             if (selectedTaskBorder.Parent == ExistingTasksContent)
             {
+                var task = (TaskModel)selectedTaskBorder.BindingContext;
+
+                if (task == null)
+                {
+                    Console.WriteLine("Task binding context is null.");
+                    return;
+                }
+
+                // Mark the task as completed
+                task.IsCompleted = true;
+
                 // Remove from ExistingTasksContent
                 ExistingTasksContent.Children.Remove(selectedTaskBorder);
 
@@ -242,6 +420,9 @@ namespace POMO
                         }
                     }
                 }
+
+                // Save the changes to the database
+                await App.Database.SaveTaskAsync(task);
             }
             else
             {
@@ -255,88 +436,6 @@ namespace POMO
             Console.WriteLine("Task moved to CompletedTasksContent");
         }
 
-
-
-        /*private Border CloneBorder(Border originalBorder)
-        {
-            // Create a new Border
-            Border clonedBorder = new Border
-            {
-                StrokeShape = originalBorder.StrokeShape,
-                BackgroundColor = originalBorder.BackgroundColor,
-                Padding = originalBorder.Padding,
-            };
-
-            // Copy GestureRecognizers
-            foreach (var gestureRecognizer in originalBorder.GestureRecognizers)
-            {
-                clonedBorder.GestureRecognizers.Add(gestureRecognizer); // Add each recognizer
-            }
-
-            // Clone the Content (assuming it's a Grid with a specific structure)
-            if (originalBorder.Content is Grid originalGrid)
-            {
-                // Clone the Grid
-                Grid clonedGrid = new Grid
-                {
-                    ColumnDefinitions = originalGrid.ColumnDefinitions,
-                    ColumnSpacing = originalGrid.ColumnSpacing,
-                    Padding = originalGrid.Padding
-                };
-
-                // Clone the Image
-                if (originalGrid.Children[0] is Image originalImage)
-                {
-                    Image clonedImage = new Image
-                    {
-                        Source = "check_icon.png",
-                        VerticalOptions = originalImage.VerticalOptions,
-                        HorizontalOptions = originalImage.HorizontalOptions,
-                        HeightRequest = originalImage.HeightRequest,
-                        WidthRequest = originalImage.WidthRequest
-                    };
-                    Grid.SetColumn(clonedImage, Grid.GetColumn(originalImage));
-                    clonedGrid.Children.Add(clonedImage);
-                }
-
-                // Clone the VerticalStackLayout
-                if (originalGrid.Children[1] is VerticalStackLayout originalStack)
-                {
-                    VerticalStackLayout clonedStack = new VerticalStackLayout
-                    {
-                        VerticalOptions = originalStack.VerticalOptions
-                    };
-
-                    int labelIndex = 0;
-
-                    foreach (var child in originalStack.Children)
-                    {
-                        if (child is Label originalLabel)
-                        {
-                            // Clone Label
-                            Label clonedLabel = new Label
-                            {
-                                Text = originalLabel.Text,
-                                FontSize = originalLabel.FontSize,
-                                TextColor = labelIndex == 0 ? Color.FromArgb("#30BFBF") : originalLabel.TextColor,
-                                IsVisible = originalLabel.IsVisible
-                            };
-                            clonedStack.Children.Add(clonedLabel);
-                            labelIndex++; // Increment the label index
-                        }
-                    }
-
-                    Grid.SetColumn(clonedStack, Grid.GetColumn(originalStack));
-                    clonedGrid.Children.Add(clonedStack);
-                }
-
-                // Set the cloned Grid as the Content of the cloned Border
-                clonedBorder.Content = clonedGrid;
-            }
-
-            return clonedBorder;
-        }*/
-
         // Event handler when task creation is canceled (cancel button clicked)
         private void OnTaskCancelled(object? sender, EventArgs e)
         {
@@ -348,7 +447,6 @@ namespace POMO
             // Navigate to TimerPage
             await Shell.Current.GoToAsync("MainPage");
         }
-
         private async void GoToTimer(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("TimerPage");
