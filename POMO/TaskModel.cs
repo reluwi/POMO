@@ -11,5 +11,6 @@ namespace POMO
         public DateTime DueDate { get; set; }
         public int NumSessions { get; set; }
         public bool IsCompleted { get; set; }
+        public int CompletedSessions { get; set; }
     }
 }

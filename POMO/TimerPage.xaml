@@ -21,7 +21,7 @@
 
                 <VerticalStackLayout Spacing="20">
                     <!-- Title -->
-                    <Label Text="Pomodoro Timer" FontSize="27" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Opacity=".8"/>
+                    <Label x:Name="TaskTitle" Text="Pomodoro Timer" FontSize="27" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Opacity=".8"/>
                     
                     <!-- Timer Display -->
                     <Label x:Name="TimerLabel" 
@@ -33,36 +33,60 @@
 
                 <!-- Reset and Play/Pause Button -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="90">
-                    <ImageButton Source="reset_button.png" WidthRequest="90" HeightRequest="90" IsVisible="False"/>
+                    <ImageButton x:Name="ResetButton" Source="reset_button.png" WidthRequest="90" HeightRequest="90" IsVisible="False"/>
                     <ImageButton x:Name="PlayPauseButton" Source="play_button.png" WidthRequest="90" HeightRequest="90" Clicked="OnPlayPauseButtonClicked"/>
                 </HorizontalStackLayout>
 
                 <!-- Choose Task Button -->
                 <VerticalStackLayout Spacing="15">
                     <Button Text="Skip Session"
+                        x:Name="SkipSessionButton"
                         BackgroundColor="White"
                         TextColor="#4F4F4F"
                         FontSize="18"
                         HeightRequest="30"
                         CornerRadius="10"
                         HorizontalOptions="FillAndExpand" 
-                        IsVisible="False"/>
+                        IsVisible="False"
+                        Clicked="SkipSession_Clicked"/>
                     <Button Text="+ Choose a Task"
+                        x:Name="ChooseButton"
                         BackgroundColor="White"
                         TextColor="#4F4F4F"
                         FontSize="18"
                         HeightRequest="30"
                         CornerRadius="10"
-                        HorizontalOptions="FillAndExpand" 
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="True"
                         Clicked="ChooseTask_Clicked"/>
                     <Button Text="End Timer"
+                        x:Name="EndTimerButton"
                         BackgroundColor="White"
                         TextColor="#4F4F4F"
                         FontSize="18"
                         HeightRequest="30"
                         CornerRadius="10"
-                        HorizontalOptions="FillAndExpand" 
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="True"
                         Clicked="EndTimerButton_Clicked"/>
+                    <Button Text="End Task"
+                        x:Name="EndTaskButton"
+                        BackgroundColor="White"
+                        TextColor="#4F4F4F"
+                        FontSize="18"
+                        HeightRequest="30"
+                        CornerRadius="10"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="False"
+                        />
+                    <Button Text="Default Timer"
+                        x:Name="DefaultTButton"
+                        FontSize="15" 
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        BackgroundColor="Transparent"
+                        IsVisible="False"
+                        Clicked="DefaultButton_Clicked"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Grid>

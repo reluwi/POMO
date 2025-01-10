@@ -20,11 +20,11 @@
             HorizontalOptions="Center"/>
 
         <Button Text="X    "
-                Clicked="CloseButton_Clicked"
-                FontSize="25" 
-                VerticalOptions="Center"
-                HorizontalOptions="End"
-                BackgroundColor="Transparent"/>
+            Clicked="CloseButton_Clicked"
+            FontSize="25" 
+            VerticalOptions="Center"
+            HorizontalOptions="End"
+            BackgroundColor="Transparent"/>
 
         <Label Text="       Existing Tasks"
                FontSize="18"
@@ -33,46 +33,7 @@
                FontAttributes="Bold"/>
 
         <VerticalStackLayout Spacing="10" x:Name="ChooseTasksContent">
-            <Border BackgroundColor="White"
-                    StrokeShape="RoundRectangle 10"
-                    HeightRequest="90"
-                    WidthRequest="350"
-                    HorizontalOptions="Center"
-                    >
-                <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
-                    <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
-                           HeightRequest="30" WidthRequest="30" Grid.Column="0"/>
-                    <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                        <Label Text="DUE 12/27/2004"
-                               TextColor="#F73467"
-                               FontSize="15"/>
-                        <Label Text="Activity 2"
-                               TextColor="Black"
-                               FontSize="18"
-                               FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Grid>
-            </Border>
-
-            <Border BackgroundColor="White"
-                    StrokeShape="RoundRectangle 10"
-                    HeightRequest="90"
-                    WidthRequest="350"
-                    HorizontalOptions="Center">
-                <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
-                    <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
-                   HeightRequest="30" WidthRequest="30" Grid.Column="0"/>
-                    <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
-                        <Label Text="DUE 12/28/2004"
-                       TextColor="#F73467"
-                       FontSize="15"/>
-                        <Label Text="Assessment 1"
-                       TextColor="Black"
-                       FontSize="18"
-                       FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Grid>
-            </Border>
+            
         </VerticalStackLayout>
 
     </VerticalStackLayout>

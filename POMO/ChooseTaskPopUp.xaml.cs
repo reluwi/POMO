@@ -128,8 +128,19 @@ namespace POMO
 
         private void OnTaskTapped(object sender, EventArgs e)
         {
-            // Example: Return a task name or identifier to the calling page
-            Close("Activity 2");
+            if (sender is Border taskBorder && taskBorder.BindingContext is TaskModel task)
+            {
+                // Get the title and number of sessions of the selected task
+                var taskTitle = task.Title ?? "No title";
+                var numSessions = task.NumSessions;
+                var completedSessions = task.CompletedSessions;
+
+                // Format the task information
+                var taskInfo = $"{taskTitle} ({completedSessions} / {numSessions})";
+
+                // Pass the task ID and task information back to TimerPage
+                Close(new Tuple<int, string, int>(task.Id, taskInfo, completedSessions));
+            }
         }
 
         private void CloseButton_Clicked(object sender, EventArgs e)

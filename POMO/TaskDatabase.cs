@@ -22,6 +22,11 @@ namespace POMO
             return _database.Table<TaskModel>().ToListAsync();
         }
 
+        public Task<TaskModel> GetTaskAsync(int id)
+        {
+            return _database.Table<TaskModel>().Where(i => i.Id == id).FirstOrDefaultAsync();
+        }
+
         public Task<int> SaveTaskAsync(TaskModel task)
         {
             if (task.Id != 0)
