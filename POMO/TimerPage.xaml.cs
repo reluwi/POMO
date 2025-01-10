@@ -2,6 +2,8 @@ using System;
 using System.Timers;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace POMO
 {
@@ -21,15 +23,9 @@ namespace POMO
 
         private async void ChooseTask_Clicked(object sender, EventArgs e)
         {
-            // Show the Choose Task popup
-            var result = await this.ShowPopupAsync(new ChooseTaskPopUp());
-
-            // Optional: Handle any result returned by the popup
-            if (result is string task)
-            {
-                // Example: Display the selected task or take an action
-                await DisplayAlert("Selected Task", $"You selected: {task}", "OK");
-            }
+            var chooseTaskPopUp = new ChooseTaskPopUp();
+            chooseTaskPopUp.LoadTasksFromTaskPage();
+            await this.ShowPopupAsync(chooseTaskPopUp);
         }
 
         private async void EndTimerButton_Clicked(object sender, EventArgs e)

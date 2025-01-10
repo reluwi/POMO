@@ -68,6 +68,7 @@
                                     VerticalOptions="Center" />
                                 </Grid>
                                 <VerticalStackLayout x:Name="ExistingTasksContent" Spacing="10" IsVisible="True" VerticalOptions="FillAndExpand">
+                                    <!--
                                     <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnTaskTapped" />
@@ -118,6 +119,7 @@
                                             </VerticalStackLayout>
                                         </Grid>
                                     </Border>
+                                    -->
                                 </VerticalStackLayout>
                             </VerticalStackLayout>
 
@@ -137,6 +139,7 @@
                                     VerticalOptions="Center" />
                                 </Grid>
                                 <VerticalStackLayout x:Name="CompletedTasksContent" Spacing="10" IsVisible="True">
+                                    <!--
                                     <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnTaskTapped" />
@@ -162,6 +165,7 @@
                                             </VerticalStackLayout>
                                         </Grid>
                                     </Border>
+                                    -->
                                 </VerticalStackLayout>
                             </VerticalStackLayout>
                         </VerticalStackLayout>

@@ -32,13 +32,13 @@
                HorizontalOptions="Start" 
                FontAttributes="Bold"/>
 
-        <VerticalStackLayout Spacing="10">
+        <VerticalStackLayout Spacing="10" x:Name="ChooseTasksContent">
             <Border BackgroundColor="White"
                     StrokeShape="RoundRectangle 10"
                     HeightRequest="90"
                     WidthRequest="350"
                     HorizontalOptions="Center"
-                    DescendantAdded="Task_Clicked">
+                    >
                 <Grid ColumnDefinitions=".2*, .8*" ColumnSpacing="5" Padding="5">
                     <Image Source="existing_task_logo.png" VerticalOptions="Center" HorizontalOptions="Center" 
                            HeightRequest="30" WidthRequest="30" Grid.Column="0"/>

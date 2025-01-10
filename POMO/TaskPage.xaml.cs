@@ -1,4 +1,6 @@
 using Microsoft.Maui.Controls.Shapes;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Maui.Views;
 
 namespace POMO
 {
@@ -9,7 +11,7 @@ namespace POMO
 
         public EditTaskPopUp EditTaskPopUpInstance => this.FindByName<EditTaskPopUp>("EditTaskPopUp");
         public DeleteTaskPopUp DeleteTaskPopUpInstance => this.FindByName<DeleteTaskPopUp>("DeleteTaskPopUp");
-        
+
         public TaskPage()
         {
             InitializeComponent();
@@ -31,6 +33,14 @@ namespace POMO
             {
                 AddTaskToUI(task);
             }
+        }
+
+        public List<TaskModel> GetExistingTasks()
+        {
+            return ExistingTasksContent.Children
+                .OfType<Border>()
+                .Select(c => (TaskModel)c.BindingContext)
+                .ToList();
         }
 
         public void AddTaskToUI(TaskModel task)
@@ -55,10 +65,10 @@ namespace POMO
             var taskGrid = new Grid
             {
                 ColumnDefinitions = new ColumnDefinitionCollection
-                {
-                    new ColumnDefinition { Width = new GridLength(0.1, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(0.9, GridUnitType.Star) },
-                },
+                    {
+                        new ColumnDefinition { Width = new GridLength(0.1, GridUnitType.Star) },
+                        new ColumnDefinition { Width = new GridLength(0.9, GridUnitType.Star) },
+                    },
                 ColumnSpacing = 10,
                 Padding = new Thickness(3),
             };
