@@ -11,6 +11,12 @@ namespace POMO
         public DateTime DueDate { get; set; }
         public int NumSessions { get; set; }
         public bool IsCompleted { get; set; }
-        public int CompletedSessions { get; set; }
+        public int CompletedSessions { get; set; } = 1;
+
+        public TaskModel()
+        {
+            // Ensure CompletedSessions is set to 1 for newly created tasks
+            CompletedSessions = 1;
+        }
     }
 }

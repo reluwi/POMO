@@ -4,6 +4,8 @@ using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.Maui.Controls.Shapes;
+using System.Linq; 
 
 namespace POMO
 {
@@ -114,6 +116,8 @@ namespace POMO
                 EndTaskButton.IsVisible = true;
                 EndTimerButton.IsVisible = false;
 
+                ChooseButton.Text = "+ Choose Another Task";
+
                 // Store the selected task information in Preferences
                 Preferences.Set(TaskIdKey, taskId);
                 Preferences.Set(TaskTitleKey, taskTitle);
@@ -128,10 +132,11 @@ namespace POMO
             }
         }
 
+        //posible polymorphism application here
         private async void EndTimerButton_Clicked(object sender, EventArgs e)
         {
             // Show the popup
-            var result = await this.ShowPopupAsync(new EndTimerPopUp());
+            var result = await this.ShowPopupAsync(new EndTimerPopUp("Are you sure you want to end the timer?"));
 
             // Check if the result is "Continue"
             if (result is string action && action == "Continue")
@@ -188,37 +193,151 @@ namespace POMO
 
         private async void SkipSession_Clicked(object sender, EventArgs e)
         {
-            // Increment the session counter for the selected task
-            var taskId = Preferences.Get(TaskIdKey, -1);
-            if (taskId != -1)
+            // Show the popup with the custom text for skipping a session
+            var result = await this.ShowPopupAsync(new EndTimerPopUp("Are you sure you want to skip this session?"));
+
+            // Check if the result is "Continue"
+            if (result is string action && action == "Continue")
             {
-                var task = await App.Database.GetTaskAsync(taskId);
-                if (task != null)
+                // Increment the session counter for the selected task
+                var taskId = Preferences.Get(TaskIdKey, -1);
+                if (taskId != -1)
                 {
-                    task.CompletedSessions++;
-                    await App.Database.SaveTaskAsync(task);
-
-                    // Update the task information
-                    var taskTitle = $"{task.Title} ({task.CompletedSessions} / {task.NumSessions})";
-                    TaskTitle.Text = taskTitle;
-
-                    // Store the updated task information in Preferences
-                    Preferences.Set(TaskTitleKey, taskTitle);
-                    Preferences.Set(CompletedSessionsKey, task.CompletedSessions);
-
-                    // Reset the timer to 25:00 and pause
-                    timeRemaining = TimeSpan.FromMinutes(25);
-                    isTimerRunning = false;
-                    timer.Stop();
-                    ChooseButton.IsVisible = true;
-                    DefaultTButton.IsVisible = true;
-
-                    // Update UI
-                    MainThread.BeginInvokeOnMainThread(() =>
+                    var task = await App.Database.GetTaskAsync(taskId);
+                    if (task != null)
                     {
-                        TimerLabel.Text = "25:00";
-                        PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
-                    });
+                        task.CompletedSessions++;
+                        await App.Database.SaveTaskAsync(task);
+
+                        // Check if the task is completed
+                        if (task.CompletedSessions > task.NumSessions)
+                        {
+                            task.IsCompleted = true;
+                            await App.Database.SaveTaskAsync(task);
+
+                            // Move the task to the completed tasks in TaskPage
+                            var taskPage = Application.Current?.Windows[0]?.Page?.Navigation?.NavigationStack?.OfType<TaskPage>().FirstOrDefault();
+                            if (taskPage != null)
+                            {
+                                taskPage.AddCompletedTask(new Border
+                                {
+                                    StrokeShape = new RoundRectangle { CornerRadius = 10 },
+                                    BackgroundColor = Colors.White,
+                                    Padding = new Thickness(15),
+                                    BindingContext = task
+                                });
+                            }
+
+                            // Clear the selected task information from Preferences
+                            Preferences.Remove(TaskIdKey);
+                            Preferences.Remove(TaskTitleKey);
+                            Preferences.Remove(CompletedSessionsKey);
+
+                            // Update UI
+                            MainThread.BeginInvokeOnMainThread(() =>
+                            {
+                                TimerLabel.Text = "25:00";
+                                PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                                SetDefaultTask();
+                            });
+                        }
+                        else
+                        {
+                            // Update the task information
+                            var taskTitle = $"{task.Title} ({task.CompletedSessions} / {task.NumSessions})";
+                            TaskTitle.Text = taskTitle;
+
+                            // Store the updated task information in Preferences
+                            Preferences.Set(TaskTitleKey, taskTitle);
+                            Preferences.Set(CompletedSessionsKey, task.CompletedSessions);
+
+                            // Reset the timer to 25:00 and pause
+                            timeRemaining = TimeSpan.FromMinutes(25);
+                            isTimerRunning = false;
+                            timer.Stop();
+                            ChooseButton.IsVisible = true;
+                            DefaultTButton.IsVisible = true;
+
+                            // Update UI
+                            MainThread.BeginInvokeOnMainThread(() =>
+                            {
+                                TimerLabel.Text = "25:00";
+                                PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void OnResetButtonClicked(object sender, EventArgs e)
+        {
+            // Show the popup with the custom text for resetting the timer
+            var result = await this.ShowPopupAsync(new EndTimerPopUp("Are you sure you want to reset the timer?"));
+
+            // Check if the result is "Continue"
+            if (result is string action && action == "Continue")
+            {
+                // Reset the timer to 25:00 and pause
+                timeRemaining = TimeSpan.FromMinutes(25);
+                isTimerRunning = false;
+                timer.Stop();
+                ChooseButton.IsVisible = true;
+                DefaultTButton.IsVisible = true;
+
+                // Update UI
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    TimerLabel.Text = "25:00";
+                    PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                });
+            }
+        }
+
+        private async void EndTaskButton_Clicked(object sender, EventArgs e)
+        {
+            // Show the popup with the custom text for ending the task
+            var result = await this.ShowPopupAsync(new EndTimerPopUp("Are you sure you want to end this task?"));
+
+            // Check if the result is "Continue"
+            if (result is string action && action == "Continue")
+            {
+                // Mark the selected task as completed
+                var taskId = Preferences.Get(TaskIdKey, -1);
+                if (taskId != -1)
+                {
+                    var task = await App.Database.GetTaskAsync(taskId);
+                    if (task != null)
+                    {
+                        task.IsCompleted = true;
+                        await App.Database.SaveTaskAsync(task);
+
+                        // Move the task to the completed tasks in TaskPage
+                        var taskPage = Application.Current?.Windows[0]?.Page?.Navigation?.NavigationStack?.OfType<TaskPage>().FirstOrDefault();
+                        if (taskPage != null)
+                        {
+                            taskPage.AddCompletedTask(new Border
+                            {
+                                StrokeShape = new RoundRectangle { CornerRadius = 10 },
+                                BackgroundColor = Colors.White,
+                                Padding = new Thickness(15),
+                                BindingContext = task
+                            });
+                        }
+
+                        // Clear the selected task information from Preferences
+                        Preferences.Remove(TaskIdKey);
+                        Preferences.Remove(TaskTitleKey);
+                        Preferences.Remove(CompletedSessionsKey);
+
+                        // Update UI
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            TimerLabel.Text = "25:00";
+                            PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                            SetDefaultTask();
+                        });
+                    }
                 }
             }
         }
@@ -249,21 +368,64 @@ namespace POMO
                             task.CompletedSessions++;
                             await App.Database.SaveTaskAsync(task);
 
-                            // Update the task information
-                            var taskTitle = $"{task.Title} ({task.CompletedSessions} / {task.NumSessions})";
-                            TaskTitle.Text = taskTitle;
+                            // Check if the task is completed
+                            if (task.CompletedSessions > task.NumSessions)
+                            {
+                                task.IsCompleted = true;
+                                await App.Database.SaveTaskAsync(task);
 
-                            // Store the updated task information in Preferences
-                            Preferences.Set(TaskTitleKey, taskTitle);
-                            Preferences.Set(CompletedSessionsKey, task.CompletedSessions);
+                                // Move the task to the completed tasks in TaskPage
+                                var taskPage = Application.Current?.Windows[0]?.Page?.Navigation?.NavigationStack?.OfType<TaskPage>().FirstOrDefault();
+                                if (taskPage != null)
+                                {
+                                    taskPage.AddCompletedTask(new Border
+                                    {
+                                        StrokeShape = new RoundRectangle { CornerRadius = 10 },
+                                        BackgroundColor = Colors.White,
+                                        Padding = new Thickness(15),
+                                        BindingContext = task
+                                    });
+                                }
+
+                                // Clear the selected task information from Preferences
+                                Preferences.Remove(TaskIdKey);
+                                Preferences.Remove(TaskTitleKey);
+                                Preferences.Remove(CompletedSessionsKey);
+
+                                // Update UI
+                                MainThread.BeginInvokeOnMainThread(() =>
+                                {
+                                    TimerLabel.Text = "25:00";
+                                    PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                                    SetDefaultTask();
+                                });
+                            }
+                            else
+                            {
+                                // Update the task information
+                                var taskTitle = $"{task.Title} ({task.CompletedSessions} / {task.NumSessions})";
+                                TaskTitle.Text = taskTitle;
+
+                                // Store the updated task information in Preferences
+                                Preferences.Set(TaskTitleKey, taskTitle);
+                                Preferences.Set(CompletedSessionsKey, task.CompletedSessions);
+
+                                // Reset the timer to 25:00 and pause
+                                timeRemaining = TimeSpan.FromMinutes(25);
+                                isTimerRunning = false;
+                                timer.Stop();
+                                ChooseButton.IsVisible = true;
+                                DefaultTButton.IsVisible = true;
+
+                                // Update UI
+                                MainThread.BeginInvokeOnMainThread(() =>
+                                {
+                                    TimerLabel.Text = "25:00";
+                                    PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                                });
+                            }
                         }
                     }
-
-                    // Reset the play button
-                    var playPauseButton = this.FindByName<ImageButton>("PlayPauseButton");
-                    playPauseButton.Source = "play_button.png";
-
-                    // Optional: Add logic to notify the user (e.g., vibration, sound)
                 }
             });
         }

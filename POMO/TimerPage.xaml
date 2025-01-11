@@ -33,7 +33,7 @@
 
                 <!-- Reset and Play/Pause Button -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="90">
-                    <ImageButton x:Name="ResetButton" Source="reset_button.png" WidthRequest="90" HeightRequest="90" IsVisible="False"/>
+                    <ImageButton x:Name="ResetButton" Source="reset_button.png" WidthRequest="90" HeightRequest="90" IsVisible="False" Clicked="OnResetButtonClicked"/>
                     <ImageButton x:Name="PlayPauseButton" Source="play_button.png" WidthRequest="90" HeightRequest="90" Clicked="OnPlayPauseButtonClicked"/>
                 </HorizontalStackLayout>
 
@@ -78,7 +78,7 @@
                         CornerRadius="10"
                         HorizontalOptions="FillAndExpand"
                         IsVisible="False"
-                        />
+                        Clicked="EndTaskButton_Clicked"/>
                     <Button Text="Default Timer"
                         x:Name="DefaultTButton"
                         FontSize="15" 

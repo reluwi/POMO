@@ -21,7 +21,8 @@
         <VerticalStackLayout Padding="-2">
             <HorizontalStackLayout Padding="20">
                 <VerticalStackLayout Padding="20">
-                    <Label 
+                    <Label
+                        x:Name="MessageLabel"
                         Text="Are you sure you want to end this timer?"
                         HorizontalTextAlignment="Center"
                         LineBreakMode="WordWrap" 

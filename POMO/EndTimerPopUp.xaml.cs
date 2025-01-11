@@ -5,9 +5,10 @@ namespace POMO
 
     public partial class EndTimerPopUp : Popup
     {
-        public EndTimerPopUp()
+        public EndTimerPopUp(string message)
         {
             InitializeComponent();
+            MessageLabel.Text = message;
         }
 
         private void ContinueButton_Clicked(object sender, EventArgs e)
