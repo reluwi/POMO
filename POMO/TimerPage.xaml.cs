@@ -5,15 +5,17 @@ using Microsoft.Maui.Controls;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Maui.Controls.Shapes;
-using System.Linq; 
+using System.Linq;
+using Plugin.Maui.Audio; // Add this for sound notification
 
 namespace POMO
 {
-	public partial class TimerPage : ContentPage
-	{
+    public partial class TimerPage : ContentPage
+    {
         private bool isTimerRunning = false;
-        private TimeSpan timeRemaining = TimeSpan.FromMinutes(25);
+        private TimeSpan timeRemaining = TimeSpan.FromSeconds(10);
         private System.Timers.Timer timer;
+        private IAudioManager audioManager;
 
         private const string TaskIdKey = "TaskId";
         private const string TaskTitleKey = "TaskTitle";
@@ -25,12 +27,15 @@ namespace POMO
         private const string EndTimerButtonVisibleKey = "EndTimerButtonVisible";
 
         public TimerPage()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             // Initialize the timer
             timer = new System.Timers.Timer(1000); // 1-second interval
             timer.Elapsed += OnTimerElapsed!;
+
+            // Initialize the audio manager
+            audioManager = AudioManager.Current;
 
             // Register to receive the TaskSelectedMessage
             WeakReferenceMessenger.Default.Register<TaskSelectedMessage>(this, (r, m) =>
@@ -59,7 +64,7 @@ namespace POMO
             if (taskId != -1 && !string.IsNullOrEmpty(taskTitle))
             {
                 TaskTitle.Text = taskTitle;
-                ChooseButton.Text = "+ Choose Another Task";   
+                ChooseButton.Text = "+ Choose Another Task";
             }
             else
             {
@@ -273,6 +278,8 @@ namespace POMO
                                 PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                                 SetDefaultTask();
                             });
+
+                            await DisplayAlert("Task Completed", "The task has been moved to completed tasks.", "OK");
                         }
                         else
                         {
@@ -300,6 +307,7 @@ namespace POMO
                         }
                     }
                 }
+                await DisplayAlert("Session Completed", "You have completed a session. Please take a 5-minute break.", "OK");
             }
         }
 
@@ -370,6 +378,8 @@ namespace POMO
                             PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                             SetDefaultTask();
                         });
+
+                        await DisplayAlert("Task Completed", "The task has been moved to completed tasks. Please take a 20/30-minute break.", "OK");
                     }
                 }
             }
@@ -390,6 +400,13 @@ namespace POMO
                     // Stop the timer when time is up
                     timer.Stop();
                     isTimerRunning = false;
+
+                    // Play sound notification
+                    var player = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("notification_sound.mp3"));
+                    player.Play();
+
+                    // Display alert for session completion
+                    await DisplayAlert("Session Completed", "You have completed a session. Please take a 5-minute break.", "OK");
 
                     // Increment the session counter for the selected task
                     var taskId = Preferences.Get(TaskIdKey, -1);
@@ -432,6 +449,8 @@ namespace POMO
                                     PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                                     SetDefaultTask();
                                 });
+
+                                await DisplayAlert("Task Completed", "The task has been moved to completed tasks. Please take a 20/30-minute break.", "OK");
                             }
                             else
                             {
@@ -444,7 +463,8 @@ namespace POMO
                                 Preferences.Set(CompletedSessionsKey, task.CompletedSessions);
 
                                 // Reset the timer to 25:00 and pause
-                                timeRemaining = TimeSpan.FromMinutes(25);
+                                //timeRemaining = TimeSpan.FromMinutes(25);
+                                timeRemaining = TimeSpan.FromSeconds(10);
                                 isTimerRunning = false;
                                 timer.Stop();
                                 ChooseButton.IsVisible = true;
@@ -453,7 +473,8 @@ namespace POMO
                                 // Update UI
                                 MainThread.BeginInvokeOnMainThread(() =>
                                 {
-                                    TimerLabel.Text = "25:00";
+                                    //TimerLabel.Text = "25:00";
+                                    TimerLabel.Text = "00:10";
                                     PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                                 });
                             }
@@ -470,14 +491,94 @@ namespace POMO
 
         private async void OnHomeButtonTapped(object sender, EventArgs e)
         {
-            // Navigate to TimerPage
-            await Shell.Current.GoToAsync("MainPage");
+            if (TimerLabel.Text != "25:00")
+            {
+                // Show the popup
+                var result = await this.ShowPopupAsync(new EndTimerPopUp("Are you sure you want to end the timer?"));
+
+                // Check if the result is "Continue"
+                if (result is string action && action == "Continue")
+                {
+                    // Reset the timer to 25:00 and pause
+                    timeRemaining = TimeSpan.FromMinutes(25);
+                    isTimerRunning = false;
+                    timer.Stop();
+                    ChooseButton.IsVisible = true;
+
+                    // Update UI
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        TimerLabel.Text = "25:00";
+                        PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+
+                        // Clear the selected task information from Preferences
+                        Preferences.Remove(TaskIdKey);
+                        Preferences.Remove(TaskTitleKey);
+                        Preferences.Remove(CompletedSessionsKey);
+
+                        // Store button visibility states in Preferences
+                        Preferences.Set(SkipSessionButtonVisibleKey, false);
+                        Preferences.Set(ResetButtonVisibleKey, false);
+                        Preferences.Set(DefaultTButtonVisibleKey, false);
+                        Preferences.Set(EndTaskButtonVisibleKey, false);
+                        Preferences.Set(EndTimerButtonVisibleKey, true);
+                    });
+
+                    // Navigate to HomePage
+                    await Shell.Current.GoToAsync("MainPage");
+                }
+            }
+            else
+            {
+                // Navigate to HomePage
+                await Shell.Current.GoToAsync("MainPage");
+            }
         }
 
         private async void OnTaskButtonTapped(object sender, EventArgs e)
         {
-            // Navigate to TaskPage
-            await Shell.Current.GoToAsync("TaskPage");
+            if (TimerLabel.Text != "25:00")
+            {
+                // Show the popup
+                var result = await this.ShowPopupAsync(new EndTimerPopUp("Are you sure you want to end the timer?"));
+
+                // Check if the result is "Continue"
+                if (result is string action && action == "Continue")
+                {
+                    // Reset the timer to 25:00 and pause
+                    timeRemaining = TimeSpan.FromMinutes(25);
+                    isTimerRunning = false;
+                    timer.Stop();
+                    ChooseButton.IsVisible = true;
+
+                    // Update UI
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        TimerLabel.Text = "25:00";
+                        PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+
+                        // Clear the selected task information from Preferences
+                        Preferences.Remove(TaskIdKey);
+                        Preferences.Remove(TaskTitleKey);
+                        Preferences.Remove(CompletedSessionsKey);
+
+                        // Store button visibility states in Preferences
+                        Preferences.Set(SkipSessionButtonVisibleKey, false);
+                        Preferences.Set(ResetButtonVisibleKey, false);
+                        Preferences.Set(DefaultTButtonVisibleKey, false);
+                        Preferences.Set(EndTaskButtonVisibleKey, false);
+                        Preferences.Set(EndTimerButtonVisibleKey, true);
+                    });
+
+                    // Navigate to TaskPage
+                    await Shell.Current.GoToAsync("TaskPage");
+                }
+            }
+            else
+            {
+                // Navigate to TaskPage
+                await Shell.Current.GoToAsync("TaskPage");
+            }
         }
     }
 }
