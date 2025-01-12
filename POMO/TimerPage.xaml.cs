@@ -31,6 +31,12 @@ namespace POMO
             // Initialize the timer
             timer = new System.Timers.Timer(1000); // 1-second interval
             timer.Elapsed += OnTimerElapsed!;
+
+            // Register to receive the TaskSelectedMessage
+            WeakReferenceMessenger.Default.Register<TaskSelectedMessage>(this, (r, m) =>
+            {
+                SetTask(m.Value.Id, $"{m.Value.Title} ({m.Value.CompletedSessions} / {m.Value.NumSessions})", m.Value.CompletedSessions);
+            });
         }
 
         protected override void OnAppearing()
@@ -53,6 +59,7 @@ namespace POMO
             if (taskId != -1 && !string.IsNullOrEmpty(taskTitle))
             {
                 TaskTitle.Text = taskTitle;
+                ChooseButton.Text = "+ Choose Another Task";   
             }
             else
             {
@@ -93,6 +100,32 @@ namespace POMO
             Preferences.Set(DefaultTButtonVisibleKey, false);
             Preferences.Set(EndTaskButtonVisibleKey, false);
             Preferences.Set(EndTimerButtonVisibleKey, true);
+        }
+
+        public void SetTask(int taskId, string taskTitle, int completedSessions)
+        {
+            // Update the TimerLabel with the selected task information
+            TaskTitle.Text = taskTitle;
+
+            SkipSessionButton.IsVisible = true;
+            ResetButton.IsVisible = true;
+            DefaultTButton.IsVisible = true;
+            EndTaskButton.IsVisible = true;
+            EndTimerButton.IsVisible = false;
+
+            ChooseButton.Text = "+ Choose Another Task";
+
+            // Store the selected task information in Preferences
+            Preferences.Set(TaskIdKey, taskId);
+            Preferences.Set(TaskTitleKey, taskTitle);
+            Preferences.Set(CompletedSessionsKey, completedSessions);
+
+            // Store button visibility states in Preferences
+            Preferences.Set(SkipSessionButtonVisibleKey, true);
+            Preferences.Set(ResetButtonVisibleKey, true);
+            Preferences.Set(DefaultTButtonVisibleKey, true);
+            Preferences.Set(EndTaskButtonVisibleKey, true);
+            Preferences.Set(EndTimerButtonVisibleKey, false);
         }
 
         private async void ChooseTask_Clicked(object sender, EventArgs e)

@@ -287,6 +287,14 @@ namespace POMO
             // Store the reference to the tapped task (Border)
             selectedTaskBorder = border;
 
+            // Extract the TaskModel from the BindingContext
+            var task = border.BindingContext as TaskModel;
+            if (task == null)
+                return;
+
+            // Set the task in SpecificTaskPopUp
+            SpecificTaskPopUp.SetTask(task);
+
             // Extract task details (labels inside the Grid within the Border)
             var grid = border.Content as Grid;
             if (grid == null)

@@ -24,7 +24,7 @@
             <!-- Buttons -->
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
                 <ImageButton x:Name="DeleteButton" Source="delete_button.png" WidthRequest="30" HeightRequest="30" Clicked="OnDeleteButtonClicked"/>
-                <ImageButton x:Name="GoTimerButton" Source="go_timer_button.png" WidthRequest="30" HeightRequest="30"/>
+                <ImageButton x:Name="GoTimerButton" Source="go_timer_button.png" WidthRequest="30" HeightRequest="30" Clicked="OnGoTimerButtonClicked"/>
                 <!-- Mark as Done Button -->
                 <Button x:Name="MarkAsDoneButton" Text="Marked as Done" BackgroundColor="#FF6F61" TextColor="White" CornerRadius="20" Clicked="OnMarkAsDoneButtonClicked"/>
             </HorizontalStackLayout>

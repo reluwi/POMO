@@ -9,7 +9,6 @@
              VerticalOptions="Start"
              HorizontalOptions="Fill">
 
-
     <!-- CHOOSE TASK POP UP -->
 
     <VerticalStackLayout Spacing="10" HorizontalOptions="Center">

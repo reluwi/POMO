@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Graphics;
 
 namespace POMO
@@ -11,9 +12,45 @@ namespace POMO
 
         public event Action<string, string, DateTime, int>? EditRequested;
 
+        private TaskModel? _task;
         public SpecificTaskPopUp()
 		{
 			InitializeComponent();
+        }
+
+        public void SetTask(TaskModel task)
+        {
+            _task = task;
+
+            // Set the task information
+            DueDateLabel.Text = $"Due Date: {task.DueDate:MM/dd/yyyy}";
+            TaskTitleLabel.Text = task.Title ?? "No title";
+            DescriptionLabel.Text = task.Description ?? "No description";
+            NumSessionLabel.Text = $"Number of Sessions: {task.NumSessions}";
+
+            // Debug statement to verify task initialization
+            Console.WriteLine($"SpecificTaskPopUp initialized with task: {task.Title}");
+        }
+
+        private async void OnGoTimerButtonClicked(object sender, EventArgs e)
+        {
+            if (_task == null)
+            {
+                Console.WriteLine("Task is null.");
+                return;
+            }
+
+            // Debug statement to verify task information
+            Console.WriteLine($"Navigating to TimerPage with task: {_task.Title}");
+
+            // Send the task information to the TimerPage
+            WeakReferenceMessenger.Default.Send(new TaskSelectedMessage(_task));
+
+            // Navigate to the TimerPage
+            await Shell.Current.GoToAsync("TimerPage");
+
+            // Close the popup
+            this.IsVisible = false;
         }
 
         public void DisplayTaskDetails(string dueDate, string taskTitle, string description, string numSession)
