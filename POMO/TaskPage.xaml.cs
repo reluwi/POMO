@@ -33,6 +33,7 @@ namespace POMO
             {
                 AddTaskToUI(task);
             }
+            
         }
 
         public List<TaskModel> GetExistingTasks()

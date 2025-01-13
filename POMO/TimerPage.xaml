@@ -25,7 +25,7 @@
                     
                     <!-- Timer Display -->
                     <Label x:Name="TimerLabel" 
-                       Text="00:10" FontSize="88" 
+                       Text="25:00" FontSize="88" 
                        FontAttributes="Bold" 
                        TextColor="White" 
                        HorizontalOptions="Center" />

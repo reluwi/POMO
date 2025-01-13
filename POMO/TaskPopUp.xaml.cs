@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.VisualBasic;
 
@@ -174,7 +175,7 @@ namespace POMO
             };
 
             // Save the task to the database
-            await App.Database.SaveTaskAsync(newTask);
+            await App.Database.SaveTaskAsync(newTask);       
 
             // Add the task to the UI
             _taskPage?.AddTaskToUI(newTask);

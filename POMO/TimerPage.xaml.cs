@@ -13,7 +13,7 @@ namespace POMO
     public partial class TimerPage : ContentPage
     {
         private bool isTimerRunning = false;
-        private TimeSpan timeRemaining = TimeSpan.FromSeconds(10);
+        private TimeSpan timeRemaining = TimeSpan.FromMinutes(25);  //adjust timer
         private System.Timers.Timer timer;
         private IAudioManager audioManager;
 
@@ -39,6 +39,12 @@ namespace POMO
 
             // Register to receive the TaskSelectedMessage
             WeakReferenceMessenger.Default.Register<TaskSelectedMessage>(this, (r, m) =>
+            {
+                SetTask(m.Value.Id, $"{m.Value.Title} ({m.Value.CompletedSessions} / {m.Value.NumSessions})", m.Value.CompletedSessions);
+            });
+
+            // Register to receive the TaskSelectedMessage
+            WeakReferenceMessenger.Default.Register<DueTaskSelectedMessage>(this, (r, m) =>
             {
                 SetTask(m.Value.Id, $"{m.Value.Title} ({m.Value.CompletedSessions} / {m.Value.NumSessions})", m.Value.CompletedSessions);
             });
@@ -463,8 +469,8 @@ namespace POMO
                                 Preferences.Set(CompletedSessionsKey, task.CompletedSessions);
 
                                 // Reset the timer to 25:00 and pause
-                                //timeRemaining = TimeSpan.FromMinutes(25);
-                                timeRemaining = TimeSpan.FromSeconds(10);
+                                timeRemaining = TimeSpan.FromMinutes(25);
+                                //timeRemaining = TimeSpan.FromSeconds(10);
                                 isTimerRunning = false;
                                 timer.Stop();
                                 ChooseButton.IsVisible = true;
@@ -473,8 +479,8 @@ namespace POMO
                                 // Update UI
                                 MainThread.BeginInvokeOnMainThread(() =>
                                 {
-                                    //TimerLabel.Text = "25:00";
-                                    TimerLabel.Text = "00:10";
+                                    TimerLabel.Text = "25:00";
+                                    //TimerLabel.Text = "00:10";
                                     PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                                 });
                             }

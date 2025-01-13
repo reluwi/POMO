@@ -13,4 +13,12 @@ namespace POMO
         {
         }
     }
+
+    public class DueTaskSelectedMessage : ValueChangedMessage<(int Id, string Title, int CompletedSessions, int NumSessions)>
+    {
+        public DueTaskSelectedMessage((int Id, string Title, int CompletedSessions, int NumSessions) value) : base(value)
+        {
+        }
+    }
+
 }
