@@ -5,7 +5,7 @@
 
     <!-- Background Gradient -->
     <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
             <GradientStop Color="#4B96FF" Offset="0.0" />
             <!-- Dark Blue -->
             <GradientStop Color="#A7B5FF" Offset="1.0" />

@@ -26,4 +26,3 @@ public partial class TimerPopUpPage2 : Popup
         ChoosingTask.IsVisible = true;
     }
 }
-

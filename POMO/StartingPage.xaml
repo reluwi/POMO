@@ -4,7 +4,7 @@
              x:Class="POMO.StartingPage">
 
     <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
             <GradientStop Color="#5B9BF3" Offset="0.0" />
             <!-- Darker Blue -->
             <GradientStop Color="#A0C4FF" Offset="1.0" />

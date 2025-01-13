@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+
 namespace POMO
 {
     public partial class TaskPage : ContentPage
@@ -8,9 +10,9 @@ namespace POMO
 
         }
 
-        private void OnCreateNewTaskClicked(object sender, EventArgs e)
+        private async void OnCreateNewTaskClicked(object sender, EventArgs e)
         {
-
+            this.ShowPopup(new CreateNewTaskPopUp());
         }
 
         private void OnExistingTasksToggleClicked(object sender, EventArgs e)
@@ -35,7 +37,12 @@ namespace POMO
 
         private void OnTaskTapped(object sender, TappedEventArgs e)
         {
+            this.ShowPopup(new SpecificTaskPopUp());
+        }
 
+        private void CompleteTaskTapped(object sender, TappedEventArgs e)
+        {
+            this.ShowPopup(new CompletedTaskPopUp());
         }
     }
 }

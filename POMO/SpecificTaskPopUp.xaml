@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.SpecificTaskPopUp"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="Transparent"
+             VerticalOptions="Start"
+             HorizontalOptions="Fill">
+
+    <!-- Whole Screen -->
+    <VerticalStackLayout Padding="20">
+        
+        <!-- This is the X button part -->
+        <!-- This border is used to make the pop-up centered without considering the height of X button -->
+        <Border BackgroundColor="Transparent"
+            StrokeThickness="0"
+            HeightRequest="130"
+            HorizontalOptions="End"/>
+        <VerticalStackLayout Margin="10">
+        <Border BackgroundColor="Transparent"
+            StrokeThickness="0"
+            HeightRequest="30"
+            HorizontalOptions="End">
+            <ImageButton Source="exit_button.png"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                BackgroundColor="Transparent"
+                Clicked="CloseButton_Clicked"/>
+        </Border>
+        </VerticalStackLayout>
+
+        <!-- This grid just make sures everything is in the center -->
+        <Grid>
+
+            <!-- Main PopUp | Create New Task -->
+            <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Center" VerticalOptions="Center"
+                    WidthRequest="350" HeightRequest="450"
+                    StrokeThickness="0" IsVisible="False">
+                <Grid Opacity="1">
+                
+                    <!-- Content of the PopUp -->
+                    <VerticalStackLayout Spacing="5" x:Name="Parent" Padding="20">
+                    <HorizontalStackLayout Spacing="30">
+                        <!-- Edit Icon -->
+                        <ImageButton x:Name="EditButton" Source="specific_task_logo.png" WidthRequest="10" HeightRequest="10"
+                                HorizontalOptions="Start"/>
+                        <Label x:Name="DueDateLabel" Text="DUE on 12/01/2024" 
+                               TextColor="#FF4B4B" FontAttributes="Bold" 
+                               FontSize="20" HorizontalOptions="Center"
+                               VerticalOptions="End"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                        <Image x:Name="BellButton" Source="bell_icon.png" WidthRequest="30" HeightRequest="40"
+                                HorizontalOptions="Start"/>
+                        <Label x:Name="NotStarted" Text="Not Started" 
+                               HorizontalOptions="Center" TextColor="#FFB202"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <!-- Task Info -->
+                    <Label x:Name="TaskTitleLabel" Text="Task Title" 
+                           FontAttributes="Bold" HorizontalOptions="Center"
+                           FontSize="30" TextColor="#797E7F"
+                           Margin="10"/>
+                    <VerticalStackLayout Padding="10">
+                        <ScrollView HeightRequest="150">
+                        <Label x:Name="DescriptionLabel" Text="Description" 
+                           FontSize="20" TextColor="#8D8E90" HorizontalOptions="Start"/>
+                        </ScrollView>
+                        <Label x:Name="NumSessionLabel" Text="Number of Session : 3" 
+                           FontSize="20" TextColor="#8D8E90" HorizontalOptions="Start"/>
+                    </VerticalStackLayout>
+                    </VerticalStackLayout>
+                
+                    <!-- Buttons -->
+                    <Grid ColumnDefinitions="5, Auto, *" ColumnSpacing="15" 
+                          RowDefinitions="*, Auto"
+                          HorizontalOptions="Fill" VerticalOptions="End">
+                        <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="25" 
+                              Grid.Column="1" Padding="15" Grid.RowSpan="2">
+                            <Button x:Name="DeleteButton" BackgroundColor="Transparent"
+                                    Grid.Column="0"/>
+                            <Image Source="delete_button.png" Grid.Column="0" HeightRequest="35"/>
+                            <Button x:Name="GoTimerButton" BackgroundColor="Transparent"
+                                    Grid.Column="1"/>
+                            <Image Source="yellow_timer_button.png" Grid.Column="1" HeightRequest="35"/>
+                        </Grid>
+                        <!-- Mark as Done Button -->
+                        <Button x:Name="DoneEditing" Text="Marked as Done" FontSize="17" FontAttributes="Bold"
+                                BackgroundColor="#F93C5D" TextColor="White" HeightRequest="50"
+                                CornerRadius="0"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            
+            
+            <!-- PopUp for Delete Task -->
+            <Border StrokeThickness="0"
+                    BackgroundColor="White"
+                    HorizontalOptions="Center"
+                    StrokeShape="RoundRectangle 20"
+                    HeightRequest="205" WidthRequest="350" IsVisible="False">
+
+                <VerticalStackLayout Padding="-2">
+                     <HorizontalStackLayout Padding="20">
+                        <VerticalStackLayout Padding="20" Spacing="10">
+                                <Image Source="delete_button.png" />
+                                <Label Text="Are you sure you want to delete this task?"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="WordWrap" 
+                                TextColor="#F73467" 
+                                FontSize="18"
+                                WidthRequest="270"/>
+                        </VerticalStackLayout>
+                     </HorizontalStackLayout>
+
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Button Text="Yes" Clicked="CloseButton_Clicked" 
+                                BackgroundColor="#F73467"
+                                TextColor="White"
+                                WidthRequest="180"
+                                CornerRadius="0"
+                                FontSize="17"/>
+                        <Button Text="No" Clicked="CloseButton_Clicked" 
+                                BackgroundColor="White"
+                                TextColor="#F73467"
+                                BorderWidth="1"
+                                BorderColor="#F73467"
+                                WidthRequest="180"
+                                CornerRadius="0"
+                                FontSize="17"/>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+
+            <!-- Main PopUp | Edit Task -->
+            <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Center" VerticalOptions="Center"
+                    WidthRequest="350" HeightRequest="500"
+                    StrokeThickness="0">
+                <Grid Opacity="1" RowDefinitions="Auto, *">
+
+                    <!-- Content of the PopUp -->
+                    <VerticalStackLayout Spacing="10" Padding="20" HorizontalOptions="FillAndExpand" Grid.Row="0">
+                        
+                        <!-- Title -->
+                        <HorizontalStackLayout Spacing="30">
+                            <!-- Edit Icon -->
+                            <Image Source="edit_task_logo.png" WidthRequest="40" HeightRequest="40"
+                                HorizontalOptions="Start"/>
+                            <Label Text="EDITING" 
+                               TextColor="#109F5B" FontAttributes="Bold" 
+                               FontSize="20" HorizontalOptions="Center"
+                               VerticalOptions="End"/>
+                        </HorizontalStackLayout>
+
+                        <!-- Task Title -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Task title" FontSize="16" TextColor="#8D8E90" />
+                            <Entry x:Name="TaskTitleEntry" Placeholder="Task Title" BackgroundColor="#E5E5E5" />
+                        </VerticalStackLayout>
+
+                        <!-- Task Description -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label x:Name="CharacterCountLabel" Text="Description 0/100" FontSize="16" TextColor="#8D8E90" />
+                            <Editor x:Name="DescriptionEditor" Placeholder="Task Description" BackgroundColor="#E5E5E5" MaxLength="100"
+                                    TextChanged="OnDescriptionTextChanged" HeightRequest="100" />
+                        </VerticalStackLayout>
+
+                        <!-- Due Date -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Due Date" FontSize="16" TextColor="#8D8E90" />
+                            <DatePicker HorizontalOptions="FillAndExpand" BackgroundColor="#E5E5E5"/>
+                        </VerticalStackLayout>
+
+                        <!-- Number of Sessions -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="No. of Sessions" FontSize="16" TextColor="#8D8E90" />
+                            <Grid ColumnDefinitions="30, 40, 30, *" ColumnSpacing="15" HeightRequest="40" RowDefinitions="5, 30, 5">
+                                
+                                <Button BackgroundColor="#109F5B" Clicked="OnDecreaseClicked" 
+                                        Grid.Column="0" Grid.Row="1" CornerRadius="0"/>
+                                <Label  Text="-" FontSize="20" TextColor="White" Grid.Column="0"
+                                        VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
+                                
+                                <Label x:Name="SessionCountLabel" Text="1" FontSize="20" HorizontalOptions="CenterAndExpand" 
+                                       VerticalOptions="Center" Grid.Column="1" Grid.RowSpan="3"/>
+                                
+                                <Button BackgroundColor="#109F5B" Clicked="OnIncreaseClicked" Grid.Column="2"
+                                        Grid.Row="1" CornerRadius="0"/>
+                                <Label Text="+" FontSize="20" TextColor="White" Grid.Column="2" 
+                                       VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                    <!-- Buttons -->
+                    <Grid HorizontalOptions="End" VerticalOptions="End" Grid.Row="1">
+                        <Button x:Name="DoneEdit" Text="Done Editing" FontSize="17" FontAttributes="Bold"
+                            BackgroundColor="#109F5B" TextColor="White" HeightRequest="50"
+                            CornerRadius="0" WidthRequest="180"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </VerticalStackLayout>
+    
+</toolkit:Popup>

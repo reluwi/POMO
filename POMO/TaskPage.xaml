@@ -6,7 +6,7 @@
 
     <!-- Background Gradient -->
     <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
             <GradientStop Color="#4B96FF" Offset="0.0" />
             <GradientStop Color="#A7B5FF" Offset="1.0" />
         </LinearGradientBrush>
@@ -47,6 +47,7 @@
                     Clicked="OnCreateNewTaskClicked" />
 
                 <!-- Tasks Section -->
+                    <ScrollView>
                 <VerticalStackLayout Spacing="60" VerticalOptions="FillAndExpand" Padding="10">
                     <!-- Existing Tasks -->
                     <VerticalStackLayout Spacing="5">
@@ -138,7 +139,7 @@
                         <VerticalStackLayout x:Name="CompletedTasksContent" Spacing="10" IsVisible="True">
                             <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15">
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                    <TapGestureRecognizer Tapped="CompleteTaskTapped" />
                                 </Border.GestureRecognizers>
                                     <Grid ColumnDefinitions=".1*, .9*" ColumnSpacing="10" Padding="3">
                                         <Image Source="check_icon.png" VerticalOptions="Center" HorizontalOptions="Center" 
@@ -165,6 +166,7 @@
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
+                        </ScrollView>
             </VerticalStackLayout>
             <!-- 
             Task Popup 

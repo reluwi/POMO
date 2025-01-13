@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="POMO.CompletedTaskPopUp"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="Transparent"
+             VerticalOptions="Start"
+             HorizontalOptions="Fill">
+
+    <!-- Whole Screen -->
+    <VerticalStackLayout Padding="20">
+
+        <!-- This is the X button part -->
+        <!-- This border is used to make the pop-up centered without considering the height of X button -->
+        <Border BackgroundColor="Transparent"
+            StrokeThickness="0"
+            HeightRequest="130"
+            HorizontalOptions="End"/>
+        <VerticalStackLayout Margin="10">
+            <Border BackgroundColor="Transparent"
+            StrokeThickness="0"
+            HeightRequest="30"
+            HorizontalOptions="End">
+                <ImageButton Source="exit_button.png"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                BackgroundColor="Transparent"
+                Clicked="CloseButton_Clicked"/>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- This grid just make sures everything is in the center -->
+        <Grid>
+            <!-- Main PopUp | Specific Task PopUp (Completed) -->
+            <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                WidthRequest="350" HeightRequest="450"
+                StrokeThickness="0">
+                <Grid Opacity="1">
+
+                    <!-- Content of the PopUp -->
+                    <VerticalStackLayout Spacing="5" x:Name="Parent" Padding="20">
+                        <HorizontalStackLayout Spacing="30">
+                            <!-- Edit Icon -->
+                            <ImageButton x:Name="EditButton" Source="specific_task_logo.png" WidthRequest="10" HeightRequest="10"
+                                HorizontalOptions="Start"/>
+                            <Label x:Name="DueDateLabel" Text="DUE on 12/21/2024" 
+                               TextColor="#109F5B" FontAttributes="Bold" 
+                               FontSize="20" HorizontalOptions="Center"
+                               VerticalOptions="End"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                            <Image x:Name="CheckIcon" Source="check_icon.png" WidthRequest="30" HeightRequest="40"
+                                HorizontalOptions="Start"/>
+                            <Label x:Name="Completed" Text="Completed" 
+                               HorizontalOptions="Center" TextColor="#30BFBF"
+                               VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <!-- Task Info -->
+                        <Label x:Name="TaskTitleLabel" Text="Task Title" 
+                           FontAttributes="Bold" HorizontalOptions="Center"
+                           FontSize="30" TextColor="#797E7F"
+                           Margin="10"/>
+                        <VerticalStackLayout Padding="10">
+                            <ScrollView HeightRequest="150">
+                                <Label x:Name="DescriptionLabel" Text="Description" 
+                                    FontSize="20" TextColor="#8D8E90" HorizontalOptions="Start"/>
+                            </ScrollView>
+                            <Label x:Name="NumSessionLabel" Text="Number of Session : 3" 
+                                 FontSize="20" TextColor="#8D8E90" HorizontalOptions="Start"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Buttons -->
+                    <Grid Padding="15" HorizontalOptions="Center" VerticalOptions="End">
+                        <Button x:Name="DeleteButton" BackgroundColor="Transparent"/>
+                        <Image Source="delete_button.png" HeightRequest="35"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+            <!-- PopUp for Delete Task -->
+            <Border StrokeThickness="0"
+                BackgroundColor="White"
+                HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 20"
+                HeightRequest="205" WidthRequest="350" IsVisible="False">
+
+                <VerticalStackLayout Padding="-2">
+                    <HorizontalStackLayout Padding="20">
+                        <VerticalStackLayout Padding="20" Spacing="10">
+                            <Image Source="delete_button.png" />
+                            <Label Text="Are you sure you want to delete this task?"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="WordWrap" 
+                                TextColor="#F73467" 
+                                FontSize="18"
+                                WidthRequest="270"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Button Text="Yes" Clicked="CloseButton_Clicked" 
+                            BackgroundColor="#F73467"
+                            TextColor="White"
+                            WidthRequest="180"
+                            CornerRadius="0"
+                            FontSize="17"/>
+                        <Button Text="No" Clicked="CloseButton_Clicked" 
+                            BackgroundColor="White"
+                            TextColor="#F73467"
+                            BorderWidth="1"
+                            BorderColor="#F73467"
+                            WidthRequest="180"
+                            CornerRadius="0"
+                            FontSize="17"/>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </VerticalStackLayout>
+
+</toolkit:Popup>

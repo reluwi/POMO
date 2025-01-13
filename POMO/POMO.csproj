@@ -67,6 +67,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="SpecificTaskPopup.xaml.cs">
+	    <DependentUpon>SpecificTaskPopUp.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="StartingPage.xaml.cs">
 	    <DependentUpon>StartingPage.xaml</DependentUpon>
 	  </Compile>
@@ -82,6 +85,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="CompletedTaskPopUp.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="CreateNewTaskPopUp.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="SpecificTaskPopUp.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="StartingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
