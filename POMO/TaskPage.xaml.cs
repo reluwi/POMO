@@ -16,13 +16,14 @@ namespace POMO
         {
             InitializeComponent();
 
-            TaskPopUp.Initialize(this);
-
-            // Access the TaskPopUp instance from XAML and subscribe to the events
-            TaskPopUp.Cancelled += OnTaskCancelled;
             SpecificTaskPopUp.EditRequested += OnEditRequested;
-            // Subscribe to the TaskUpdated event from EditTaskPopUp
             EditTaskPopUpInstance.TaskUpdated += OnTaskUpdated;
+
+            // Register to listen for TaskAddedMessage
+            WeakReferenceMessenger.Default.Register<TaskAddedMessage>(this, (r, message) =>
+            {
+                AddTaskToUI(message.Task);
+            });
         }
 
         protected override async void OnAppearing()
@@ -219,13 +220,6 @@ namespace POMO
             EditTaskPopUp.IsVisible = true;
         }
 
-        // Update the method in TaskPopUp.xaml.cs to reference ExistingTasksContent directly
-        public void AddNewTask(Border taskBorder)
-        {
-            // Ensure ExistingTasksContent is directly accessible
-            ExistingTasksContent.Children.Add(taskBorder);
-        }
-
         public void AddCompletedTask(Border taskBorder)
         {
             // Ensure ExistingTasksContent is directly accessible
@@ -272,7 +266,9 @@ namespace POMO
 
         private void OnCreateNewTaskClicked(object sender, EventArgs e)
         {
-            TaskPopUp.Show(); // Show the TaskPopUp when the button is clicked
+            var taskPopUp = new TaskPopUp();
+            taskPopUp.Initialize(this);
+            this.ShowPopup(taskPopUp);
         }
 
         // Store a reference to the currently selected task
@@ -453,12 +449,6 @@ namespace POMO
 
             // Log the completion status
             Console.WriteLine("Task moved to CompletedTasksContent");
-        }
-
-        // Event handler when task creation is canceled (cancel button clicked)
-        private void OnTaskCancelled(object? sender, EventArgs e)
-        {
-            TaskPopUp.IsVisible = false; // Hide the popup when the action is canceled
         }
 
         private async void OnHomeButtonTapped(object sender, EventArgs e)

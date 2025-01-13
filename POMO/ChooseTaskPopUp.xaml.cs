@@ -14,7 +14,6 @@ namespace POMO
         public void PopulateTasks(IEnumerable<TaskModel> tasks)
         {
             ChooseTasksContent.Children.Clear();
-            Console.WriteLine("Cleared existing children in ChooseTasksContent");
 
             foreach (var task in tasks)
             {

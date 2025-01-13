@@ -13,4 +13,15 @@ namespace POMO
         {
         }
     }
+
+    // Define the TaskAddedMessage class
+    public class TaskAddedMessage
+    {
+        public TaskModel Task { get; }
+
+        public TaskAddedMessage(TaskModel task)
+        {
+            Task = task;
+        }
+    }
 }
