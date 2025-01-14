@@ -190,6 +190,7 @@ namespace POMO
 
                 var taskInfo = $"{taskTitle} ({completedSessions} / {numSessions})";
 
+                Preferences.Set("IsDefaultTaskSet", false);
                 Preferences.Set("TaskTitle", taskInfo);
 
                 // Send the TaskSelectedMessage
