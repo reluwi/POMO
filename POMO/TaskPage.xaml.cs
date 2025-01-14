@@ -16,8 +16,24 @@ namespace POMO
         {
             InitializeComponent();
 
-            SpecificTaskPopUp.EditRequested += OnEditRequested;
-            EditTaskPopUpInstance.TaskUpdated += OnTaskUpdated;
+            // Ensure EditTaskPopUpInstance and DeleteTaskPopUpInstance are not null
+            if (EditTaskPopUpInstance != null)
+            {
+                EditTaskPopUpInstance.TaskUpdated += OnTaskUpdated;
+            }
+            else
+            {
+                Console.WriteLine("EditTaskPopUpInstance is null.");
+            }
+
+            if (DeleteTaskPopUpInstance != null)
+            {
+                // Add any necessary event handlers for DeleteTaskPopUpInstance
+            }
+            else
+            {
+                Console.WriteLine("DeleteTaskPopUpInstance is null.");
+            }
 
             // Register to listen for TaskAddedMessage
             WeakReferenceMessenger.Default.Register<TaskAddedMessage>(this, (r, message) =>
@@ -202,22 +218,16 @@ namespace POMO
         // Populate the EditTaskPopUp with the current task details
         private void OnEditRequested(string title, string description, DateTime dueDate, int numSessions)
         {
-            // Populate the task details in EditTaskPopUp
-            EditTaskPopUp.TaskTitleEntryControl.Text = title;
-            EditTaskPopUp.DescriptionEditorControl.Text = description;
+            // Create and show the EditTaskPopUp
+            var editTaskPopUp = new EditTaskPopUp
+            {
+                TaskTitleEntryControl = { Text = title },
+                DescriptionEditorControl = { Text = description },
+                DatePickerControl = { Date = dueDate },
+                SessionCountLabelControl = { Text = numSessions > 0 ? numSessions.ToString() : "1" }
+            };
 
-            //dueDate = DateTime.Now;
-
-            // Set the pickers for the due date
-            EditTaskPopUp.MonthPickerControl.SelectedIndex = 0;
-            EditTaskPopUp.DayPickerControl.SelectedIndex = 0;
-            EditTaskPopUp.YearPickerControl.SelectedIndex = 0;
-
-            // Set the session count
-            EditTaskPopUp.SessionCountLabelControl.Text = numSessions > 0 ? numSessions.ToString() : "1";
-
-            // Show the EditTaskPopUp
-            EditTaskPopUp.IsVisible = true;
+            //this.ShowPopup(editTaskPopUp);
         }
 
         public void AddCompletedTask(Border taskBorder)
@@ -289,9 +299,6 @@ namespace POMO
             if (task == null)
                 return;
 
-            // Set the task in SpecificTaskPopUp
-            SpecificTaskPopUp.SetTask(task);
-
             // Extract task details (labels inside the Grid within the Border)
             var grid = border.Content as Grid;
             if (grid == null)
@@ -308,32 +315,44 @@ namespace POMO
             var dueDateLabel = taskDetailsStack.Children[0] as Label;
             var taskTitleLabel = taskDetailsStack.Children[1] as Label;
             var descriptionLabel = taskDetailsStack.Children[2] as Label;
-            var NumSessionLabel = taskDetailsStack.Children[3] as Label;
+            var numSessionLabel = taskDetailsStack.Children[3] as Label;
 
-            if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && NumSessionLabel != null)
+            if (dueDateLabel != null && taskTitleLabel != null && descriptionLabel != null && numSessionLabel != null)
             {
+                // Create a new instance of SpecificTaskPopUp and set the required properties
+                var specificTaskPopUp = new SpecificTaskPopUp
+                {
+                    DueDate = dueDateLabel.Text,
+                    TaskTitle = taskTitleLabel.Text,
+                    Description = descriptionLabel.Text,
+                    NumSession = numSessionLabel.Text
+                };
+
+                specificTaskPopUp.SetTask(task);
+                specificTaskPopUp.EditRequested += OnEditRequested;
+
                 // Pass the task details and the border reference to SpecificTaskPopUp
-                SpecificTaskPopUp.DisplayTaskDetails(
+                specificTaskPopUp.DisplayTaskDetails(
                     dueDateLabel.Text,
                     taskTitleLabel.Text,
                     descriptionLabel.Text,
-                    NumSessionLabel.Text
+                    numSessionLabel.Text
                 );
 
                 // Check if the tapped task is under CompletedTasksContent
                 if (CompletedTasksContent.Children.Contains(border))
                 {
                     // Hide the "Mark as Done" button in SpecificTaskPopUp
-                    SpecificTaskPopUp.HideButtons();
+                    specificTaskPopUp.HideButtons();
                 }
                 else
                 {
                     // Show the "Mark as Done" button
-                    SpecificTaskPopUp.ShowButtons();
+                    specificTaskPopUp.ShowButtons();
                 }
 
                 // Show the popup
-                SpecificTaskPopUp.IsVisible = true;
+                specificTaskPopUp.Show();
             }
         }
 

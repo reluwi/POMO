@@ -18,7 +18,7 @@ namespace POMO
         private IAudioManager audioManager;
 
         private const string TaskIdKey = "TaskId";
-        private const string TaskTitleKey = "TaskTitle";
+        private const string TaskTitleKey = null;
         private const string CompletedSessionsKey = "CompletedSessions";
         private const string SkipSessionButtonVisibleKey = "SkipSessionButtonVisible";
         private const string ResetButtonVisibleKey = "ResetButtonVisible";
@@ -95,6 +95,9 @@ namespace POMO
             Preferences.Remove(TaskTitleKey);
             Preferences.Remove(TaskIdKey);
             Preferences.Remove(CompletedSessionsKey);
+
+            // Set a flag indicating that the default task is set
+            Preferences.Set("IsDefaultTaskSet", true);
 
             // Update UI
             SkipSessionButton.IsVisible = false;
@@ -277,6 +280,9 @@ namespace POMO
                             Preferences.Remove(TaskTitleKey);
                             Preferences.Remove(CompletedSessionsKey);
 
+                            // Set a flag indicating that the default task is set
+                            Preferences.Set("IsDefaultTaskSet", true);
+
                             // Update UI
                             MainThread.BeginInvokeOnMainThread(() =>
                             {
@@ -377,6 +383,9 @@ namespace POMO
                         Preferences.Remove(TaskTitleKey);
                         Preferences.Remove(CompletedSessionsKey);
 
+                        // Set a flag indicating that the default task is set
+                        Preferences.Set("IsDefaultTaskSet", true);
+
                         // Update UI
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
@@ -447,6 +456,9 @@ namespace POMO
                                 Preferences.Remove(TaskIdKey);
                                 Preferences.Remove(TaskTitleKey);
                                 Preferences.Remove(CompletedSessionsKey);
+
+                                // Set a flag indicating that the default task is set
+                                Preferences.Set("IsDefaultTaskSet", true);
 
                                 // Update UI
                                 MainThread.BeginInvokeOnMainThread(() =>

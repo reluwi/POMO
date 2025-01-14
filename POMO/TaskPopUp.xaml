@@ -93,8 +93,8 @@
                     <!-- Buttons -->
                     <Grid HorizontalOptions="End" VerticalOptions="End" Grid.Row="1">
                         <Button x:Name="DoneEdit" Text="Done" FontSize="20" FontAttributes="Bold" 
-                                    BackgroundColor="#D93FAD" TextColor="White" HeightRequest="50" 
-                                    CornerRadius="0" WidthRequest="180" Clicked="OnDoneClicked" />
+                                BackgroundColor="#D93FAD" TextColor="White" HeightRequest="50" 
+                                CornerRadius="0" WidthRequest="180" Clicked="OnDoneClicked" />
                     </Grid>
                 </Grid>
             </Border>

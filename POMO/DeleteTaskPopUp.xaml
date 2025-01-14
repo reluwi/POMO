@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:POMO"
-             x:Class="POMO.DeleteTaskPopUp">
-    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
-            Padding="20"
-            HorizontalOptions="Center" VerticalOptions="Center"
-            WidthRequest="350" HeightRequest="250">
-        <VerticalStackLayout
+             x:Class="POMO.DeleteTaskPopUp"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="Transparent"
+             VerticalOptions="Center"
+             HorizontalOptions="Fill">
+
+    <Border StrokeThickness="0"
+            BackgroundColor="White"
             HorizontalOptions="Center"
-            VerticalOptions="Center"
-            BackgroundColor="#FFFFFF"
-            Padding="20"
-            Spacing="40">
-            <ImageButton Source="delete_button.png" WidthRequest="30" HeightRequest="30"/>
-            <Label Text="Are you sure you want to delete this task?" 
-               TextColor="#F73467" 
-               HorizontalOptions="Center" />
+            StrokeShape="RoundRectangle 20"
+            HeightRequest="205" WidthRequest="350">
+
+        <VerticalStackLayout Padding="-2">
+            <HorizontalStackLayout Padding="20">
+                <VerticalStackLayout Padding="20" Spacing="10">
+                    <Image Source="delete_button.png" />
+                    <Label Text="Are you sure you want to delete this task?"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="WordWrap" 
+                                TextColor="#F73467" 
+                                FontSize="18"
+                                WidthRequest="270"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
             <HorizontalStackLayout HorizontalOptions="Center">
-                <Button Text="Yes" TextColor="White" BackgroundColor="#F73467" HorizontalOptions="Start" Clicked="OnYesButtonClicked"/>
-                <Button Text="No" TextColor="White" BackgroundColor="#E5E5E5" HorizontalOptions="End" Clicked="OnNoButtonClicked"/>
+                <Button Text="Yes" Clicked="OnYesButtonClicked" 
+                                BackgroundColor="#F73467"
+                                TextColor="White"
+                                WidthRequest="180"
+                                CornerRadius="0"
+                                FontSize="17"/>
+                <Button Text="No" Clicked="OnNoButtonClicked" 
+                                BackgroundColor="White"
+                                TextColor="#F73467"
+                                BorderWidth="1"
+                                BorderColor="#F73467"
+                                WidthRequest="180"
+                                CornerRadius="0"
+                                FontSize="17"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Border>
-</ContentView>
+</toolkit:Popup>

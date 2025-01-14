@@ -35,7 +35,7 @@
                 </HorizontalStackLayout>
 
                 <VerticalStackLayout Margin="30">
-                    <Label Text="No tasks in progress" 
+                    <Label x:Name="TaskInProgress" Text="No tasks in progress" 
                        FontSize="20"
                        TextColor="White" 
                        HorizontalOptions="Center" />
@@ -56,15 +56,7 @@
 
                 <!-- Task Section -->
                 <VerticalStackLayout Spacing="10" x:Name="DueTasksContent">
-                   <!--
-                    <Border x:Name="NoDueTask" StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15" IsVisible="True">
-                        <Label 
-                           Text="No deadlines today—enjoy! 😊" 
-                           TextColor="Black" 
-                           FontSize="16"
-                           />
-                    </Border>
-                    -->
+                
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Grid>

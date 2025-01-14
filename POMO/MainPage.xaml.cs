@@ -16,6 +16,46 @@ namespace POMO
 
             // Load tasks due today
             LoadTasksDueToday();
+
+            // Check if the default task is set
+            var isDefaultTaskSet = Preferences.Get("IsDefaultTaskSet", true);
+
+            if (isDefaultTaskSet)
+            {
+                // Update the TaskInProgress label to the default text
+                UpdateTaskInProgress("No tasks in progress");
+
+                // Clear the flag
+                Preferences.Remove("IsDefaultTaskSet");               
+            }
+            else
+            {
+                // Retrieve the selected task information from Preferences
+                var taskTitle = Preferences.Get("TaskTitle", string.Empty);
+
+                if (!string.IsNullOrEmpty(taskTitle))
+                {
+                    UpdateTaskInProgress(taskTitle);
+                }
+                else
+                {
+                    UpdateTaskInProgress("No tasks in progress");
+
+                }
+            }
+        }
+
+        private void UpdateTaskInProgress(string taskTitle)
+        {
+            Console.WriteLine($"Updating TaskInProgress label to: {taskTitle}");
+            if (string.IsNullOrEmpty(taskTitle))
+            {
+                TaskInProgress.Text = "No tasks in progress";
+            }
+            else
+            {
+                TaskInProgress.Text = taskTitle;
+            }
         }
 
         private async void LoadTasksDueToday()
@@ -34,8 +74,7 @@ namespace POMO
                 }
 
                 // Filter tasks that are due today
-                var tasksDueToday = tasks.Where(task => task.DueDate.Date == DateTime.Today).ToList();
-                Console.WriteLine($"Tasks due today count: {tasksDueToday.Count}");
+                var tasksDueToday = tasks.Where(task => task.DueDate.Date == DateTime.Today && !task.IsCompleted).ToList();
 
                 // Populate the DueTasksContent with tasks due today
                 PopulateTasksDueToday(tasksDueToday);
@@ -148,6 +187,10 @@ namespace POMO
                 var taskTitle = task.Title ?? "No title";
                 var numSessions = task.NumSessions;
                 var completedSessions = task.CompletedSessions;
+
+                var taskInfo = $"{taskTitle} ({completedSessions} / {numSessions})";
+
+                Preferences.Set("TaskTitle", taskInfo);
 
                 // Send the TaskSelectedMessage
                 WeakReferenceMessenger.Default.Send(new DueTaskSelectedMessage((task.Id, taskTitle, completedSessions, numSessions)));

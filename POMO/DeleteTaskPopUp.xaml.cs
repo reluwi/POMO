@@ -1,8 +1,9 @@
 using Microsoft.Maui.Controls.Compatibility;
+using CommunityToolkit.Maui.Views;
 
 namespace POMO
 {
-    public partial class DeleteTaskPopUp : ContentView
+    public partial class DeleteTaskPopUp : Popup
     {
         public DeleteTaskPopUp()
         {
@@ -12,7 +13,7 @@ namespace POMO
         private void OnNoButtonClicked(object sender, EventArgs e)
         {
             // Simply hide the DeleteTaskPopUp
-            this.IsVisible = false;
+            this.Close();
         }
 
         private async void OnYesButtonClicked(object sender, EventArgs e)
@@ -30,7 +31,7 @@ namespace POMO
                         await taskPage.DeleteTaskAsync();
 
                         // Hide the DeleteTaskPopUp
-                        this.IsVisible = false;
+                        this.Close();
 
                         return;
                     }

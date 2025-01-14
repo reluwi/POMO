@@ -8,7 +8,7 @@ namespace POMO
     public partial class TaskPopUp : Popup
     {
         // Define events for Task creation and cancellation
-        public event EventHandler? TaskCreated;
+        //public event EventHandler? TaskCreated;
 
         private TaskPage? _taskPage;
 

@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls.Shapes;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace POMO
 {
@@ -136,6 +137,13 @@ namespace POMO
 
                 // Format the task information
                 var taskInfo = $"{taskTitle} ({completedSessions} / {numSessions})";
+
+                // Log the task information
+                Console.WriteLine($"Task selected: {taskInfo}");
+
+                // Save the task information in Preferences
+                Preferences.Set("IsDefaultTaskSet", false);
+                Preferences.Set("TaskTitle", taskInfo);
 
                 // Pass the task ID and task information back to TimerPage
                 Close(new Tuple<int, string, int>(task.Id, taskInfo, completedSessions));

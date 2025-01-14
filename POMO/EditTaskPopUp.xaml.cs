@@ -1,35 +1,23 @@
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.VisualBasic;
+using CommunityToolkit.Maui.Views;
 
 namespace POMO
 {
-    public partial class EditTaskPopUp : ContentView
+    public partial class EditTaskPopUp : Popup
 	{
         public EditTaskPopUp()
 		{
 			InitializeComponent();
 
-            // Populate Month Picker
-            MonthPicker.ItemsSource = Enumerable.Range(1, 12).Select(m => m.ToString("D2")).ToList(); // "01" to "12"
-
-            // Populate Year Picker with a range of years (e.g., current year ± 50)
-            int currentYear = DateTime.Now.Year;
-            YearPicker.ItemsSource = Enumerable.Range(currentYear, 6).Select(y => y.ToString()).ToList();
-
-            // Populate Day Picker initially (default to 31 days)
-            UpdateDayPicker(31);
-
-            // Event to update days when month or year changes
-            MonthPicker.SelectedIndexChanged += OnMonthOrYearChanged;
-            YearPicker.SelectedIndexChanged += OnMonthOrYearChanged;
+            // Set the default due date to the current date
+            DatePickerControl.Date = DateTime.Now;
         }
 
         // Public properties to access UI elements
         public Entry TaskTitleEntryControl => TaskTitleEntry;
         public Editor DescriptionEditorControl => DescriptionEditor;
-        public Picker MonthPickerControl => MonthPicker;
-        public Picker DayPickerControl => DayPicker;
-        public Picker YearPickerControl => YearPicker;
+        public DatePicker DatePickerControl => DatePickerEditor;
         public Label SessionCountLabelControl => SessionCountLabel;
 
 
@@ -69,36 +57,10 @@ namespace POMO
             CharacterCountLabel.Text = $"Description {currentLength}/100";
         }
 
-        private void OnMonthOrYearChanged(object? sender, EventArgs e)
-        {
-            if (sender is Picker picker)
-            {
-                // Ensure YearPicker.SelectedItem is not null
-                if (YearPicker.SelectedItem != null)
-                {
-                    int selectedYear = YearPicker.SelectedItem != null
-                        ? int.Parse(YearPicker.SelectedItem.ToString()!)
-                        : DateTime.Now.Year; // Default to current year
-
-                    int selectedMonth = MonthPicker.SelectedIndex != -1
-                        ? MonthPicker.SelectedIndex + 1
-                        : DateTime.Now.Month; // Default to current month
-
-                    int daysInMonth = DateTime.DaysInMonth(selectedYear, selectedMonth);
-                    UpdateDayPicker(daysInMonth);
-                }
-            }
-        }
-
-        private void UpdateDayPicker(int days)
-        {
-            DayPicker.ItemsSource = Enumerable.Range(1, days).Select(d => d.ToString("D2")).ToList(); // "01" to "31"
-        }
-
         // Event handler when the Cancel button is clicked
         private void OnCancelClicked(object sender, EventArgs e)
         {
-            this.IsVisible = false;
+            this.Close();
         }
 
         public event Action<string, string, DateTime, int>? TaskUpdated;
@@ -108,27 +70,10 @@ namespace POMO
             // Get updated values from the UI controls
             string updatedTitle = TaskTitleEntryControl.Text;
             string updatedDescription = DescriptionEditorControl.Text;
+            // Construct the due date from the selected values
+            DateTime dueDate = DatePickerControl.Date;
 
-            if (MonthPickerControl.SelectedItem == null || DayPickerControl.SelectedItem == null || YearPickerControl.SelectedItem == null)
-            {
-                // Handle missing date selection
-                ShowAlert("Error", "Please select a valid date.");
-                return;
-            }
-
-            // Get the updated due date from the pickers
-            int selectedMonth = int.Parse(MonthPickerControl.SelectedItem.ToString()!);
-            int selectedDay = int.Parse(DayPickerControl.SelectedItem.ToString()!);
-            int selectedYear = int.Parse(YearPickerControl.SelectedItem.ToString()!);
-
-            // Check if the selected values form a valid date
-            if (selectedMonth <= 0 || selectedMonth > 12 || selectedDay <= 0 || selectedDay > 31 || selectedYear <= 0)
-            {
-                ShowAlert("Error", "Please select a valid date.");
-                return;
-            }
-
-            DateTime updatedDueDate = new DateTime(selectedYear, selectedMonth, selectedDay);
+            DateTime updatedDueDate = dueDate;
 
             // Get the updated session count
             int updatedNumSessions = int.Parse(SessionCountLabelControl.Text);
@@ -158,7 +103,7 @@ namespace POMO
             }
 
             // Hide the EditTaskPopUp after updating
-            this.IsVisible = false;
+            this.Close();
         }
 
         private void ShowAlert(string title, string message)

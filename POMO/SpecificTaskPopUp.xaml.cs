@@ -1,9 +1,10 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Graphics;
+using CommunityToolkit.Maui.Views;
 
 namespace POMO
 {
-	public partial class SpecificTaskPopUp : ContentView
+	public partial class SpecificTaskPopUp : Popup
 	{
         public required string DueDate { get; set; }
         public required string TaskTitle { get; set; }
@@ -28,6 +29,16 @@ namespace POMO
             DescriptionLabel.Text = task.Description ?? "No description";
             NumSessionLabel.Text = $"Number of Sessions: {task.NumSessions}";
 
+            // Update the NotStarted label based on the number of CompletedSessions
+            if (task.CompletedSessions >= 2)
+            {
+                NotStarted.Text = "Started";
+            }
+            else
+            {
+                NotStarted.Text = "Not started";
+            }
+
             // Debug statement to verify task initialization
             Console.WriteLine($"SpecificTaskPopUp initialized with task: {task.Title}");
         }
@@ -50,7 +61,7 @@ namespace POMO
             await Shell.Current.GoToAsync("TimerPage");
 
             // Close the popup
-            this.IsVisible = false;
+            this.Close();
         }
 
         public void DisplayTaskDetails(string dueDate, string taskTitle, string description, string numSession)
@@ -59,17 +70,29 @@ namespace POMO
             TaskTitleLabel.Text = taskTitle; 
             DescriptionLabel.Text = description;
             NumSessionLabel.Text = numSession;
-            IsVisible = true;
+
+            // Make the main popup content visible
+            var mainPopupContent = this.FindByName<Border>("MainPopupContent");
+            if (mainPopupContent != null)
+            {
+                mainPopupContent.IsVisible = true;
+            }
+            this.Show();
         }
 
         public void Show()
         {
-            this.IsVisible = true;
+            // Show the popup using the current page
+            var currentPage = Application.Current?.Windows[0].Page;
+            if (currentPage != null)
+            {
+                currentPage.ShowPopup(this);
+            }
         }
 
         public void Hide()
         {
-            this.IsVisible = false;
+            this.Close();
         }
 
         private void OnCloseClicked(object sender, EventArgs e)
@@ -84,7 +107,12 @@ namespace POMO
             string taskDescription = DescriptionLabel.Text;
 
             // Parse the due date (assuming the format is valid)
-            DateTime.TryParse(DueDateLabel.Text, out DateTime dueDate);
+            DateTime dueDate;
+            if (!DateTime.TryParse(DueDateLabel.Text.Replace("DUE on ", ""), out dueDate))
+            {
+                // If parsing fails, set the due date to the current date
+                dueDate = DateTime.Now;
+            }
 
             // Parse the number of sessions (assuming it's a valid number)
             int.TryParse(NumSessionLabel.Text.Replace("Number of Session : ", ""), out int numSessions);
@@ -92,54 +120,40 @@ namespace POMO
             // Trigger the EditRequested event and pass the extracted values
             EditRequested?.Invoke(taskTitle, taskDescription, dueDate, numSessions);
 
-            // Traverse the visual tree to find the TaskPage
-            Element parent = this;
-
-            while (parent != null)
+            // Show the EditTaskPopUp
+            var editTaskPopUp = new EditTaskPopUp
             {
-                if (parent is TaskPage taskPage)
-                {
-                    // Show EditTaskPopUp
-                    taskPage.EditTaskPopUpInstance.IsVisible = true;
+                TaskTitleEntryControl = { Text = taskTitle },
+                DescriptionEditorControl = { Text = taskDescription },
+                DatePickerControl = { Date = dueDate },
+                SessionCountLabelControl = { Text = numSessions > 0 ? numSessions.ToString() : "1" }
+            };
 
-                    // Optionally, hide SpecificTaskPopUp
-                    this.IsVisible = false;
-
-                    return;
-                }
-
-                // Traverse to the next parent
-                parent = parent.Parent;
+            // Show the EditTaskPopUp using the current page
+            var currentPage = Application.Current?.Windows[0].Page;
+            if (currentPage != null)
+            {
+                currentPage.ShowPopup(editTaskPopUp);
             }
 
-            // If TaskPage was not found, log a message (optional)
-            Console.WriteLine("TaskPage not found in the visual tree.");
+            // Optionally, hide SpecificTaskPopUp
+            this.Close();
         }
 
         private void OnDeleteButtonClicked(object sender, EventArgs e)
         {
-            // Traverse the visual tree to find the TaskPage
-            Element parent = this;
+            // Show the DeleteTaskPopUp
+            var deleteTaskPopUp = new DeleteTaskPopUp();
 
-            while (parent != null)
+            // Show the DeleteTaskPopUp using the current page
+            var currentPage = Application.Current?.Windows[0].Page;
+            if (currentPage != null)
             {
-                if (parent is TaskPage taskPage)
-                {
-                    // Show the DeleteTaskPopUp
-                    taskPage.DeleteTaskPopUpInstance.IsVisible = true;
-
-                    // Optionally, hide the SpecificTaskPopUp
-                    this.IsVisible = false;
-
-                    return;
-                }
-
-                // Traverse to the next parent
-                parent = parent.Parent;
+                currentPage.ShowPopup(deleteTaskPopUp);
             }
 
-            // If TaskPage was not found, log a message (optional)
-            Console.WriteLine("TaskPage not found in the visual tree.");
+            // Optionally, hide SpecificTaskPopUp
+            this.Close();
         }
 
         private void OnMarkAsDoneButtonClicked(object sender, EventArgs e)
@@ -157,7 +171,7 @@ namespace POMO
                         taskPage.OnMarkAsDoneClicked(sender, e);
 
                         // Hide the popup
-                        this.IsVisible = false;
+                        this.Close();
                         return;
                     }
                 }
@@ -172,8 +186,14 @@ namespace POMO
         {
             MarkAsDoneButton.IsVisible = false;
             GoTimerButton.IsVisible = false;
-            EditButton.IsVisible = false;
+            EditButton.IsEnabled = false;
+            EditButton.Opacity = 0;
             DueDateLabel.TextColor = Color.FromArgb("#30BFBF");
+            GoTimerLogo.IsVisible = false;
+            NotStarted.Text = "Finished";
+            DescriptionLabel.HorizontalOptions = LayoutOptions.Center;
+            DescriptionLabel.HorizontalTextAlignment = TextAlignment.Center;
+            NumSessionLabel.HorizontalOptions = LayoutOptions.Center;
         }
 
         public void ShowButtons()
@@ -183,5 +203,6 @@ namespace POMO
             EditButton.IsVisible = true;
             DueDateLabel.TextColor = Color.FromArgb("#FF6F61");
         }
+
     }
 }

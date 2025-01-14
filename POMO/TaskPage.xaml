@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:POMO"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:Class="POMO.TaskPage">
 
     <!-- Background Gradient -->
@@ -94,27 +95,6 @@
                 </VerticalStackLayout>
 
             </Grid>
-
-            <!-- Specific Task Popup -->
-            <local:SpecificTaskPopUp x:Name="SpecificTaskPopUp" 
-            IsVisible="False"
-            AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
-            BackgroundColor="#000000AA"/>
-
-            <!-- Edit Task Popup -->
-            <local:EditTaskPopUp x:Name="EditTaskPopUp" 
-            IsVisible="False"
-            AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
-            BackgroundColor="#000000AA"/>
-
-            <!-- Delete Task Popup -->
-            <local:DeleteTaskPopUp x:Name="DeleteTaskPopUp" 
-            IsVisible="False"
-            AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
-            BackgroundColor="#000000AA"/>
 
             <!-- Bottom Navigation -->
             <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" VerticalOptions="End" HeightRequest="80">
