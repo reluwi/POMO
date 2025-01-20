@@ -118,6 +118,8 @@ namespace POMO
 
         public void SetTask(int taskId, string taskTitle, int completedSessions)
         {
+            Preferences.Set("IsDefaultTaskSet", false);
+
             // Update the TimerLabel with the selected task information
             TaskTitle.Text = taskTitle;
 
@@ -133,6 +135,7 @@ namespace POMO
             Preferences.Set(TaskIdKey, taskId);
             Preferences.Set(TaskTitleKey, taskTitle);
             Preferences.Set(CompletedSessionsKey, completedSessions);
+            Preferences.Set("TaskTitle", taskTitle);
 
             // Store button visibility states in Preferences
             Preferences.Set(SkipSessionButtonVisibleKey, true);
@@ -282,6 +285,13 @@ namespace POMO
 
                             // Set a flag indicating that the default task is set
                             Preferences.Set("IsDefaultTaskSet", true);
+
+                            // Reset the timer to 25:00 and pause
+                            timeRemaining = TimeSpan.FromMinutes(25);
+                            isTimerRunning = false;
+                            timer.Stop();
+                            ChooseButton.IsVisible = true;
+                            DefaultTButton.IsVisible = true;
 
                             // Update UI
                             MainThread.BeginInvokeOnMainThread(() =>

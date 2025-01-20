@@ -21,6 +21,7 @@
         <Button Text="X    "
             Clicked="CloseButton_Clicked"
             FontSize="25" 
+            TextColor="White"
             VerticalOptions="Center"
             HorizontalOptions="End"
             BackgroundColor="Transparent"/>
