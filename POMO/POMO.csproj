@@ -24,7 +24,7 @@
 		<ApplicationTitle>POMO</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.pomo</ApplicationId>
+		<ApplicationId>Pomo</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

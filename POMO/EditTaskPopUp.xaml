@@ -55,20 +55,20 @@
                         <!-- Task Title -->
                         <VerticalStackLayout Spacing="5">
                             <Label Text="Task title" FontSize="16" TextColor="#8D8E90" />
-                            <Entry x:Name="TaskTitleEntry" Placeholder="Task Title" BackgroundColor="#E5E5E5" />
+                            <Entry x:Name="TaskTitleEntry" Placeholder="Task Title" BackgroundColor="#E5E5E5" TextColor="Black"/>
                         </VerticalStackLayout>
 
                         <!-- Task Description -->
                         <VerticalStackLayout Spacing="5">
                             <Label x:Name="CharacterCountLabel" Text="Description 0/100" FontSize="16" TextColor="#8D8E90" />
                             <Editor x:Name="DescriptionEditor" Placeholder="Task Description" BackgroundColor="#E5E5E5" MaxLength="100"
-                                    TextChanged="OnDescriptionTextChanged" HeightRequest="100" />
+                                    TextChanged="OnDescriptionTextChanged" HeightRequest="100" TextColor="Black"/>
                         </VerticalStackLayout>
 
                         <!-- Due Date -->
                         <VerticalStackLayout Spacing="5">
                             <Label Text="Due Date" FontSize="16" TextColor="#8D8E90" />
-                            <DatePicker x:Name="DatePickerEditor" HorizontalOptions="FillAndExpand" BackgroundColor="#E5E5E5"/>
+                            <DatePicker x:Name="DatePickerEditor" HorizontalOptions="FillAndExpand" BackgroundColor="#E5E5E5" TextColor="Black"/>
                         </VerticalStackLayout>
 
                         <!-- Number of Sessions -->
@@ -82,7 +82,7 @@
                                         VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
 
                                 <Label x:Name="SessionCountLabel" Text="1" FontSize="20" HorizontalOptions="CenterAndExpand" 
-                                       VerticalOptions="Center" Grid.Column="1" Grid.RowSpan="3"/>
+                                       VerticalOptions="Center" Grid.Column="1" Grid.RowSpan="3" TextColor="Black"/>
 
                                 <Button BackgroundColor="#109F5B" Clicked="OnIncreaseClicked" Grid.Column="2"
                                         Grid.Row="1" CornerRadius="0"/>

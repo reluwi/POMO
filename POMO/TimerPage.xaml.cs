@@ -14,6 +14,7 @@ namespace POMO
     {
         private bool isTimerRunning = false;
         private TimeSpan timeRemaining = TimeSpan.FromMinutes(25);  //adjust timer
+        //private TimeSpan timeRemaining = TimeSpan.FromSeconds(10);
         private System.Timers.Timer timer;
         private IAudioManager audioManager;
 
@@ -41,6 +42,8 @@ namespace POMO
             WeakReferenceMessenger.Default.Register<TaskSelectedMessage>(this, (r, m) =>
             {
                 SetTask(m.Value.Id, $"{m.Value.Title} ({m.Value.CompletedSessions} / {m.Value.NumSessions})", m.Value.CompletedSessions);
+                var getTaskTitle = $"{m.Value.Title}";
+                Preferences.Set("TaskTitle", getTaskTitle);
             });
 
             // Register to receive the TaskSelectedMessage
@@ -104,7 +107,7 @@ namespace POMO
             ResetButton.IsVisible = false;
             DefaultTButton.IsVisible = false;
             EndTaskButton.IsVisible = false;
-            EndTimerButton.IsVisible = true;
+            EndTimerButton.IsVisible = false;
 
             ChooseButton.Text = "+ Choose a Task";
 
@@ -113,7 +116,7 @@ namespace POMO
             Preferences.Set(ResetButtonVisibleKey, false);
             Preferences.Set(DefaultTButtonVisibleKey, false);
             Preferences.Set(EndTaskButtonVisibleKey, false);
-            Preferences.Set(EndTimerButtonVisibleKey, true);
+            Preferences.Set(EndTimerButtonVisibleKey, false);
         }
 
         public void SetTask(int taskId, string taskTitle, int completedSessions)
@@ -135,7 +138,6 @@ namespace POMO
             Preferences.Set(TaskIdKey, taskId);
             Preferences.Set(TaskTitleKey, taskTitle);
             Preferences.Set(CompletedSessionsKey, completedSessions);
-            Preferences.Set("TaskTitle", taskTitle);
 
             // Store button visibility states in Preferences
             Preferences.Set(SkipSessionButtonVisibleKey, true);
@@ -191,16 +193,23 @@ namespace POMO
             // Check if the result is "Continue"
             if (result is string action && action == "Continue")
             {
+                // Play sound notification
+                var player = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("notification_sound.mp3"));
+                player.Play();
+
                 // Reset the timer to 25:00 and pause
                 timeRemaining = TimeSpan.FromMinutes(25);
+                //timeRemaining = TimeSpan.FromSeconds(10);
                 isTimerRunning = false;
                 timer.Stop();
                 ChooseButton.IsVisible = true;
+                EndTimerButton.IsVisible = false;
 
                 // Update UI
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     TimerLabel.Text = "25:00";
+                    //TimerLabel.Text = "00:10";
                     PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
 
                     // Clear the selected task information from Preferences
@@ -213,7 +222,7 @@ namespace POMO
                     Preferences.Set(ResetButtonVisibleKey, false);
                     Preferences.Set(DefaultTButtonVisibleKey, false);
                     Preferences.Set(EndTaskButtonVisibleKey, false);
-                    Preferences.Set(EndTimerButtonVisibleKey, true);
+                    Preferences.Set(EndTimerButtonVisibleKey, false);
                 });
             }
         }
@@ -238,6 +247,12 @@ namespace POMO
                 playPauseButton.Source = "pause_button.png";
                 ChooseButton.IsVisible = false;
                 DefaultTButton.IsVisible = false;
+                EndTimerButton.IsVisible = true;
+                var taskId = Preferences.Get(TaskIdKey, -1);
+                if (taskId != -1)
+                {
+                    EndTimerButton.IsVisible = false;
+                }
             }
         }
 
@@ -249,6 +264,10 @@ namespace POMO
             // Check if the result is "Continue"
             if (result is string action && action == "Continue")
             {
+                // Play sound notification
+                var player = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("notification_sound.mp3"));
+                player.Play();
+
                 // Increment the session counter for the selected task
                 var taskId = Preferences.Get(TaskIdKey, -1);
                 if (taskId != -1)
@@ -288,6 +307,7 @@ namespace POMO
 
                             // Reset the timer to 25:00 and pause
                             timeRemaining = TimeSpan.FromMinutes(25);
+                            //timeRemaining = TimeSpan.FromSeconds(10);
                             isTimerRunning = false;
                             timer.Stop();
                             ChooseButton.IsVisible = true;
@@ -297,6 +317,7 @@ namespace POMO
                             MainThread.BeginInvokeOnMainThread(() =>
                             {
                                 TimerLabel.Text = "25:00";
+                                //TimerLabel.Text = "00:10";
                                 PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                                 SetDefaultTask();
                             });
@@ -315,6 +336,7 @@ namespace POMO
 
                             // Reset the timer to 25:00 and pause
                             timeRemaining = TimeSpan.FromMinutes(25);
+                            //timeRemaining = TimeSpan.FromSeconds(10);
                             isTimerRunning = false;
                             timer.Stop();
                             ChooseButton.IsVisible = true;
@@ -324,6 +346,7 @@ namespace POMO
                             MainThread.BeginInvokeOnMainThread(() =>
                             {
                                 TimerLabel.Text = "25:00";
+                                //TimerLabel.Text = "00:10";
                                 PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                             });
                         }
@@ -343,6 +366,7 @@ namespace POMO
             {
                 // Reset the timer to 25:00 and pause
                 timeRemaining = TimeSpan.FromMinutes(25);
+                //timeRemaining = TimeSpan.FromSeconds(10);
                 isTimerRunning = false;
                 timer.Stop();
                 ChooseButton.IsVisible = true;
@@ -352,6 +376,7 @@ namespace POMO
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     TimerLabel.Text = "25:00";
+                    //TimerLabel.Text = "00:10";
                     PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                 });
             }
@@ -365,6 +390,10 @@ namespace POMO
             // Check if the result is "Continue"
             if (result is string action && action == "Continue")
             {
+                // Play sound notification
+                var player = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("notification_sound.mp3"));
+                player.Play();
+
                 // Mark the selected task as completed
                 var taskId = Preferences.Get(TaskIdKey, -1);
                 if (taskId != -1)
@@ -396,10 +425,19 @@ namespace POMO
                         // Set a flag indicating that the default task is set
                         Preferences.Set("IsDefaultTaskSet", true);
 
+                        // Reset the timer to 25:00 and pause
+                        timeRemaining = TimeSpan.FromMinutes(25);
+                        //timeRemaining = TimeSpan.FromSeconds(10);
+                        isTimerRunning = false;
+                        timer.Stop();
+                        ChooseButton.IsVisible = true;
+                        DefaultTButton.IsVisible = true;
+
                         // Update UI
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
                             TimerLabel.Text = "25:00";
+                            //TimerLabel.Text = "00:10";
                             PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                             SetDefaultTask();
                         });
@@ -432,6 +470,23 @@ namespace POMO
 
                     // Display alert for session completion
                     await DisplayAlert("Session Completed", "You have completed a session. Please take a 5-minute break.", "OK");
+
+                    // Reset the timer to 25:00 and pause
+                    timeRemaining = TimeSpan.FromMinutes(25);
+                    //timeRemaining = TimeSpan.FromSeconds(10);
+                    isTimerRunning = false;
+                    timer.Stop();
+                    ChooseButton.IsVisible = true;
+                    EndTimerButton.IsVisible = false;
+                    DefaultTButton.IsVisible = false;
+
+                    // Update UI
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        TimerLabel.Text = "25:00";
+                        //TimerLabel.Text = "00:10";
+                        PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
+                    });
 
                     // Increment the session counter for the selected task
                     var taskId = Preferences.Get(TaskIdKey, -1);
@@ -467,6 +522,14 @@ namespace POMO
                                 Preferences.Remove(TaskTitleKey);
                                 Preferences.Remove(CompletedSessionsKey);
 
+                                // Reset the timer to 25:00 and pause
+                                timeRemaining = TimeSpan.FromMinutes(25);
+                                //timeRemaining = TimeSpan.FromSeconds(10);
+                                isTimerRunning = false;
+                                timer.Stop();
+                                ChooseButton.IsVisible = true;
+                                DefaultTButton.IsVisible = true;
+
                                 // Set a flag indicating that the default task is set
                                 Preferences.Set("IsDefaultTaskSet", true);
 
@@ -474,6 +537,7 @@ namespace POMO
                                 MainThread.BeginInvokeOnMainThread(() =>
                                 {
                                     TimerLabel.Text = "25:00";
+                                    //TimerLabel.Text = "00:10";
                                     PlayPauseButton.Source = "play_button.png"; // Ensure play button is shown
                                     SetDefaultTask();
                                 });

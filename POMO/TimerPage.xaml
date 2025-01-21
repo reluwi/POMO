@@ -25,7 +25,7 @@
                     
                     <!-- Timer Display -->
                     <Label x:Name="TimerLabel" 
-                       Text="25:00" FontSize="88" 
+                       Text="25:00" FontSize="78" 
                        FontAttributes="Bold" 
                        TextColor="White" 
                        HorizontalOptions="Center" />
@@ -67,7 +67,7 @@
                         HeightRequest="30"
                         CornerRadius="10"
                         HorizontalOptions="FillAndExpand"
-                        IsVisible="True"
+                        IsVisible="False"
                         Clicked="EndTimerButton_Clicked"/>
                     <Button Text="End Task"
                         x:Name="EndTaskButton"
