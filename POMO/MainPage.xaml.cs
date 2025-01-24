@@ -191,7 +191,7 @@ namespace POMO
                 var taskInfo = $"{taskTitle} ({completedSessions} / {numSessions})";
 
                 Preferences.Set("IsDefaultTaskSet", false);
-                Preferences.Set("TaskTitle", taskInfo);
+                Preferences.Set("TaskTitle", taskTitle);
 
                 // Send the TaskSelectedMessage
                 WeakReferenceMessenger.Default.Send(new DueTaskSelectedMessage((task.Id, taskTitle, completedSessions, numSessions)));
